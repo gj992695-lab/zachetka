@@ -556,6 +556,7 @@ body.th-vuc{--orange:#5B6B34;--orange-btn:#3F4D22;--orange-ink:#3F5A23;--peach:#
 .vk-fcat{height:130px;image-rendering:pixelated}
 .vk-prog{margin:8px 0 10px}.vk-prog i{background:#5B6B34}
 .vk-note{margin-top:28px}
+.dark-cat{height:72px!important;top:-44px!important}
 .vk-rank{margin-top:14px}
 .vk-lead{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:14px}
 .vk-ld{position:relative;background:#fff;border-radius:18px;border:3px solid var(--c);box-shadow:0 6px 20px rgba(40,50,20,.1);overflow:visible;display:flex;flex-direction:column}
@@ -1522,6 +1523,12 @@ document.addEventListener('pointerup',e=>{if(!bd)return;const{b,rs,d}=bd;bd=null
 document.addEventListener('keydown',e=>{const el=e.target;if((e.key==='Enter'||e.key===' ')&&el.matches&&el.matches('[data-tinfo]')){e.preventDefault();openTeacher(el.dataset.tinfo)}if((e.key==='ArrowRight'||e.key==='ArrowLeft')&&el.matches&&el.matches('[role=tab]')){const l=[...el.parentElement.querySelectorAll('[role=tab]')],n=l[(l.indexOf(el)+(e.key==='ArrowRight'?1:-1)+l.length)%l.length];n.focus();n.click()}});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){$('#menu').hidden=true;closeTask()}if(e.key==='Tab'&&$('#ov')){const f=$$('button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled])',$('#ov'));const a=f[0],z=f[f.length-1];if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}}});
 window.addEventListener('hashchange',route);shell();route();
+
+/* (см. CSS .dark-cat) */
+/* Пиксель-арт читается, только если каждый пиксель спрайта = целое число экранных пикселей (1x, 2x, 3x) и не меньше 1x.
+   Маленькие чиби (до 120px исходника) приводим к ближайшему целому масштабу. */
+function pxSnap(){document.querySelectorAll('img.px').forEach(i=>{const go=()=>{if(!i.naturalHeight||i.naturalHeight>120)return;i.style.height='';i.style.width='';i.style.maxWidth='';i.style.maxHeight='';const h=i.getBoundingClientRect().height;if(!h)return;const r=h/i.naturalHeight;let k=Math.max(1,Math.floor(r)+(r%1>=.3?1:0));const box=i.closest('.tc-art');if(box){const bh=box.clientHeight-8,bw=box.clientWidth-8;k=Math.max(1,Math.min(k,Math.floor(bh/i.naturalHeight),Math.floor(bw/i.naturalWidth)))}i.style.height=i.naturalHeight*k+'px';i.style.width=i.naturalWidth*k+'px';i.style.maxWidth='none';i.style.maxHeight='none'};i.complete?go():i.addEventListener('load',go,{once:true})})}
+(()=>{let t=0;const run=()=>{cancelAnimationFrame(t);t=requestAnimationFrame(pxSnap)};new MutationObserver(run).observe(document.body,{childList:true,subtree:true});addEventListener('resize',run);addEventListener('load',run)})();
 </script>
 </body>
 </html>
