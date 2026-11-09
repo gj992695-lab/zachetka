@@ -555,12 +555,17 @@ body.th-vuc{--orange:#5B6B34;--orange-btn:#3F4D22;--orange-ink:#3F5A23;--peach:#
 .vk-fcat{height:130px;image-rendering:pixelated}
 .vk-prog{margin:8px 0 10px}.vk-prog i{background:#5B6B34}
 .vk-note{margin-top:28px}
-.vk-rcard{margin-top:14px}
-.vk-rk{display:flex;flex-wrap:wrap;gap:14px 26px;min-height:170px;align-items:flex-start;padding:16px 4px 8px}
-#vkRn{margin-top:2px}
-.vk-rk figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:6px;width:92px;text-align:center}
-.vk-rk svg{filter:drop-shadow(0 3px 4px rgba(30,40,10,.25))}
+.vk-rank{margin-top:14px}
+.vk-rk{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;justify-items:center}
+.vk-rk figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+.vk-rk svg{width:38px;height:auto;filter:drop-shadow(0 2px 3px rgba(30,40,10,.2))}
 .vk-rk figcaption{font-size:14px;line-height:1.2;font-weight:600}
+.vk-rl{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
+.vk-rl span{display:inline-flex;align-items:center;gap:6px}
+.vk-rl i{display:inline-block;width:12px;height:14px;border-radius:2px}
+.vk-p1{background:linear-gradient(90deg,#556535 42%,#B3262B 42% 58%,#556535 58%)}
+.vk-p2{background:linear-gradient(90deg,#556535 20%,#B3262B 20% 34%,#556535 34% 66%,#B3262B 66% 80%,#556535 80%)}
+@media (max-width:720px){.vk-rk{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:18px}}
 .th-vuc .sec-t{background:linear-gradient(transparent 68%,#B9C77F 68%,#B9C77F 90%,transparent 90%)}
 @media (max-width:980px){.vk-deck,.vk-roles{grid-template-columns:repeat(2,minmax(0,1fr))}.vk-facts{grid-template-columns:repeat(2,minmax(0,1fr))}.vk-cases{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:720px){.vk-hero .wrap{grid-template-columns:1fr;padding-top:26px}.vk-ht{padding-bottom:6px}.vk-ht h1{font-size:32px}.vk-ht .sub{font-size:16.5px}.vk-cats img{height:170px}.vk-cats figure:last-child img{height:200px}.vk-cats .bub{font-size:13px;max-width:160px}.vk-deck,.vk-roles,.vk-cases{grid-template-columns:1fr}.vk-fri{grid-template-columns:1fr}.vk-fcat{display:none}.vk-corner{display:none}}
@@ -1321,13 +1326,7 @@ const VUC = {
 };
 
 /* Погоны: схема, без точных размеров по приказу. Звёзды и полосы по правилам ношения знаков различия. */
-const RANKS=[
- ['Солдаты и сержанты','Лычки поперечные, у старшины — одна продольная.',[['Рядовой',{}],['Ефрейтор',{lat:1}],['Младший сержант',{lat:2}],['Сержант',{lat:3}],['Старший сержант',{wide:1}],['Старшина',{lon:1}]]],
- ['Прапорщики','Звёзды вдоль погона, без просветов.',[['Прапорщик',{st:[[23,82],[23,64]],r:4}],['Старший прапорщик',{st:[[23,82],[23,64],[23,46]],r:4}]]],
- ['Младшие офицеры','Один просвет, маленькие звёзды.',[['Младший лейтенант',{pr:1,st:[[23,80]],r:4.5}],['Лейтенант',{pr:1,st:[[13,80],[33,80]],r:4.5}],['Старший лейтенант',{pr:1,st:[[13,80],[33,80],[23,63]],r:4.5}],['Капитан',{pr:1,st:[[13,80],[33,80],[23,63],[23,46]],r:4.5}]]],
- ['Старшие офицеры','Два просвета, крупные звёзды.',[['Майор',{pr:2,st:[[23,80]],r:6.5}],['Подполковник',{pr:2,st:[[14,80],[32,80]],r:6.5}],['Полковник',{pr:2,st:[[14,80],[32,80],[23,58]],r:6.5}]]],
- ['Высшие офицеры','Погон с зигзагом, без просветов.',[['Генерал-майор',{gen:1,st:[[23,76]],r:8}],['Генерал-лейтенант',{gen:1,st:[[23,82],[23,56]],r:8}],['Генерал-полковник',{gen:1,st:[[23,86],[23,62],[23,38]],r:8}],['Генерал армии',{gen:1,st:[[23,80]],r:12,emb:1}]]],
-];
+const RANKS=[['Лейтенант',{pr:1,st:[[13,80],[33,80]],r:4.5}],['Старший лейтенант',{pr:1,st:[[13,80],[33,80],[23,63]],r:4.5}],['Капитан',{pr:1,st:[[13,80],[33,80],[23,63],[23,46]],r:4.5}],['Майор',{pr:2,st:[[23,80]],r:6.5}],['Подполковник',{pr:2,st:[[14,80],[32,80]],r:6.5}],['Полковник',{pr:2,st:[[14,80],[32,80],[23,58]],r:6.5}]];
 const starP=(cx,cy,r)=>{let p='';for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,rr=i%2?r*.42:r;p+=(i?'L':'M')+(cx+rr*Math.cos(a)).toFixed(1)+' '+(cy+rr*Math.sin(a)).toFixed(1)}return p+'Z'};
 function pogon(o){const G='#D9B44A',F=o.gen?'#C9A43A':'#556535';let b=`<path d="M2 16 L23 3 L44 16 L44 116 Q44 120 40 120 L6 120 Q2 120 2 116 Z" fill="${F}" stroke="#2B3318" stroke-width="2"/>`;
  if(o.gen)for(let y=26;y<116;y+=8)b+=`<path d="M4 ${y} l5 -4 l5 4 l5 -4 l5 4 l5 -4 l5 4 l5 -4 l5 4 l3 -2" fill="none" stroke="#A8862A" stroke-width="1.2"/>`;
@@ -1360,7 +1359,7 @@ R.vuc=p=>({title:`Военная кафедра (ВУЦ МГУ): уставы, �
 
 <section class="sec"><div class="sec-head"><h2 class="sec-t">Кто за что отвечает во взводе</h2></div><div class="vk-roles">${VUC.roles.map(r=>`<div class="card pad"><b>${r[0]}</b><p class="small muted">${r[1]}</p></div>`).join('')}</div></section>
 
-<section class="sec" id="vk-ranks"><div class="sec-head"><h2 class="sec-t">Звания и погоны</h2></div><div class="card pad vk-rcard"><div class="vk-tabs" role="tablist">${RANKS.map((g,i)=>`<button role="tab" data-vkr="${i}" aria-selected="${i?'false':'true'}">${g[0]}</button>`).join('')}</div><div class="vk-rk" id="vkR"></div><p class="small muted" id="vkRn"></p></div></section>
+<section class="sec" id="vk-ranks"><div class="sec-head"><h2 class="sec-t">Звания</h2></div><div class="card pad vk-rank"><div class="vk-rk">${RANKS.map(r=>`<figure>${pogon(r[1])}<figcaption>${r[0]}</figcaption></figure>`).join('')}</div><p class="small muted vk-rl"><span><i class="vk-p1"></i>1 просвет — младшие офицеры</span><span><i class="vk-p2"></i>2 просвета — старшие</span></p></div></section>
 
 <section class="sec" id="vk-fri"><div class="card pad vk-fri"><div><h2>Чек-лист к пятнице</h2><p class="muted small" id="vkC"></p><div class="prog vk-prog"><i id="vkP"></i></div>${VUC.friday.map((x,i)=>`<label class="ck"><input type="checkbox" data-vkc="${i}"><span>${x}</span></label>`).join('')}</div>${spr('lat_sit_army',LN,'vk-fcat')}</div></section>
 <p class="small muted vk-note">Страница собрана по опыту занятий роты и не является официальным документом ВУЦ МГУ. Звания и фамилии подставляй свои.</p>
@@ -1369,10 +1368,8 @@ function vucDisc(id){const d=VUC.disc.find(x=>x.id===id),box=$('#vkD');$$('[data
 let vkStep=0;
 function vucStep(i){vkStep=Math.max(0,Math.min(VUC.lesson.length-1,i));const l=VUC.lesson[vkStep];$$('[data-vks]').forEach(b=>b.setAttribute('aria-selected',+b.dataset.vks===vkStep));$('#vkS').innerHTML=`<h3>${vkStep+1}. ${l[0]}</h3>${l[1].map(r=>`<div class="vk-say"><span class="vk-who vk-${r[0]==='Преподаватель'?'p':r[0]==='Дежурный'?'d':'v'}">${r[0]}</span><span>${r[1]}</span></div>`).join('')}`}
 function vucChkDraw(){const n=VUC.friday.length,k=VUC.friday.filter((x,i)=>vucChk[i]).length;$('#vkC').textContent=k===n?'Готов к пятнице':`Готово ${k} из ${n}`;$('#vkP').style.width=Math.round(k/n*100)+'%';$$('[data-vkc]').forEach(c=>c.checked=!!vucChk[c.dataset.vkc])}
-function vucRank(i){$$('[data-vkr]').forEach(b=>b.setAttribute('aria-selected',+b.dataset.vkr===i));const g=RANKS[i];$('#vkR').innerHTML=g[2].map(r=>`<figure>${pogon(r[1])}<figcaption>${r[0]}</figcaption></figure>`).join('');$('#vkRn').textContent=g[1]}
-function vucAfter(){vucStep(0);vucRank(0);vucChkDraw();const m=$('#main');
+function vucAfter(){vucStep(0);vucChkDraw();const m=$('#main');
  m.querySelectorAll('[data-vkd]').forEach(b=>b.onclick=()=>vucDisc(b.dataset.vkd));
- m.querySelectorAll('[data-vkr]').forEach(b=>b.onclick=()=>vucRank(+b.dataset.vkr));
  m.querySelectorAll('[data-vks]').forEach(b=>b.onclick=()=>vucStep(+b.dataset.vks));
  m.querySelectorAll('[data-vkmv]').forEach(b=>b.onclick=()=>vucStep(vkStep+ +b.dataset.vkmv));
  m.querySelectorAll('[data-vkc]').forEach(c=>c.onchange=()=>{vucChk[c.dataset.vkc]=c.checked;vucChkDraw()});
