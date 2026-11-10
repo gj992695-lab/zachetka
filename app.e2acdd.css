@@ -766,3 +766,10 @@ a.kpi:hover{box-shadow:0 0 0 2px var(--orange-btn)}
 .topbar .tb-out:hover{background:rgba(255,255,255,.12)}
 /* Лиана растёт из-под карточки «А подписка?» */
 .v-nb{top:-10px!important;z-index:1!important}
+
+.cred{display:grid;gap:10px;max-width:520px;margin:18px auto 0;text-align:left}
+.cred h2{margin:0}.cred .btn{justify-self:start}
+#admF{display:grid;gap:12px;text-align:left}#admF .reg-cat{justify-self:center}
+.done+.cred,.card.done~.cred{margin-top:18px}
+.tform input[type=password]{width:100%;min-height:48px;background:#fff;border:1.5px solid #E2D8D1;border-radius:12px;padding:8px 14px;font:inherit;font-size:16.5px}
+.tform input[type=password]:focus{outline:3px solid var(--orange-btn);outline-offset:1px}
