@@ -957,3 +957,6 @@ a.kpi:hover{box-shadow:0 0 0 2px var(--orange-btn)}
 .wk-semb input:checked+span{background:var(--orange-btn);border-color:var(--orange-btn);color:#fff}
 .wk-semb input:focus-visible+span{outline:2px solid var(--ink);outline-offset:2px}
 #semC{margin:6px 0 0}
+.wk-phf{display:flex;gap:16px;align-items:center;margin-bottom:6px}.wk-phf p{margin:0 0 8px}
+.wk-php img,.wk-php .wk-ini{width:110px;height:110px;border-radius:20px;object-fit:cover;font-size:44px}
+@media(max-width:500px){.wk-phf{flex-direction:column;align-items:flex-start}}
