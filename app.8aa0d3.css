@@ -951,3 +951,9 @@ a.kpi:hover{box-shadow:0 0 0 2px var(--orange-btn)}
 .wk-tph .ib{width:38px;height:38px;border-radius:10px;font-size:17px}.wk-tph .ib:hover{background:var(--tag-bg)}.wk-tph .ib svg{width:16px;height:16px}
 .wk-tp details{margin-top:8px}.wk-tp summary{cursor:pointer;font-weight:600;font-size:14.5px;color:var(--orange-ink);padding:4px 0 8px}
 .wk-tp .te{margin-top:4px}
+.wk-sems{border:0;padding:0;margin:4px 0 0}
+.wk-semb{display:flex;gap:6px;flex-wrap:wrap}
+.wk-semb span{display:grid;place-items:center;width:44px;height:44px;border-radius:12px;border:1.5px solid var(--line);background:#fff;font-weight:700;cursor:pointer}
+.wk-semb input:checked+span{background:var(--orange-btn);border-color:var(--orange-btn);color:#fff}
+.wk-semb input:focus-visible+span{outline:2px solid var(--ink);outline-offset:2px}
+#semC{margin:6px 0 0}
