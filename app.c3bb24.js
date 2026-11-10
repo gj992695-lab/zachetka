@@ -1631,6 +1631,18 @@ document.addEventListener('change',async e=>{const t=e.target;if(t.dataset.tphot
  try{toast('Загружаю фото…');const r=await WB.upload(await wSquare(f));const form=t.closest('form');form.photo.value=r.url;$('#phPrev').innerHTML=`<img loading="lazy" decoding="async" src="${r.url}" alt="">`;$('[data-tphrm]',form).hidden=false;toast('Фото загружено. Не забудь сохранить')}catch(x){toast(x.message||'Не удалось загрузить фото')}t.value=''});
 document.addEventListener('click',e=>{const b=e.target.closest('[data-tphrm]');if(!b)return;const form=b.closest('form');form.photo.value='';$('#phPrev').innerHTML=`<span class="wk-ini">${esc((form.nm.value||'?').trim()[0])}</span>`;b.hidden=true});
 
+/* ===== видео-фон военки: один и тот же <video> переносится между отрисовками, поэтому не перезагружается; вне экрана — пауза ===== */
+const VUC_V={src:'/media/vuc-tos.672267.mp4',poster:'/media/vuc-tos-poster.664c59.webp'};let vucVid=null,vucIO=null;
+const vucCalm=()=>matchMedia('(prefers-reduced-motion: reduce)').matches||!!(navigator.connection&&navigator.connection.saveData);
+function vucVideo(){const h=$('.vk-hero');if(!h)return;h.classList.add('has-vid');
+ if(!vucVid){const v=document.createElement('video');v.className='vk-vid';v.muted=v.defaultMuted=true;v.loop=true;v.playsInline=true;['muted','playsinline','disablepictureinpicture','disableremoteplayback'].forEach(a=>v.setAttribute(a,''));v.setAttribute('aria-hidden','true');v.tabIndex=-1;v.preload='metadata';v.poster=VUC_V.poster;if(!vucCalm())v.src=VUC_V.src;vucVid=v}
+ if(vucVid.parentNode!==h)h.prepend(vucVid);
+ if(vucCalm())return;
+ if(vucIO)vucIO.disconnect();vucIO=new IntersectionObserver(es=>{const e=es[es.length-1];if(e.isIntersecting&&!document.hidden){vucVid.preload='auto';const p=vucVid.play();p&&p.catch(()=>{})}else vucVid.pause()},{threshold:0.01});vucIO.observe(h)}
+const _vucAfterV=vucAfter;vucAfter=function(){_vucAfterV.apply(this,arguments);vucVideo()};
+const _routeV=route;route=function(){const r=_routeV.apply(this,arguments);if(vucVid&&!vucVid.isConnected){vucVid.pause();if(vucIO){vucIO.disconnect();vucIO=null}}return r};
+document.addEventListener('visibilitychange',()=>{if(!vucVid||!vucVid.isConnected||vucCalm())return;if(document.hidden)vucVid.pause();else{const r=vucVid.getBoundingClientRect();if(r.bottom>0&&r.top<innerHeight){const p=vucVid.play();p&&p.catch(()=>{})}}});
+
 window.addEventListener('popstate',LOC.pop);shell();route();
 
 /* (см. CSS .dark-cat) */
