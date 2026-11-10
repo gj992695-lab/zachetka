@@ -6,5 +6,6 @@ Disallow: /checkout
 Disallow: /thanks
 Disallow: /login
 Disallow: /forgot
+Disallow: /history
 
 Sitemap: https://latisha.ru/sitemap.xml
