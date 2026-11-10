@@ -818,3 +818,5 @@ a.kpi:hover{box-shadow:0 0 0 2px var(--orange-btn)}
 @media (max-width:720px){.aud .ups,.aud .ups-n,.aud .tc-l{display:none}}
 .ap .ap-img{border:0;padding:0;cursor:zoom-in;width:100%}
 .ap.big{grid-template-columns:1fr}.ap.big .ap-img{aspect-ratio:auto;max-width:640px;cursor:zoom-out}.ap.big .ap-img img{object-fit:contain}
+.ups-n.good{background:var(--ok-bg);color:var(--ok)}
+.pro-lock{display:grid;grid-template-columns:20px minmax(0,1fr);gap:8px;padding:12px 14px;border-radius:12px;background:#FFF1E6;font-size:14.5px;line-height:1.4}.pro-lock svg{width:18px;height:18px;color:var(--orange-ink);margin-top:1px}
