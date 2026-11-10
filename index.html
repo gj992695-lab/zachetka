@@ -596,6 +596,167 @@ body.th-vuc{--orange:#5B6B34;--orange-btn:#3F4D22;--orange-ink:#3F5A23;--peach:#
 .tc-dif{left:7px;top:7px;background:var(--c2);color:#fff}
 .tc.lv1 .tc-dif{background:#FBE08A;color:#3A2A05}
 .tc-resp{position:absolute;top:-12px;left:50%;transform:translateX(-50%);z-index:3;background:linear-gradient(180deg,#F1D78C 0%,#C99A3A 45%,#9C7020 100%);color:#3E2A06;font-size:13px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;border:1px solid #6E4F14;border-radius:6px;padding:2px 14px;white-space:nowrap;text-shadow:0 1px 0 rgba(255,240,200,.6);box-shadow:inset 0 1px 0 rgba(255,250,220,.7),0 3px 8px rgba(60,40,10,.3)}
+
+/* ===== Улучшения внутренней части ===== */
+.vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.tab[aria-pressed=true]{background:var(--orange-btn);border-color:var(--orange-btn);color:#fff}
+.pg-h{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.pg-h h2,.pg-h h3{margin:0}
+.pg-n{font-size:26px;font-weight:700;color:var(--orange-ink)}
+.pg .prog{margin:4px 0 10px}
+.pg-r{padding-top:6px;border-top:1px solid var(--line)}
+.pg-r .top{display:flex;justify-content:space-between;gap:8px;font-size:14.5px}
+.pg-r .w-b{margin:4px 0 0}
+.pg-r .link{min-height:36px;font-size:14.5px}
+.pg-r>.small{display:block;padding:6px 0 8px}
+.side .pg,.side .dlc{display:grid;gap:2px}
+.dl-r{display:flex;justify-content:space-between;align-items:center;gap:6px;padding-block:6px;border-bottom:1px solid var(--line)}
+.dl-r>span:first-child{display:grid;font-size:15px}.dl-r small{color:var(--ink-2);font-size:13.5px}
+.dl-r.past{opacity:.55}
+.dl-a{display:flex}.dl-a .ib{width:40px;height:40px}.dl-a .ib svg{width:20px;height:20px}
+.dlc .link svg,.btn svg{width:18px;height:18px;flex:none}
+.dlc .link{gap:5px;min-height:36px;font-size:14.5px}
+.dl-f{display:grid;gap:6px;margin-top:10px}
+.dl-f input{min-height:44px;font-size:15px;border:1.5px solid #E2D8D1;border-radius:12px;padding:6px 12px;background:#fff;width:100%}
+.doc.done>summary::after{content:" ✓";color:var(--ok)}
+.doc.hl{box-shadow:0 0 0 3px var(--orange-btn);border-radius:12px}
+.rd{display:inline-flex;align-items:center;gap:8px;min-height:44px;font-weight:600;font-size:14.5px;cursor:pointer;margin-right:auto}
+.rd input{width:20px;height:20px;accent-color:var(--orange-btn)}
+.doc-f{flex-wrap:wrap}
+/* Мой семестр */
+.sem-pick{display:flex;align-items:center;gap:8px}.sem-pick select{min-height:44px;width:auto;padding-right:34px}
+.mine-g{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:16px;align-items:start}
+.mine-g h3{margin:0 0 8px}
+.mrow{display:grid;grid-template-columns:minmax(0,1fr) 110px 44px;gap:10px;align-items:center;min-height:46px;border-bottom:1px solid var(--line);color:var(--ink);text-decoration:none}
+.mrow:last-child{border-bottom:0}.mrow:hover .mn{text-decoration:underline}
+.mrow b{text-align:right;font-size:15px}
+.mbar{height:8px;background:var(--tag-bg);border-radius:4px;overflow:hidden}.mbar i{display:block;height:100%;background:var(--bar)}
+.star{color:#C99A3A}
+.dl{display:flex;justify-content:space-between;align-items:center;gap:10px;padding-block:9px;border-bottom:1px solid var(--line);color:var(--ink);text-decoration:none}
+.dl>span:first-child{display:grid}.dl small{color:var(--ink-2);font-size:13.5px}
+.dl .dr{font-size:14px;color:var(--orange-ink);font-weight:600;text-align:right;white-space:nowrap}
+/* Поиск по конспектам */
+.nh{display:grid;gap:0}
+.nh-r{display:grid;gap:2px;padding-block:11px;border-bottom:1px solid var(--line);color:var(--ink);text-decoration:none}
+.nh-r:hover b{text-decoration:underline}
+.nh mark{background:#FBE08A;color:inherit;border-radius:3px;padding:0 2px}
+/* Тренажёр */
+.qz{display:grid;gap:10px;margin-top:8px}
+.qz-top{display:flex;justify-content:space-between}
+.qz-p{margin:0}
+.qz-q{font-size:18px;font-weight:600;line-height:1.4}
+.qz-o{display:grid;gap:8px}
+.qz-b{text-align:left;min-height:48px;padding:10px 16px;border:1.5px solid #E2D8D1;background:#fff;border-radius:12px;font:inherit;font-size:16px;cursor:pointer;color:var(--ink)}
+.qz-b:hover:not([disabled]){border-color:var(--orange-btn)}
+.qz-b.sel{border-color:var(--orange-btn);box-shadow:inset 0 0 0 1.5px var(--orange-btn);background:#FFF6EF}
+.qz-b.ok{border-color:var(--ok);background:var(--ok-bg);box-shadow:inset 0 0 0 1.5px var(--ok)}
+.qz-b.ok::before{content:"✓ ";font-weight:700;color:var(--ok)}
+.qz-b.bad{border-color:#C23A3A;background:#FBEAEA}
+.qz-b.bad::before{content:"✕ ";font-weight:700;color:#A81E1E}
+.qz-b[disabled]{cursor:default}
+.qz-why{border-radius:12px;padding:12px 16px;display:grid;gap:4px}
+.qz-why.ok{background:var(--ok-bg)}.qz-why.bad{background:#FBEAEA}
+.qz-why p{margin:0}
+.qz .btn{justify-self:start}
+.qz-res{display:grid;gap:10px;justify-items:start}
+.qz-big{font-size:40px;font-weight:700;color:var(--orange-ink)}
+.qz-wr{display:grid;gap:8px;width:100%}.qz-wr .li{padding:10px 14px;background:var(--tag-bg);border-radius:10px}
+/* Правки: этапы */
+.ph-r{padding-block:12px;border-bottom:1px solid var(--line)}.ph-r:last-child{border-bottom:0}
+.ph-h{display:grid;gap:2px}
+.tl{list-style:none;display:flex;flex-wrap:wrap;gap:0;margin:10px 0 4px;padding:0}
+.tl li{position:relative;padding:4px 14px 4px 26px;font-size:14px;color:var(--ink-2)}
+.tl li::before{content:"";position:absolute;left:6px;top:50%;width:12px;height:12px;margin-top:-6px;border-radius:50%;border:2px solid #CFC4BC;background:#fff}
+.tl li+li::after{content:"";position:absolute;left:-10px;top:50%;width:14px;border-top:2px solid #CFC4BC}
+.tl li.on{color:var(--ink);font-weight:600}.tl li.on::before{background:var(--orange-btn);border-color:var(--orange-btn)}
+.tl li.cur::before{background:#fff;box-shadow:0 0 0 3px rgba(231,104,38,.25)}
+.tl li.ok::before{background:var(--ok);border-color:var(--ok)}
+.tl li.no::before{background:#C23A3A;border-color:#C23A3A}
+.tgb{display:grid;gap:8px}
+.sw{display:inline-flex;align-items:center;gap:8px;min-height:44px;font-weight:600;font-size:14.5px;cursor:pointer}
+.sw input{width:20px;height:20px;accent-color:var(--orange-btn)}
+.tgchat{background:#DCE7EF;border-radius:14px;padding:12px;display:grid;gap:8px}
+.tgm{background:#fff;border-radius:12px 12px 12px 4px;padding:8px 12px;max-width:560px;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.tgm b{color:#2A7DB8;font-size:13.5px}.tgm p{margin:2px 0;font-size:15px}.tgm small{color:var(--ink-2);font-size:12.5px}
+/* Админка */
+.msel{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:600;padding:0 10px 0 4px;min-height:32px;cursor:pointer}
+.msel input{width:20px;height:20px;accent-color:var(--orange-btn)}
+.mass{display:flex;flex-wrap:wrap;align-items:center;gap:10px;position:sticky;top:72px;z-index:30;box-shadow:0 6px 18px rgba(49,49,53,.12)}
+.mass .reason{flex:1 1 220px;width:auto;min-height:44px}
+.ck0{display:inline-flex;align-items:center;gap:8px;font-weight:600;cursor:pointer;min-height:44px}
+.ck0 input{width:20px;height:20px;accent-color:var(--orange-btn)}
+.vsw{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.vsw .tab{min-height:38px;font-size:14px}
+.bs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.bs>div{background:#fff;border-radius:12px;padding:12px;border:1.5px solid var(--line)}
+.bs>div:first-child{background:#FBF1F1}.bs>div:last-child{background:#EFF7EF}
+.bs p{margin:4px 0 0}
+.prow-a{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.bon-f{display:grid;gap:8px;padding:12px;margin:0 0 8px;background:#FFF6EF;border-radius:12px}
+.bon-f .btn{justify-self:end}
+.kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-bottom:16px}
+.kpi{padding:16px 18px;display:grid;gap:2px;color:var(--ink);text-decoration:none}
+a.kpi:hover{box-shadow:0 0 0 2px var(--orange-btn)}
+.kpi .w{font-size:14px;color:var(--ink-2);font-weight:600}.kpi b{font-size:28px;line-height:1.2}
+.dash2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.vbars{display:flex;align-items:flex-end;gap:10px;height:190px;padding-top:18px;border-bottom:1px solid var(--line)}
+.vb{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;position:relative}
+.vb i{display:block;width:100%;max-width:38px;background:var(--bar);border-radius:6px 6px 0 0}
+.vb-n{font-size:13px;font-weight:700;margin-bottom:3px}
+.vb small{position:absolute;bottom:-22px;font-size:12px;color:var(--ink-2);white-space:nowrap}
+.dash2 .card:first-child{padding-bottom:36px}
+.hb{display:grid;grid-template-columns:minmax(0,1fr) 120px 36px;gap:10px;align-items:center;min-height:38px;font-size:14.5px}
+.hb>span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hb-b{height:10px;background:var(--tag-bg);border-radius:5px;overflow:hidden}.hb-b i{display:block;height:100%;background:var(--bar)}
+.hb b{text-align:right}
+.jlq{width:260px;max-width:100%;min-height:44px}
+.jl{display:grid;grid-template-columns:76px minmax(0,1fr);gap:12px;padding-block:10px;border-bottom:1px solid var(--line);font-size:15px}
+.jl:last-child{border-bottom:0}.jl-t{font-size:13.5px;color:var(--ink-2);font-weight:600}
+.ce{margin-top:14px}
+.ce-tp{border:0;padding:0;margin:0;display:grid;gap:8px}
+.ce-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr) 44px;gap:8px;align-items:start}
+.ce-row textarea{min-height:48px}
+.ce-tp .link{justify-self:start}
+.ct-g{display:grid;grid-template-columns:minmax(0,1fr) 240px;gap:18px;align-items:start;margin-top:12px}
+.ct-prev .deck{grid-template-columns:1fr!important;padding-top:14px}
+/* Трекер */
+.np2{display:grid;grid-template-columns:minmax(0,1fr) 230px auto;gap:10px}
+.np2 select{min-height:48px}
+.tx{display:grid;gap:8px;margin-top:4px}
+.tx .ck span{display:inline-flex;align-items:center;gap:6px}.tx .ck svg{width:18px;height:18px}
+.tfiles{display:grid;gap:6px}
+.tf-r{display:grid;gap:0;padding:8px 12px;background:var(--tag-bg);border-radius:10px}
+.tf-r>span{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.tf-r svg{width:16px;height:16px}
+.tf-r .tag{background:#fff;font-size:12.5px;padding:1px 8px}
+.tf-add{position:relative;justify-self:start;cursor:pointer;gap:6px}
+.tkb{display:inline-flex;align-items:center;gap:2px;font-size:12.5px;color:var(--ink-2);margin-left:4px;vertical-align:middle}
+.tkb svg{width:13px;height:13px}
+.bdbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.remb{display:grid;gap:4px;margin-bottom:12px;background:#E9F1F7}
+.remb>b{display:flex;align-items:center;gap:6px}.remb>b svg{width:18px;height:18px}
+.tk[hidden]{display:none!important}
+/* Военка */
+.vsch{display:grid;gap:0}
+.vs-h,.vs-r{display:grid;grid-template-columns:120px minmax(0,1.6fr) 110px minmax(0,1fr);gap:12px;align-items:center;padding-block:10px;border-bottom:1px solid var(--line)}
+.vs-h{font-size:13.5px;font-weight:700;color:var(--ink-2);padding-top:0}
+.vs-r.nx{background:#EEF2E2;margin-inline:-12px;padding-inline:12px;border-radius:10px;border-bottom-color:transparent}
+.vs-r.past{opacity:.55}
+.vs-d{font-weight:700;display:grid}.vs-d em{font-style:normal;font-size:12px;color:#4C5A2A;background:#D8E2B4;border-radius:100px;padding:1px 8px;justify-self:start;margin-top:2px}
+.vs-a{font-weight:600}
+.vs-e{display:grid;grid-template-columns:150px minmax(0,1.6fr) 120px minmax(0,1fr);gap:8px;padding-block:6px}
+.vs-e input{min-height:44px;border:1.5px solid #E2D8D1;border-radius:10px;padding:6px 10px;font-size:15px;background:#fff;width:100%}
+.th-vuc .qz-b.sel{background:#F2F5E8;border-color:#556535;box-shadow:inset 0 0 0 1.5px #556535}
+.th-vuc .qz-b:hover:not([disabled]){border-color:#556535}
+.vk-keep{margin-top:4px}
+@media (max-width:980px){.kpis{grid-template-columns:repeat(3,minmax(0,1fr))}.mine-g,.dash2{grid-template-columns:1fr}.ct-g{grid-template-columns:1fr}.ct-prev{max-width:260px}}
+@media (max-width:720px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.kpi b{font-size:23px}.np2{grid-template-columns:1fr}.bs{grid-template-columns:1fr}.ce-row{grid-template-columns:minmax(0,1fr) 44px}.ce-row textarea{grid-column:1}.ce-row .ib{grid-row:1;grid-column:2}
+.vs-h{display:none}.vs-r{grid-template-columns:1fr;gap:2px}.vs-e{grid-template-columns:1fr 1fr}.vs-e input[name=t],.vs-e input[name=b]{grid-column:1/-1}
+.mrow{grid-template-columns:minmax(0,1fr) 70px 40px}.hb{grid-template-columns:minmax(0,1fr) 80px 32px}.mass{top:64px}.jl{grid-template-columns:64px minmax(0,1fr)}.vbars{gap:5px}.vb small{font-size:10.5px}}
+
+.prow>div.prow-a{display:flex;flex:none;align-items:center;gap:8px;min-width:0}
+.tform label.ck0{display:flex;align-items:center;gap:10px;font-weight:600}
+.tform label.tf-add{display:inline-flex;align-items:center;gap:6px;color:var(--orange-ink);justify-self:start}
+@media (max-width:720px){.kpis>:last-child{grid-column:1/-1}.prow>div.prow-a{width:100%;justify-content:space-between}}
 </style>
 </head>
 <body>
@@ -1523,6 +1684,193 @@ document.addEventListener('pointermove',e=>{if(!bd)return;const d=Math.round((e.
 document.addEventListener('pointerup',e=>{if(!bd)return;const{b,rs,d}=bd;bd=null;if(!d){if(!barMoved)openTask(b.dataset.bar);return}const x=pById(pv.id),t=x.tasks.find(k=>k.id==b.dataset.bar);if(rs){const ne=addD(t.e,d);t.e=ne<t.s?t.s:ne}else{t.s=addD(t.s,d);t.e=addD(t.e,d)}save();pDraw();setTimeout(()=>barMoved=false,0)});
 document.addEventListener('keydown',e=>{const el=e.target;if((e.key==='Enter'||e.key===' ')&&el.matches&&el.matches('[data-tinfo]')){e.preventDefault();openTeacher(el.dataset.tinfo)}if((e.key==='ArrowRight'||e.key==='ArrowLeft')&&el.matches&&el.matches('[role=tab]')){const l=[...el.parentElement.querySelectorAll('[role=tab]')],n=l[(l.indexOf(el)+(e.key==='ArrowRight'?1:-1)+l.length)%l.length];n.focus();n.click()}});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){$('#menu').hidden=true;closeTask()}if(e.key==='Tab'&&$('#ov')){const f=$$('button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled])',$('#ov'));const a=f[0],z=f[f.length-1];if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}}});
+
+/* ===================== Улучшения внутренней части (кабинет, предметы, админка, трекер, военка) ===================== */
+const ST=(k,d)=>store.get(k,d),saveK=k=>store.set(k,S[k]);
+const hsh=t=>{let h=7;for(const c of String(t))h=(h*31+c.charCodeAt(0))|0;return Math.abs(h)};
+const shuf=a=>{const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b};
+const I_CAL=SVG('<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/>'),I_CLIP=SVG('<path d="M20 11.5l-8.2 8.2a5 5 0 01-7.1-7.1l8.6-8.6a3.4 3.4 0 014.8 4.8l-8.6 8.6a1.7 1.7 0 01-2.4-2.4l7.9-7.9"/>'),I_BELL=SVG('<path d="M6 16V11a6 6 0 0112 0v5l1.5 2h-15z"/><path d="M10 20a2 2 0 004 0"/>');
+S.read=ST('read',{});S.quiz=ST('quiz',{});S.dl=ST('dl',{});S.me=ST('me',{sem:5});S.views=ST('views',{});S.cEdit=ST('cEdit',{});S.vucS=ST('vucS',null);
+const noDot=t=>String(t||'').replace(/[.\s]+$/,'');
+const decTxt=p=>{const s=byId(p.sid);return `${p.status==='ok'?'Принял':'Отклонил'} правку «${propTitle(p)}» (${s.name}) от ${p.by}${p.status==='ok'?`, +${rub(p.amount)}`:`: ${noDot(p.reason)}`}`};
+const tgTxt=p=>{const s=byId(p.sid);return p.status==='ok'?`Правку «${propTitle(p)}» по предмету «${s.name}» приняли. +${rub(p.amount)} на счёт`:`Правку «${propTitle(p)}» по предмету «${s.name}» отклонили. Причина: ${noDot(p.reason)}.`};
+const SEED_DONE=S.props.filter(p=>p.status!=='pending');
+S.tg=ST('tg',null)||{on:true,msgs:SEED_DONE.filter(p=>p.by===ME).map(p=>({t:tgTxt(p),at:addD(p.at,1)})).sort((a,b)=>a.at<b.at?-1:1)};
+S.jlog=ST('jlog',null)||[{at:addD(T0,-30),tm:'18:40',t:'Отменил штраф @student «Оскорбления и личные данные в отзывах»: номер оказался собственным',ex:1},...SEED_DONE.map((p,i)=>({at:addD(p.at,1),tm:['12:05','21:17','09:52','16:30'][i%4],t:decTxt(p),ex:1}))].sort((a,b)=>a.at<b.at?-1:1);
+const jlog=t=>{const d=new Date();S.jlog.push({at:T0,tm:String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0'),t});saveK('jlog')};
+const tgPush=t=>{if(!S.tg.on)return;S.tg.msgs.push({t,at:T0});saveK('tg')};
+const bonusOf=p=>(p.bonus||[]).reduce((a,b)=>a+b.a,0);
+
+/* --- Контент, отредактированный админом, поверх исходных данных --- */
+const ORIG={};SUBJECTS.forEach(s=>ORIG[s.id]={about:s.about,topics:(s.topics||[]).map(x=>[...x]),tasks:[...(s.tasks||[])]});
+function applyCEdit(id){const ids=id?[id]:Object.keys(S.cEdit);ids.forEach(k=>{const s=byId(k),e=S.cEdit[k]||ORIG[k];if(!s||!e)return;s.about=e.about;s.topics=e.topics.map(x=>[...x]);s.tasks=[...e.tasks]})}
+applyCEdit();
+
+/* ===== Предметы: прогресс ===== */
+function progOf(s){if(!s||!s.full)return null;const ts=topicsOf(s),r=S.read[s.id]||[],c=S.course[s.id]||[],q=S.quiz[s.id],nt=s.topics.length;
+ const read=[ts.filter((x,i)=>r[i]).length,ts.length],course=[s.topics.filter((x,i)=>c[i]).length,nt],quiz=q?[q.best,q.n]:[0,ts.filter((x,i)=>(noteText(s,i)||'').length>12).length];
+ const f=v=>v[1]?v[0]/v[1]:0;return{read,course,quiz,p:Math.round((f(read)+f(course)+f(quiz))/3*100)}}
+const progCard=s=>{const g=progOf(s);if(!g)return '';const row=(l,v,tab,need)=>`<div class="pg-r"><div class="top"><span>${l}</span><b>${v[0]} из ${v[1]}</b></div><div class="w-b"><i style="width:${v[1]?v[0]/v[1]*100:0}%"></i></div>${need&&!has(need)?`<span class="small muted">Откроется по тарифу от ${rub(D.access[need])}</span>`:`<button class="link" data-tabgo="${tab}">Открыть</button>`}</div>`;
+ return `<div class="card pad pg"><div class="pg-h"><b>Готовность к экзамену</b><span class="pg-n">${g.p}%</span></div><div class="prog"><i style="width:${g.p}%"></i></div>${row('Прочитано тем',g.read,'notes','notes')}${row('Пройдено этапов курса',g.course,'course','course')}${row('Тренажёр, лучший результат',g.quiz,'trainer','trainer')}</div>`};
+function refreshSide(){if(!curS)return;const c=$('.side .pg');if(c)c.outerHTML=progCard(curS);const d=$('.side .dlc');if(d)d.outerHTML=dlCard(curS)}
+
+/* ===== Предметы: дедлайны ===== */
+const SES_Z='2026-12-21',SES_E='2027-01-11';
+function dlSeed(s){if(!s.full||!s.sems||!s.sems.includes(+S.me.sem))return [];const h=hsh(s.id),o=[];if(s.control!=='Зачёт')o.push({t:'Контрольная',d:addD(T0,6+h%20),ex:1});o.push({t:s.control||'Зачёт',d:s.control==='Экзамен'?addD(SES_E,h%14):addD(SES_Z,h%9),ex:1});return o}
+const dlOf=s=>[...dlSeed(s),...(S.dl[s.id]||[]).map((x,k)=>({...x,own:1,k}))].sort((a,b)=>a.d<b.d?-1:1);
+const dlWhen=d=>{const n=dDiff(T0,d);return n<0?'прошло':n===0?'сегодня':n===1?'завтра':`через ${plural(n,'день','дня','дней')}`};
+const dlCard=s=>{const a=dlOf(s);return `<div class="card pad dlc"><div class="pg-h"><b>Дедлайны</b>${a.length?`<button class="link" data-ics="${s.id}">${I_CAL} Всё в календарь</button>`:''}</div>${a.length?a.map((x,i)=>`<div class="dl-r ${x.d<T0?'past':''}"><span><b>${esc(x.t)}</b><small>${fmtD(x.d)}, ${dlWhen(x.d)}${x.ex?' · пример':''}</small></span><span class="dl-a"><button class="ib" data-ics1="${s.id}|${i}" aria-label="Добавить «${esc(x.t)}» в календарь">${I_CAL}</button>${x.own?`<button class="ib" data-dldel="${s.id}|${x.k}" aria-label="Удалить «${esc(x.t)}»">${I.x}</button>`:''}</span></div>`).join(''):'<p class="small muted">Дат пока нет.</p>'}<form class="dl-f" data-dladd="${s.id}" novalidate><input type="text" name="t" placeholder="Что сдаём" maxlength="40" aria-label="Что сдаём"><input type="date" name="d" aria-label="Дата" min="${T0}"><button class="btn btn-oo btn-sm">Добавить дату</button></form></div>`};
+function icsDownload(items,name){const d=x=>x.replace(/-/g,''),e=t=>String(t).replace(/[\\,;]/g,m=>'\\'+m),L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//latisha.ru//RU','CALSCALE:GREGORIAN'];
+ items.forEach((x,i)=>L.push('BEGIN:VEVENT',`UID:${d(x.d)}-${i}-${hsh(x.t+(x.s||''))}@latisha.ru`,`DTSTAMP:${d(T0)}T090000Z`,`DTSTART;VALUE=DATE:${d(x.d)}`,`DTEND;VALUE=DATE:${d(addD(x.d,1))}`,`SUMMARY:${e((x.s?x.s+': ':'')+x.t)}`,'BEGIN:VALARM','TRIGGER:-P1D','ACTION:DISPLAY',`DESCRIPTION:${e('Завтра: '+x.t)}`,'END:VALARM','END:VEVENT'));
+ L.push('END:VCALENDAR');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([L.join('\r\n')],{type:'text/calendar'}));a.download=name+'.ics';document.body.append(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500);goal('ics_download');toast(plural(items.length,'дата','даты','дат')+' в файле календаря: открой его, и они появятся в календаре')}
+
+/* ===== Мой семестр на главной ===== */
+const mySem=()=>SUBJECTS.filter(s=>s.sems&&s.sems.includes(+S.me.sem));
+let mineAll=false;
+function homeMine(){const all=mySem(),fv=s=>S.fav.includes(s.id)?2:0,pp=s=>(progOf(s)||{p:0}).p,list=[...all].sort((a,b)=>(fv(b)+(pp(b)>0))-(fv(a)+(pp(a)>0))||(a.req==='v')-(b.req==='v')),shown=mineAll?list:list.slice(0,7),dls=list.flatMap(s=>dlOf(s).filter(x=>x.d>=T0).map(x=>({...x,s:s.name,sid:s.id}))).sort((a,b)=>a.d<b.d?-1:1),avg=list.length?Math.round(list.reduce((a,s)=>a+pp(s),0)/list.length):0;
+ return `<section class="sec" id="mine"><div class="sec-head"><h2 class="sec-t">Мой семестр</h2><label class="sem-pick"><span class="small muted">Семестр</span><select class="f" id="mySem">${[1,2,3,4,5,6,7,8].map(n=>`<option value="${n}" ${n==S.me.sem?'selected':''}>${n}-й, ${Math.ceil(n/2)} курс</option>`).join('')}</select></label></div><div class="mine-g"><div class="card pad"><div class="pg-h"><h3>${plural(list.length,'предмет','предмета','предметов')}</h3><span class="small muted">Готовность в среднем ${avg}%</span></div><p class="small muted" style="margin:-2px 0 6px">Сначала избранные и начатые. ★ ставится кнопкой «В мои предметы» на странице предмета.</p>${shown.map(s=>{const g=progOf(s);return `<a class="mrow" href="#/subject/${s.id}"><span class="mn">${esc(s.name)}${S.fav.includes(s.id)?' <span class="star" title="В избранном">★</span>':''}</span><span class="mbar"><i style="width:${g?g.p:0}%"></i></span><b>${g?g.p:0}%</b></a>`}).join('')||'<p class="muted small">В этом семестре предметов нет.</p>'}${list.length>7?`<button class="link" data-mineall="1" aria-expanded="${mineAll}">${mineAll?'Свернуть':`Показать все ${list.length}`}</button>`:''}</div><div class="card pad"><h3>Ближайшие дедлайны</h3>${dls.length?dls.slice(0,6).map(x=>`<a class="dl" href="#/subject/${x.sid}"><span><b>${esc(x.t)}</b><small>${esc(x.s)}${x.ex?' · пример':''}</small></span><span class="dr">${fmtD(x.d)}, ${dlWhen(x.d)}</span></a>`).join('')+`<button class="btn btn-oo btn-sm" data-icsall="1" style="margin-top:12px">${I_CAL} Все дедлайны в календарь</button>`:'<p class="muted small">Дедлайнов нет.</p>'}</div></div></section>`}
+
+/* ===== Поиск по тексту конспектов ===== */
+function noteHits(){const rows=$('#rows');if(!rows)return;let box=$('#nHits');if(!box){box=document.createElement('section');box.id='nHits';box.className='sec';rows.after(box)}const q=norm(cat.q.trim());if(q.length<3){box.innerHTML='';return}
+ const hits=[];SUBJECTS.forEach(s=>topicsOf(s).forEach((x,i)=>{const tx=noteText(s,i)||'',inT=norm(x[0]).includes(q);if(inT||norm(tx).includes(q))hits.push({s,i,title:x[0],tx,inT})}));hits.sort((a,b)=>b.inT-a.inT);
+ const mark=t=>{const k=norm(t).indexOf(q);if(k<0)return esc(t.length>150?t.slice(0,150)+'…':t);const a=Math.max(0,k-60),z=Math.min(t.length,k+q.length+80);return (a?'…':'')+esc(t.slice(a,k))+'<mark>'+esc(t.slice(k,k+q.length))+'</mark>'+esc(t.slice(k+q.length,z))+(z<t.length?'…':'')};
+ box.innerHTML=hits.length?`<div class="sec-head"><h2 class="sec-t">Найдено в конспектах</h2><span class="muted small">${plural(hits.length,'совпадение','совпадения','совпадений')}</span></div><div class="card pad nh">${hits.slice(0,12).map(h=>`<a class="nh-r" href="#/subject/${h.s.id}?tab=notes&topic=${h.i}"><b>${mark(h.title)}</b><small class="muted">${esc(h.s.name)}</small>${has('notes')?`<span class="small">${mark(h.tx)}</span>`:''}</a>`).join('')}${hits.length>12?`<p class="small muted">Показаны первые 12. Уточни запрос.</p>`:''}${has('notes')?'':`<p class="small muted">Текст конспектов откроется по тарифу от ${rub(D.access.notes)}. Сейчас видны только названия тем.</p>`}</div>`:''}
+
+/* ===== Тренажёр: реши, проверь, разбор ===== */
+const QZ={};
+function qzBuild(id,qs){return QZ[id]={qs,i:0,pick:null,checked:false,ok:0,wrong:[]}}
+function qzHtml(id){const z=QZ[id];if(!z)return '';const n=z.qs.length;
+ if(z.i>=n)return `<div class="qz" data-qz="${id}"><div class="qz-res"><span class="qz-big">${z.ok} из ${n}</span><p class="muted">${z.ok===n?'Без ошибок. Можно идти сдавать.':z.ok>=n*0.7?'Хорошо. Повтори ошибки ниже и пройди ещё раз.':'Стоит перечитать конспект и пройти ещё раз.'}</p>${z.wrong.length?`<div class="qz-wr"><b>Где ошибка</b>${z.wrong.map(w=>{const q=z.qs[w];return `<div class="li"><span class="small muted">${esc(q.q)}</span><br>Правильно: <b>${esc(q.opts[q.a])}</b>${q.link?` <a class="link" href="${q.link}">повторить</a>`:''}</div>`}).join('')}</div>`:''}<button class="btn btn-o btn-sm" data-qzagain="1">Пройти ещё раз</button></div></div>`;
+ const q=z.qs[z.i],right=z.pick===q.a;return `<div class="qz" data-qz="${id}"><div class="qz-top"><span class="small muted">Вопрос ${z.i+1} из ${n}</span><span class="small muted">Верно: ${z.ok}</span></div><div class="prog qz-p"><i style="width:${z.i/n*100}%"></i></div><p class="qz-q">${esc(q.q)}</p><div class="qz-o" role="radiogroup" aria-label="Варианты ответа">${q.opts.map((o,k)=>{const c=z.checked?(k===q.a?'ok':k===z.pick?'bad':''):k===z.pick?'sel':'';return `<button type="button" class="qz-b ${c}" role="radio" aria-checked="${k===z.pick}" data-qzpick="${k}" ${z.checked?'disabled':''}>${esc(o)}</button>`}).join('')}</div>${z.checked?`<div class="qz-why ${right?'ok':'bad'}" role="status"><b>${right?'Верно':'Неверно'}</b>${q.why?`<p>${esc(q.why)}</p>`:''}${q.link?`<a class="link" href="${q.link}">${q.linkT||'Открыть в конспекте'}</a>`:''}</div><button type="button" class="btn btn-o btn-sm" data-qznext="1">${z.i+1<n?'Дальше':'Посмотреть результат'}</button>`:`<button type="button" class="btn btn-o btn-sm" data-qzcheck="1" ${z.pick==null?'disabled':''}>Проверить</button>`}</div>`}
+function subjQs(s){const ts=topicsOf(s).map((x,i)=>({t:x[0],d:noteText(s,i),i})).filter(x=>x.d&&x.d.length>12),pool=ts.map(x=>x.t),oth=shuf(SUBJECTS.filter(o=>o.id!==s.id&&o.full&&kindOf(o)===kindOf(s)).flatMap(o=>(o.topics||[]).map(x=>x[0])));
+ return shuf(ts).map(x=>{let w=pool.filter(t=>t!==x.t);if(w.length<3)w=w.concat(oth.filter(t=>t!==x.t&&!w.includes(t)).slice(0,3-w.length));const opts=shuf([x.t,...shuf(w).slice(0,3)]);return{q:`О какой теме это: «${x.d}»`,opts,a:opts.indexOf(x.t),why:`Это тема «${x.t}».`,link:has('notes')?`#/subject/${s.id}?tab=notes&topic=${x.i}`:'',linkT:'Повторить в конспекте'}})}
+function trainerHtml(s){const id='s_'+s.id;if(!QZ[id]){const z=qzBuild(id,subjQs(s));z.rebuild=()=>subjQs(s);z.done=z=>{const q=S.quiz[s.id]||{best:0};q.n=z.qs.length;q.last=z.ok;q.best=Math.max(q.best||0,z.ok);q.at=T0;S.quiz[s.id]=q;saveK('quiz');refreshSide()}}const q=S.quiz[s.id];
+ return `<section class="card pad"><div class="hh between"><h2>Тренажёр</h2>${spr('lat_sit',LN,'corner')}</div><p class="muted small">Выбери ответ, нажми «Проверить» и посмотри разбор.${q?` Лучший результат: ${q.best} из ${q.n}, последний: ${q.last} из ${q.n}.`:''}</p>${qzHtml(id)}</section>`}
+
+/* --- Обёртки функций предмета --- */
+const _tabHtml=tabHtml;tabHtml=function(s,t){if(t==='trainer'&&s.full&&has('trainer'))return trainerHtml(s);return _tabHtml(s,t)};
+const _tabSet=tabSet;tabSet=function(t){_tabSet(t);if(t==='notes'&&curS&&has('notes'))enhanceNotes(curS)};
+function enhanceNotes(s){const r=S.read[s.id]||[];$$('#tabC details.doc').forEach((d,i)=>{const f=$('.doc-f',d);if(!f||$('.rd',d))return;const l=document.createElement('label');l.className='rd';l.innerHTML=`<input type="checkbox" data-read="${i}" ${r[i]?'checked':''}><span>Прочитал</span>`;f.prepend(l);d.classList.toggle('done',!!r[i])})}
+const _RS=R.subject;R.subject=(p,id)=>{const v=_RS(p,id),s=byId(id);if(!s||!S.auth||!v.html.includes('<aside class="side">'))return v;S.views[id]=(S.views[id]||0)+1;saveK('views');
+ v.html=v.html.replace('<aside class="side">','<aside class="side">'+progCard(s)+dlCard(s));const af=v.after;v.after=()=>{af&&af();if(p.topic!=null&&curT==='notes'){const d=$$('#tabC details.doc')[+p.topic];if(d){d.open=true;d.classList.add('hl');setTimeout(()=>d.scrollIntoView({block:'center'}),60)}}};return v};
+const _catDraw=catDraw;catDraw=function(){_catDraw();noteHits()};
+const _RH=R.home;R.home=(...a)=>{const v=_RH(...a);if(!S.auth||!v.html)return v;const k=v.html.indexOf('<section class="sec"><div class="sec-head"><h2 class="sec-t">Как это работает</h2>');if(k>=0)v.html=v.html.slice(0,k)+homeMine()+v.html.slice(k);return v};
+
+/* ===== Правки: история с этапами и уведомления ===== */
+function myPropsHtml(n){const mine=S.props.filter(p=>p.by===ME).slice().reverse().slice(0,n||99);return mine.length?mine.map(p=>{const s=byId(p.sid),fin=p.status!=='pending',ok=p.status==='ok',bon=bonusOf(p);return `<div class="ph-r"><div class="ph-h"><b>${esc(s.name)}: ${esc(propTitle(p))}</b><span class="small muted">${TYPES[p.type]}, ${fmtD(p.at)}</span></div><ol class="tl" aria-label="Этапы правки"><li class="on">Отправлено</li><li class="on ${fin?'':'cur'}">На проверке</li><li class="${fin?(ok?'on ok':'on no'):''}">${fin?(ok?`Принято, +${rub(p.amount)}`:'Отклонено'):'Решение'}</li>${bon?`<li class="on ok">Доначислено +${rub(bon)}</li>`:''}</ol>${p.reason?`<p class="small">Причина: ${esc(noDot(p.reason))}.</p>`:''}</div>`}).join(''):'<p class="muted">Правок пока нет. Открой конспект и нажми «Предложить правку».</p>'}
+const tgBox=()=>`<section class="card pad tgb"><div class="pg-h"><h2>Уведомления в Telegram</h2><label class="sw"><input type="checkbox" id="tgOn" ${S.tg.on?'checked':''}><span>Присылать в @${D.bot}</span></label></div><div class="tgchat" aria-live="polite">${S.tg.msgs.slice(-4).map(m=>`<div class="tgm"><b>@${D.bot}</b><p>${esc(m.t)}</p><small>${fmtD(m.at)}</small></div>`).join('')||'<p class="muted small">Сообщений пока нет.</p>'}</div><p class="small muted">${EX} Бот пишет, когда правку приняли, отклонили или доначислили рубли.</p></section>`;
+const _RAcc=R.account;R.account=(...a)=>{const v=_RAcc(...a);if(!S.auth||!v.html.includes('Кабинет'))return v;v.html=v.html.replace(/<\/div>$/,`<section class="sec"><div class="sec-head"><h2 class="sec-t">Мои правки</h2><a class="more" href="#/contrib">Весь вклад</a></div><div class="card pad">${myPropsHtml(4)}</div></section><section class="sec">${tgBox()}</section></div>`);return v};
+const _RC=R.contrib;R.contrib=(...a)=>{const v=_RC(...a),m='<section class="sec"><div class="sec-head"><h2 class="sec-t">Мои правки</h2></div>',k=v.html.indexOf(m),z=v.html.indexOf('<section class="sec"><div class="sec-head"><h2 class="sec-t">Сколько начисляем');if(k>=0&&z>k)v.html=v.html.slice(0,k)+`${m}<div class="card pad">${myPropsHtml()}</div></section><section class="sec">${tgBox()}</section>`+v.html.slice(z);return v};
+const _decide=decide;decide=function(id,ok,card){const p=S.props.find(x=>x.id==id),was=p&&p.status;_decide(id,ok,card);if(!p||p.status===was)return;jlog(decTxt(p));if(p.by===ME)tgPush(tgTxt(p))};
+
+/* ===== Админка: сводка, массовые действия, было/стало, доначисление, журнал, контент ===== */
+const XT=[['dash','Сводка'],['log','Журнал'],['content','Контент']];
+const xTabs=(t,q)=>adminTabs(XT.some(x=>x[0]===t)?'none':t,q).replace('aria-label="Разделы модерации">',`aria-label="Разделы модерации"><a class="tab" href="#/admin?tab=dash" ${t==='dash'?'aria-current="page"':''}>Сводка</a>`).replace('</nav>',`<a class="tab" href="#/admin?tab=log" ${t==='log'?'aria-current="page"':''}>Журнал</a><a class="tab" href="#/admin?tab=content" ${t==='content'?'aria-current="page"':''}>Контент</a></nav>`);
+const admHead=d=>`<div class="phead ph-row"><div><h1 tabindex="-1">Модерация</h1><p class="d">${d}</p></div>${spr('lat_read',LN,'head-cat')}</div>`;
+function decisionsHtml(){const done=S.props.filter(p=>p.status!=='pending').slice().reverse();if(!done.length)return '';return `<section class="sec"><div class="sec-head"><h2 class="sec-t">Решения</h2></div><div class="card pad">${done.map(p=>{const bon=bonusOf(p);return `<div class="prow" data-brow="${p.id}"><div><b>${esc(byId(p.sid).name)}: ${esc(propTitle(p))}</b><span class="muted small">${esc(p.by)}${p.reason?`. ${esc(noDot(p.reason))}`:''}${bon?`. Доначислено ${rub(bon)}`:''}</span></div><div class="prow-a">${statusTag(p)}<button class="btn btn-oo btn-sm" data-bonus="${p.id}" aria-expanded="false">Доначислить</button></div></div>`}).join('')}</div></section>`}
+const _RA=R.admin;R.admin=p=>{p=p||{};const t=p.tab;if(S.admin&&XT.some(x=>x[0]===t))return adminX(t);const v=_RA(p);if(!S.admin)return v;const q=S.props.filter(x=>x.status==='pending').length;
+ v.html=v.html.replace(/<nav class="tags atabs"[\s\S]*?<\/nav>/,xTabs(t==='fines'?'fines':'props',q));if(t!=='fines'){const k=v.html.indexOf('<section class="sec"><div class="sec-head"><h2 class="sec-t">Решения</h2>');v.html=(k>=0?v.html.slice(0,k):v.html.replace(/<\/div>$/,''))+decisionsHtml()+'</div>'}
+ const af=v.after;v.after=()=>{af&&af();if(t!=='fines')admEnhance()};return v};
+function admEnhance(){const cards=$$('article.adm[data-prop-id]');cards.forEach(c=>{const p=S.props.find(x=>x.id==c.dataset.propId);if(!p)return;const l=document.createElement('label');l.className='msel';l.innerHTML=`<input type="checkbox" data-msel="${p.id}"><span>Выбрать</span>`;$('.tags',c).prepend(l);
+  if(p.topic!=='new'){const s=byId(p.sid),old=noteText(s,p.topic),d=$('.diff',c),sw=document.createElement('div');sw.className='vsw';sw.setAttribute('role','group');sw.setAttribute('aria-label','Как показать изменения');sw.innerHTML=`<button type="button" class="tab" aria-pressed="true" data-vw="d">Изменения в тексте</button><button type="button" class="tab" aria-pressed="false" data-vw="s">Было и стало рядом</button>`;d.before(sw);const bs=document.createElement('div');bs.className='bs';bs.hidden=true;bs.innerHTML=`<div><span class="fl">Было</span><p>${esc(old)}</p></div><div><span class="fl">Стало</span><p>${esc(p.text)}</p></div>`;d.after(bs)}});
+ if(cards.length>1){const st=cards[0].parentElement,bar=document.createElement('div');bar.className='card pad mass';bar.innerHTML=`<label class="ck0"><input type="checkbox" id="mAll"><span>Выбрать все (${cards.length})</span></label><span class="small muted" id="mN" aria-live="polite">Ничего не выбрано</span><input type="text" id="mWhy" class="reason" placeholder="Общая причина отказа" aria-label="Причина отказа для выбранных правок"><button class="btn btn-oo btn-sm" id="mNo" disabled>Отклонить выбранные</button><button class="btn btn-o btn-sm" id="mOk" disabled>Принять выбранные</button>`;st.prepend(bar)}}
+function massSync(){const a=$$('[data-msel]'),n=a.filter(x=>x.checked).length,all=$('#mAll');if($('#mN'))$('#mN').textContent=n?`Выбрано: ${n}`:'Ничего не выбрано';if($('#mOk'))$('#mOk').disabled=$('#mNo').disabled=!n;if(all){all.checked=n===a.length;all.indeterminate=n>0&&n<a.length}}
+function massRun(ok){const ids=$$('[data-msel]').filter(x=>x.checked).map(x=>x.dataset.msel),why=($('#mWhy')||{}).value||'';if(!ok&&!why.trim()){toast('Напиши общую причину отказа: её увидят авторы');$('#mWhy').focus();return}const rr=rerender;rerender=()=>{};let n=0;try{ids.forEach(id=>{const c=$(`article.adm[data-prop-id="${id}"]`);if(!c)return;if(!ok)$('.reason',c).value=why.trim();const p=S.props.find(x=>x.id==id),was=p.status;decide(id,ok,c);if(p.status!==was)n++})}finally{rerender=rr}rerender();toast(ok?`Принято правок: ${n}`:`Отклонено правок: ${n}`)}
+const DEMO_VIEWS={fin:142,stat:118,micro:97,acc:85,mkt:73,omi:61,math:58,im:44};
+function dashHtml(){const pend=S.props.filter(p=>p.status==='pending').length,acc=S.props.filter(p=>p.status==='ok'),rej=S.props.filter(p=>p.status==='no').length,paid=acc.reduce((a,p)=>a+(p.amount||0),0)+S.props.reduce((a,p)=>a+bonusOf(p),0),fa=S.fines.filter(f=>f.status==='active').length,fap=S.fines.filter(f=>f.status==='appeal').length;
+ const reg=[3,5,4,8,6,9,12],rm=Math.max(...reg),views={...DEMO_VIEWS};Object.entries(S.views).forEach(([k,v])=>views[k]=(views[k]||0)+v);const top=Object.entries(views).filter(x=>byId(x[0])).sort((a,b)=>b[1]-a[1]).slice(0,6),tm=top.length?top[0][1]:1;
+ const kpi=(l,v,s,href)=>`<${href?`a href="${href}"`:'div'} class="card kpi"><span class="w">${l}</span><b>${v}</b><small class="muted">${s}</small></${href?'a':'div'}>`;
+ return `<div class="kpis">${kpi('Регистраций за 7 дней',reg.reduce((a,b)=>a+b,0),'пример, по данным бота')}${kpi('Правок ждут проверки',pend,pend?'открыть очередь':'очередь пуста','#/admin')}${kpi('Принято и отклонено',`${acc.length} / ${rej}`,'за всё время')}${kpi('Начислено рублей',rub(paid),'с доначислениями')}${kpi('Штрафы',fa+fap,`${fa} к оплате, ${fap} на обжаловании`,'#/admin?tab=fines')}</div>
+ <div class="g2 dash2"><section class="card pad"><div class="pg-h"><h2>Регистрации по дням</h2>${EX}</div><div class="vbars" role="img" aria-label="Регистрации за 7 дней: ${reg.join(', ')}">${reg.map((x,i)=>`<div class="vb"><span class="vb-n">${x}</span><i style="height:${x/rm*100}%"></i><small>${fmtD(addD(T0,i-6))}</small></div>`).join('')}</div></section><section class="card pad"><div class="pg-h"><h2>Популярные предметы</h2>${EX}</div>${top.map(([k,v])=>`<div class="hb"><span>${esc(byId(k).name)}</span><span class="hb-b"><i style="width:${v/tm*100}%"></i></span><b>${v}</b></div>`).join('')}<p class="small muted" style="margin-top:8px">Открытия карточек предмета. Твои открытия добавляются к примеру.</p></section></div>`}
+function logHtml(){const a=[...S.jlog].reverse();return `<section class="card pad"><div class="pg-h"><h2>Журнал действий</h2><input type="search" id="jlQ" class="f jlq" placeholder="Найти в журнале" aria-label="Найти в журнале"></div><div id="jlL">${a.map(x=>`<div class="jl"><span class="jl-t">${fmtD(x.at)}<br><small>${x.tm||''}</small></span><span><b>Администратор</b> ${esc(x.t)}${x.ex?' '+EX:''}</span></div>`).join('')||'<p class="muted">Записей пока нет.</p>'}</div></section>`}
+let ceS='fin',ceT=null;
+function contentHtml(){const s=byId(ceS)||SUBJECTS[0],tps=s.topics||[];ceT=ceT||TEACH[0].id;const t=T(ceT);
+ return `<div class="stack"><section class="card pad"><h2>Предмет</h2><label class="fl" for="ceSel">Что правим</label><select class="f" id="ceSel">${SUBJECTS.map(x=>`<option value="${x.id}" ${x.id===s.id?'selected':''}>${esc(x.name)}${S.cEdit[x.id]?' (изменён)':''}</option>`).join('')}</select><form id="ceF" class="tform ce" data-sid="${s.id}" novalidate><label>О чём предмет<textarea name="about" rows="3" maxlength="600">${esc(s.about||'')}</textarea></label><fieldset class="ce-tp"><legend class="fl">Темы конспекта</legend><div id="ceRows">${tps.map(ceRow).join('')}</div><button type="button" class="link" id="ceAdd">+ Добавить тему</button></fieldset><label>Задачи для контрольных и экзаменов, по одной в строке<textarea name="tasks" rows="4">${esc((s.tasks||[]).join('\n'))}</textarea></label><p class="small" id="ceE" style="color:#A81E1E" hidden></p><div class="dlg-b">${S.cEdit[s.id]?`<button type="button" class="link" id="ceReset" style="color:#A81E1E">Вернуть исходный текст</button>`:'<span></span>'}<button class="btn btn-o btn-sm">Сохранить предмет</button></div></form></section>
+ <section class="card pad"><h2>Преподаватель: тег и сложность</h2><label class="fl" for="ctSel">Кого правим</label><select class="f" id="ctSel">${allT().map(x=>`<option value="${x.id}" ${x.id===ceT?'selected':''}>${esc(x.name)}</option>`).join('')}</select><div class="ct-g"><form id="ctF" class="tform" data-id="${t.id}" novalidate><label>Плашка над карточкой<input type="text" name="tag" maxlength="24" value="${esc(t.tag||'')}" placeholder="Например, Босс маркетинга"></label><label class="ck0"><input type="checkbox" name="resp" ${t.resp?'checked':''}><span>Уважаемый: золотая карточка за доброту, понимание и помощь</span></label><label>Сложность<select class="f" name="lv"><option value="0">Не указана</option>${LEVELS.map(l=>`<option value="${l.id}" ${+t.lv===l.id?'selected':''}>${l.name}</option>`).join('')}</select></label><div class="dlg-b"><span></span><button class="btn btn-o btn-sm">Сохранить преподавателя</button></div></form><div class="ct-prev" aria-label="Предпросмотр карточки"><div class="deck tdeck in">${realCard(t)}</div></div></div></section></div>`}
+const ceRow=(x,i)=>`<div class="ce-row"><input type="text" name="tt" value="${esc(x[0])}" maxlength="80" aria-label="Название темы"><textarea name="tx" rows="2" maxlength="900" aria-label="Текст темы">${esc(x[1])}</textarea><button type="button" class="ib" data-cerm="1" aria-label="Удалить тему">${I.x}</button></div>`;
+function adminX(t){const q=S.props.filter(x=>x.status==='pending').length,d={dash:'Главные цифры сервиса за неделю.',log:'Кто, что и когда принял, начислил или оштрафовал.',content:'Меняй темы, тексты и задачи предметов, теги и сложность преподавателей без кода.'}[t];
+ return{title:`Модерация: ${D.brand}`,after:()=>{if(t==='content')ctPrev()},html:`<div class="wrap">${admHead(d)}${xTabs(t,q)}${t==='dash'?dashHtml():t==='log'?logHtml():contentHtml()}</div>`}}
+function ctPrev(){}
+
+/* ===== Трекер: шаблоны, напоминания, файлы, «только мои» ===== */
+const PTPL={group:['Групповой проект',null],blank:['Пустой проект',[]],course:['Курсовая работа',[['Выбрать тему и согласовать',0,7],['Собрать литературу',5,14],['Написать введение и план',12,18],['Написать главы',18,40],['Оформить по ГОСТ',38,45],['Сдать руководителю',45,47]]],case:['Кейс-чемпионат',[['Разобрать условие кейса',0,1],['Анализ рынка и конкурентов',1,3],['Сгенерировать решения',2,4],['Финансовая модель',3,5],['Собрать презентацию',4,6],['Прогон выступления',6,7]]],exam:['Подготовка к экзамену',[['Собрать билеты и конспекты',0,2],['Пройти первую половину тем',2,8],['Пройти вторую половину тем',8,14],['Тренажёр и пробный вариант',14,17],['Повторить ошибки',17,19]]]};
+const _RP=R.projects;R.projects=(...a)=>{const v=_RP(...a);v.html=v.html.replace('<form class="card newp" id="newP"><input type="text" name="n" aria-label="Название проекта" placeholder="Название нового проекта" maxlength="60"><button class="btn btn-o cta1">Создать проект</button></form>',`<form class="card newp np2" id="newP"><input type="text" name="n" aria-label="Название проекта" placeholder="Название нового проекта" maxlength="60"><select class="f" name="tpl" aria-label="Шаблон проекта">${Object.entries(PTPL).map(([k,x])=>`<option value="${k}">${x[0]}</option>`).join('')}</select><button class="btn btn-o cta1">Создать проект</button></form>`);return v};
+document.addEventListener('submit',e=>{const f=e.target;if(f.id!=='newP'||!f.tpl)return;e.preventDefault();e.stopPropagation();const k=f.tpl.value,tp=PTPL[k],n=f.n.value.trim()||(k!=='blank'&&k!=='group'?tp[0]:'');if(!n){f.n.focus();toast('Напиши название проекта');return}const x=addProject(n,'');if(!x){toast(`${TAR}: лимит проектов на этом тарифе исчерпан`);return}if(tp[1])x.tasks=tp[1].map(t=>mk(t[0],0,0,t[1],t[2]));save();toast(tp[1]&&tp[1].length?`Создан по шаблону «${tp[0]}»: ${plural(x.tasks.length,'задача','задачи','задач')}`:'Проект создан');location.hash='#/project/'+x.id},true);
+if(!store.get('remSeed',false)){const p1=pById('p1');if(p1){p1.tasks.filter(t=>t.c<3&&dDiff(T0,t.e)>=0&&dDiff(T0,t.e)<=3).forEach(t=>t.rem=true);save()}store.set('remSeed',true)}
+const fsz=b=>b>1048576?(b/1048576).toFixed(1).replace('.',',')+' МБ':Math.max(1,Math.round(b/1024))+' КБ';
+function taskExtra(x,t,ro){const fs=t.files||[],who=(x.mem[t.a]||x.mem[0])[0];return `<label class="ck"><input type="checkbox" data-trem="${t.id}" ${t.rem?'checked':''} ${ro?'disabled':''}><span>${I_BELL} Напомнить ${who===ME?'мне':esc(who)} в Telegram за день до срока</span></label><div class="tfiles"><span class="fl">Файлы</span>${fs.length?[...fs].reverse().map(f=>`<div class="tf-r"><span>${I_CLIP}<b>${esc(f.name)}</b><span class="tag">версия ${f.v}</span></span><small class="muted">${esc(f.by)}, ${fmtD(f.at)}${f.size?', '+fsz(f.size):''}</small></div>`).join(''):'<p class="small muted">Файлов пока нет.</p>'}${ro?'':`<label class="btn btn-oo btn-sm tf-add">${I_CLIP} Прикрепить файл<input type="file" data-tfile="${t.id}" class="vh"></label><p class="small muted">Файл с тем же именем сохранится как новая версия, старые останутся в истории.</p>`}</div>`}
+const _openTask=openTask;openTask=function(id){_openTask(id);const x=pById(pv.id),t=x&&x.tasks.find(k=>k.id==id),f=$('#tEdit');if(!t||!f)return;const ro=x.mem[pv.as][1]==='viewer',box=document.createElement('div');box.className='tx';box.innerHTML=taskExtra(x,t,ro);const b=$('.dlg-b',f);b?b.before(box):f.append(box)};
+const _pDraw=pDraw;pDraw=function(){_pDraw();const x=pById(pv.id);if(!x||pv.view!=='board')return;const me=meIdx(x),box=$('#pv');
+ $$('.tk',box).forEach(k=>{const t=x.tasks.find(z=>z.id==k.dataset.t);if(!t)return;if(pv.mine&&t.a!==me)k.hidden=true;const b=[];if(t.files&&t.files.length)b.push(`<span class="tkb" title="Файлов: ${t.files.length}">${I_CLIP}${t.files.length}</span>`);if(t.rem)b.push(`<span class="tkb" title="Напоминание в Telegram">${I_BELL}</span>`);if(b.length){const m=$('.m1 span',k);if(m)m.insertAdjacentHTML('beforeend',' '+b.join(''))}});
+ if(pv.mine)$$('.col',box).forEach(c=>{const n=$('h3 span',c);if(n)n.textContent=$$('.tk:not([hidden])',c).length});
+ const soon=x.tasks.filter(t=>t.rem&&t.c<3&&dDiff(T0,t.e)<=3&&(!pv.mine||t.a===me)).sort((a,b)=>a.e<b.e?-1:1);
+ box.insertAdjacentHTML('afterbegin',`<div class="bdbar"><button class="tab" data-mine aria-pressed="${!!pv.mine}">Только мои задачи</button><span class="small muted">${pv.mine?`Показаны задачи, где исполнитель ${esc(x.mem[me][0])}`:`${plural(x.tasks.length,'задача','задачи','задач')} у ${plural(x.mem.length,'участника','участников','участников')}`}</span></div>${soon.length?`<div class="card pad remb"><b>${I_BELL} Напоминания в Telegram</b>${soon.map(t=>{const n=dDiff(T0,t.e);return `<div class="small"><b>«${esc(t.t)}»</b>, ${esc((x.mem[t.a]||x.mem[0])[0])}: срок ${fmtD(t.e)}, ${n<0?'просрочено':dlWhen(t.e)}. ${n<=1?`Бот @${D.bot} напомнит сегодня в 10:00.`:`Бот @${D.bot} напомнит ${fmtD(addD(t.e,-1))} в 10:00.`}</div>`}).join('')}</div>`:''}`)};
+
+/* ===== Военка: чек-лист до пятницы, расписание, тренажёр ===== */
+const nextFri=()=>{const d=parseD(T0);d.setDate(d.getDate()+(5-d.getDay()+7)%7);return iso(d)};
+{const v=store.get('vucChk',null);if(v&&v.fri===nextFri())vucChk=v.c||{}}
+const _vcd=vucChkDraw;vucChkDraw=function(){_vcd();store.set('vucChk',{fri:nextFri(),c:vucChk})};
+const VUC_S0=[['2026-11-13','Общевоинские уставы: обязанности дежурного по роте','ауд. 215','Тетрадь, устав, форма'],['2026-11-20','Общая тактика: оборона, наступление, встречный бой','ауд. 215','Тетрадь, схемы подразделений'],['2026-11-27','РХБ защита: норматив надевания ОЗК','ауд. 110','Форма, головной убор'],['2026-12-04','Строевая подготовка: строевая стойка, приветствие в движении','Плац','Форма, бушлат по погоде'],['2026-12-11','Общая тактика: манёвры, работа с картой','ауд. 215','Тетрадь, цветные карандаши'],['2026-12-18','Итоговое занятие, сдача рефератов','ауд. 215','Реферат по ГОСТ 7.32, тетрадь']];
+let vsEdit=false;const vsRows=()=>S.vucS||VUC_S0;
+function vucSchedHtml(){const r=vsRows(),nf=nextFri();return `<section class="sec" id="vkSch"><div class="sec-head"><h2 class="sec-t">Расписание пятниц</h2>${S.admin?`<button class="btn btn-oo btn-sm" data-vsed="1">${vsEdit?'Отменить':'Изменить'}</button>`:''}</div><div class="card pad vsch">${vsEdit?`<form id="vsF" novalidate>${r.map((x,i)=>`<div class="vs-e"><input type="date" name="d" value="${x[0]}" aria-label="Дата"><input type="text" name="t" value="${esc(x[1])}" aria-label="Тема"><input type="text" name="a" value="${esc(x[2])}" aria-label="Аудитория"><input type="text" name="b" value="${esc(x[3])}" aria-label="Что принести"></div>`).join('')}<div class="dlg-b"><button type="button" class="link" id="vsReset">Вернуть пример</button><button class="btn btn-o btn-sm">Сохранить расписание</button></div></form>`:`<div class="vs-h" aria-hidden="true"><span>Дата</span><span>Тема</span><span>Где</span><span>Что принести</span></div>${r.map(x=>`<div class="vs-r ${x[0]===nf?'nx':''} ${x[0]<T0?'past':''}"><span class="vs-d">${fmtD(x[0])}${x[0]===nf?'<em>ближайшая</em>':''}</span><span>${esc(x[1])}</span><span class="vs-a">${esc(x[2])}</span><span class="small">${esc(x[3])}</span></div>`).join('')}<p class="small muted" style="margin-top:8px">${EX} ${S.admin?'Расписание правит старшина: кнопка «Изменить».':'Ошибка в расписании? Напиши старшине.'}</p>`}</div></section>`}
+const VUC_QS=[['Сколько общевоинских уставов в ВС РФ?',['3','4','5','6'],1,'Устав внутренней службы, Дисциплинарный, Устав гарнизонной, комендантской и караульной служб, Строевой.'],['Что ответить, когда объявили благодарность?',['«Есть!»','«Служу России!»','«Так точно!»','«Благодарю!»'],1,'Ответ на благодарность: «Служу России!».'],['Что ответить на замечание?',['«Виноват, исправлюсь»','«Я не виноват»','«Есть!»','Промолчать'],0,'Только «Виноват, исправлюсь», без оправданий.'],['За сколько шагов до офицера отдают воинское приветствие?',['2–3','5–6','10','15'],1,'За 5–6 шагов, рука к головному убору, голова к начальнику.'],['Какую команду подаёт дежурный, когда входит преподаватель?',['«Вольно!»','«Внимание!»','«Взвод, встать! Смирно!»','«Здравия желаем!»'],2,'Затем дежурный делает доклад.'],['Сколько просветов на погонах у старших офицеров?',['Ни одного','Один','Два','Три'],2,'Один просвет у младших офицеров, два у старших.'],['Сколько звёзд у подполковника?',['Одна','Две','Три','Четыре'],1,'Две крупные звезды и два просвета.'],['Одна крупная звезда между двумя просветами. Какое звание?',['Майор','Лейтенант','Капитан','Полковник'],0,'Это майор.'],['Сколько звёзд у капитана?',['Две','Три','Четыре','Одна'],2,'Четыре маленькие звезды и один просвет.'],['Каким документом определён порядок вручения и хранения Боевого знамени?',['Строевым уставом','Указом Президента РФ № 1422','Приказом начальника ВУЦ','Законом «Об обороне»'],1,'Указ Президента РФ № 1422 «О Боевом знамени воинской части».'],['Сколько человек примерно во взводе?',['Около 10','Около 30','Около 100','Около 500'],1,'Отделение около 10, взвод около 30, рота около 100.'],['До какого времени взводный передаёт расход личного состава дежурному по ВУЦ?',['8:20','9:00','9:30','12:00'],2,'До 9:30, после согласования с преподавателем.']];
+const vucQs=()=>shuf(VUC_QS).map(x=>({q:x[0],opts:x[1],a:x[2],why:x[3]}));
+function vucQuizHtml(){if(!QZ.vuc){const z=qzBuild('vuc',vucQs());z.rebuild=vucQs;z.done=z=>{const b=store.get('vucBest',0);if(z.ok>b)store.set('vucBest',z.ok)}}const b=store.get('vucBest',0);return `<section class="sec" id="vkQz"><div class="sec-head"><h2 class="sec-t">Тренажёр по уставам и званиям</h2></div><div class="card pad"><p class="muted small">${VUC_QS.length} вопросов: уставы, доклады и погоны. Выбери ответ, нажми «Проверить» и прочитай разбор.${b?` Лучший результат: ${b} из ${VUC_QS.length}.`:''}</p>${qzHtml('vuc')}</div></section>`}
+const _RV=R.vuc;R.vuc=(...a)=>{const v=_RV(...a);v.html=v.html.replace('<section class="sec"><div class="sec-head"><h2 class="sec-t">Руководство</h2>',vucSchedHtml()+'<section class="sec"><div class="sec-head"><h2 class="sec-t">Руководство</h2>').replace('<section class="sec" id="vk-fri">',vucQuizHtml()+'<section class="sec" id="vk-fri">').replace('<p class="muted small" id="vkC"></p>',`<p class="muted small" id="vkC"></p><p class="small muted vk-keep">Галочки сохраняются до пятницы, ${fmtD(nextFri())}, потом список начнётся заново.</p>`);return v};
+
+/* ===== Общие обработчики ===== */
+let propN=0;
+document.addEventListener('submit',e=>{if(e.target.id==='pForm')propN=S.props.length},true);
+document.addEventListener('click',e=>{const q=s=>e.target.closest(s);let b;
+ if(b=q('[data-qzpick],[data-qzcheck],[data-qznext],[data-qzagain]')){const box=b.closest('[data-qz]'),id=box.dataset.qz,z=QZ[id];if(!z)return;let foc='[data-qzcheck]';
+  if('qzpick' in b.dataset)z.pick=+b.dataset.qzpick;
+  if('qzcheck' in b.dataset&&z.pick!=null){z.checked=true;if(z.pick===z.qs[z.i].a)z.ok++;else z.wrong.push(z.i);foc='[data-qznext]'}
+  if('qznext' in b.dataset){z.i++;z.pick=null;z.checked=false;foc='.qz-b';if(z.i>=z.qs.length){z.done&&z.done(z);foc='[data-qzagain]'}}
+  if('qzagain' in b.dataset){Object.assign(z,{qs:z.rebuild?z.rebuild():z.qs,i:0,pick:null,checked:false,ok:0,wrong:[]});foc='.qz-b'}
+  const keep='qzpick' in b.dataset?b.dataset.qzpick:null;box.outerHTML=qzHtml(id);const nb=$(`[data-qz="${id}"]`);if(nb){const el=keep!=null?$(`[data-qzpick="${keep}"]`,nb):$(foc,nb);el&&el.focus({preventScroll:true})}}
+ if(b=q('[data-ics]')){const s=byId(b.dataset.ics);icsDownload(dlOf(s).map(x=>({...x,s:s.name})),'latisha-'+s.id)}
+ if(b=q('[data-ics1]')){const[sid,i]=b.dataset.ics1.split('|'),s=byId(sid),x=dlOf(s)[+i];icsDownload([{...x,s:s.name}],'latisha-'+sid+'-'+x.d)}
+ if(q('[data-icsall]')){const a=mySem().flatMap(s=>dlOf(s).filter(x=>x.d>=T0).map(x=>({...x,s:s.name})));icsDownload(a,'latisha-semestr-'+S.me.sem)}
+ if(b=q('[data-dldel]')){const[sid,k]=b.dataset.dldel.split('|');(S.dl[sid]||[]).splice(+k,1);saveK('dl');refreshSide();toast('Дата удалена')}
+ if(b=q('[data-vw]')){const c=b.closest('.adm'),s=b.dataset.vw==='s';$$('[data-vw]',c).forEach(x=>x.setAttribute('aria-pressed',x===b));$('.diff',c).hidden=s;$('.bs',c).hidden=!s}
+ if(q('#mOk'))massRun(true);if(q('#mNo'))massRun(false);
+ if(b=q('[data-bonus]')){const id=b.dataset.bonus,row=b.closest('.prow'),open=row.nextElementSibling&&row.nextElementSibling.matches('.bon-f');$$('.bon-f').forEach(x=>x.remove());$$('[data-bonus]').forEach(x=>x.setAttribute('aria-expanded','false'));if(!open){row.insertAdjacentHTML('afterend',`<form class="bon-f" data-bonf="${id}" novalidate><div class="amts"><span class="fl">Доначислить</span>${[50,100,150,300].map(v=>`<button type="button" class="tab" data-bamt="${v}">${v} ₽</button>`).join('')}<input type="number" name="a" min="1" max="5000" step="10" value="50" aria-label="Сколько доначислить"></div><input type="text" name="c" maxlength="120" placeholder="За что: например, доработал правку" aria-label="За что доначисляем"><p class="small bon-e" style="color:#A81E1E" hidden></p><button class="btn btn-o btn-sm">Доначислить</button></form>`);b.setAttribute('aria-expanded','true');$('.bon-f input[name=a]').focus()}}
+ if(b=q('[data-bamt]'))b.closest('.bon-f').a.value=b.dataset.bamt;
+ if(q('#ceAdd')){$('#ceRows').insertAdjacentHTML('beforeend',ceRow(['',''],0));$('#ceRows .ce-row:last-child input').focus()}
+ if(b=q('[data-cerm]'))b.closest('.ce-row').remove();
+ if(q('#ceReset')){delete S.cEdit[ceS];saveK('cEdit');applyCEdit(ceS);jlog(`Вернул исходный текст предмета «${byId(ceS).name}»`);rerender();toast('Исходный текст возвращён')}
+ if(q('[data-mine]')){pv.mine=!pv.mine;pDraw()}
+ if(q('[data-mineall]')){mineAll=!mineAll;$('#mine').outerHTML=homeMine();$('[data-mineall]').focus()}
+ if(q('[data-vsed]')){vsEdit=!vsEdit;$('#vkSch').outerHTML=vucSchedHtml()}
+ if(q('#vsReset')){S.vucS=null;store.set('vucS',null);vsEdit=false;$('#vkSch').outerHTML=vucSchedHtml();toast('Вернули пример расписания')}
+ if(b=q('[data-fkeep],[data-fdrop]')){const f=S.fines.find(x=>x.id==(b.dataset.fkeep||b.dataset.fdrop));if(f&&(f.status==='active'||f.status==='cancelled'))jlog(`${f.status==='active'?'Оставил в силе':'Отменил'} штраф ${f.user} «${ftype(f.type)[1]}»`)}
+});
+document.addEventListener('change',e=>{const t=e.target;
+ if(t.dataset.read!==undefined&&curS){const r=S.read[curS.id]||(S.read[curS.id]=[]);r[+t.dataset.read]=t.checked;saveK('read');t.closest('details').classList.toggle('done',t.checked);refreshSide()}
+ if(t.dataset.step!==undefined)refreshSide();
+ if(t.id==='mySem'){S.me.sem=+t.value;saveK('me');rerender();toast(`Показан ${t.value}-й семестр`)}
+ if(t.id==='tgOn'){S.tg.on=t.checked;saveK('tg');toast(t.checked?`Бот @${D.bot} будет присылать уведомления`:'Уведомления в Telegram выключены')}
+ if(t.dataset.msel!==undefined)massSync();
+ if(t.id==='mAll'){$$('[data-msel]').forEach(x=>x.checked=t.checked);massSync()}
+ if(t.id==='ceSel'){ceS=t.value;rerender()}
+ if(t.id==='ctSel'){ceT=t.value;rerender()}
+ if(t.dataset.trem!==undefined){const x=pById(pv.id),k=x.tasks.find(z=>z.id==t.dataset.trem);k.rem=t.checked;save();pDraw();toast(t.checked?'Напоминание включено':'Напоминание выключено')}
+ if(t.dataset.tfile!==undefined&&t.files[0]){const x=pById(pv.id),k=x.tasks.find(z=>z.id==t.dataset.tfile),f=t.files[0],fs=k.files||(k.files=[]),v=fs.filter(z=>z.name===f.name).length+1;fs.push({name:f.name,size:f.size,v,at:T0,by:x.mem[pv.as][0]});save();const box=t.closest('.tx');box.innerHTML=taskExtra(x,k,false);pDraw();toast(v>1?`Загружена версия ${v} файла`:'Файл прикреплён')}
+});
+document.addEventListener('input',e=>{const t=e.target;if(t.id==='jlQ'){const q=norm(t.value.trim());$$('#jlL .jl').forEach(r=>r.hidden=!!q&&!norm(r.textContent).includes(q))}
+ if(t.closest&&t.closest('#ctF')){const f=$('#ctF'),id=f.dataset.id,tt={...T(id),tag:f.tag.value.trim(),resp:f.resp.checked,lv:+f.lv.value};$('.ct-prev .deck').innerHTML=realCard(tt)}});
+document.addEventListener('change',e=>{if(e.target.closest&&e.target.closest('#ctF')){const f=$('#ctF'),id=f.dataset.id,tt={...T(id),tag:f.tag.value.trim(),resp:f.resp.checked,lv:+f.lv.value};$('.ct-prev .deck').innerHTML=realCard(tt)}});
+document.addEventListener('submit',e=>{const f=e.target;
+ if(f.id==='pForm'&&S.props.length>propN){const p=S.props[S.props.length-1];tgPush(`Правка «${propTitle(p)}» по предмету «${byId(p.sid).name}» отправлена на проверку. Напишу, когда администратор решит.`)}
+ if(f.matches('.dl-f')){e.preventDefault();const sid=f.dataset.dladd,t=f.t.value.trim(),d=f.d.value;if(!t||!d){toast(!t?'Напиши, что сдаём':'Выбери дату');(!t?f.t:f.d).focus();return}(S.dl[sid]=S.dl[sid]||[]).push({t,d});saveK('dl');refreshSide();toast('Дата добавлена')}
+ if(f.matches('.bon-f')){e.preventDefault();const p=S.props.find(x=>x.id==f.dataset.bonf),a=Math.floor(+f.a.value),c=f.c.value.trim(),er=$('.bon-e',f);if(!(a>0)||a>5000){er.hidden=false;er.textContent='Сумма от 1 до 5 000 ₽';return}(p.bonus=p.bonus||[]).push({a,c,at:T0});if(p.by===ME){S.wallet.bal+=a;S.wallet.log.push([`Доначисление за правку «${propTitle(p)}»${c?': '+c:''}`,a,T0])}saveC();jlog(`Доначислил ${rub(a)} за правку «${propTitle(p)}» от ${p.by}${c?`: ${c}`:''}`);if(p.by===ME)tgPush(`За правку «${propTitle(p)}» доначислили ${rub(a)}${c?`: ${c}`:''}`);rerender();toast(`Доначислено ${rub(a)}`)}
+ if(f.id==='ceF'){e.preventDefault();const sid=f.dataset.sid,tt=$$('[name=tt]',f).map(x=>x.value.trim()),tx=$$('[name=tx]',f).map(x=>x.value.trim()),topics=tt.map((x,i)=>[x,tx[i]]).filter(x=>x[0]),er=$('#ceE');if(!topics.length){er.hidden=false;er.textContent='Нужна хотя бы одна тема с названием';return}S.cEdit[sid]={about:f.about.value.trim(),topics,tasks:f.tasks.value.split('\n').map(x=>x.trim()).filter(Boolean)};saveK('cEdit');applyCEdit(sid);jlog(`Изменил предмет «${byId(sid).name}»: ${plural(topics.length,'тема','темы','тем')}`);rerender();toast('Предмет обновлён на всех страницах')}
+ if(f.id==='ctF'){e.preventDefault();const id=f.dataset.id;S.tEdit[id]={...(S.tEdit[id]||{}),tag:f.tag.value.trim(),resp:f.resp.checked,lv:+f.lv.value};store.set('tEdit',S.tEdit);jlog(`Изменил карточку преподавателя «${T(id).name}»`);rerender();toast('Карточка преподавателя обновлена')}
+ if(f.id==='vsF'){e.preventDefault();const g=n=>$$(`[name=${n}]`,f).map(x=>x.value.trim());const d=g('d'),t=g('t'),a=g('a'),b=g('b');S.vucS=d.map((x,i)=>[x,t[i],a[i],b[i]]).filter(x=>x[0]&&x[1]).sort((x,y)=>x[0]<y[0]?-1:1);store.set('vucS',S.vucS);vsEdit=false;jlog('Обновил расписание пятниц на «Военке»');$('#vkSch').outerHTML=vucSchedHtml();toast('Расписание сохранено')}
+ if(f.id==='fineF'&&$('#fineE')&&$('#fineE').hidden){const x=S.fines[S.fines.length-1];if(x&&x.at===T0)jlog(`Назначил штраф ${x.user} «${ftype(x.type)[1]}», ${rub(x.amount)}`)}
+ if(f.id==='dfF'){jlog(`Изменил сложность предмета «${byId(f.dataset.sid).name}»`)}
+});
+
 window.addEventListener('hashchange',route);shell();route();
 
 /* (см. CSS .dark-cat) */
