@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /account
+Disallow: /contrib
+Disallow: /admin
+Disallow: /checkout
+Disallow: /thanks
+Disallow: /login
+
+Sitemap: https://latisha.ru/sitemap.xml
