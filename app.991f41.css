@@ -773,3 +773,48 @@ a.kpi:hover{box-shadow:0 0 0 2px var(--orange-btn)}
 .done+.cred,.card.done~.cred{margin-top:18px}
 .tform input[type=password]{width:100%;min-height:48px;background:#fff;border:1.5px solid #E2D8D1;border-radius:12px;padding:8px 14px;font:inherit;font-size:16.5px}
 .tform input[type=password]:focus{outline:3px solid var(--orange-btn);outline-offset:1px}
+
+/* Регистрация через бота */
+.rg{display:grid;gap:14px;text-align:left}
+.rg-chat{border:1.5px solid var(--line);border-radius:16px;overflow:hidden;background:#fff}
+.rg-top{display:flex;align-items:baseline;gap:8px;padding:10px 14px;border-bottom:1px solid var(--line);background:#F4F8FB}
+.rg-top b{color:#2A7DB8}
+.rg-msgs{border-radius:0;max-height:420px;overflow:auto}
+.tgu{justify-self:end;background:#E2F4D6;border-radius:12px 12px 4px 12px}
+.tge{background:#FBEAEA}
+.rg-img{display:block;max-width:180px;border-radius:8px;margin-bottom:4px}
+.rg-in{display:flex;gap:8px;padding:10px;flex-wrap:wrap;align-items:center;border-top:1px solid var(--line)}
+.rg-in input[type=text],.rg-in input[type=password]{flex:1 1 160px;min-height:46px;border:1.5px solid #E2D8D1;border-radius:12px;padding:6px 12px;font:inherit;font-size:16px;background:#fff}
+.rg-file{position:relative;cursor:pointer;gap:6px}
+.rg-st{display:grid;gap:10px;justify-items:center;text-align:center}
+.rg-st .tag{justify-self:center}
+/* Заявки в админке */
+.ap{display:grid;grid-template-columns:200px minmax(0,1fr);gap:18px;align-items:start}
+.ap-img{display:block;border-radius:12px;overflow:hidden;background:var(--tag-bg);aspect-ratio:4/3}
+.ap-img img{width:100%;height:100%;object-fit:cover;display:block}
+.ap-noimg{display:grid;place-items:center;align-content:center;gap:6px;color:var(--ink-2);font-size:13.5px;text-align:center;padding:10px}
+.ap-noimg svg{width:26px;height:26px}
+.ap-b{display:grid;gap:8px}
+.ap-h{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.ap-h b{font-size:18px}
+.ap-d{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0}
+.ap-d dt{font-size:13px;color:var(--ink-2);font-weight:600}.ap-d dd{margin:0;font-weight:600;overflow-wrap:anywhere}
+.ap .reason{min-height:44px;border:1.5px solid #E2D8D1;border-radius:12px;padding:6px 12px;font:inherit}
+.ap-a{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+.tab .cnt{display:inline-grid;place-items:center;min-width:20px;height:20px;border-radius:10px;background:#C23A3A;color:#fff;font-size:12px;padding:0 5px;margin-left:4px}
+.acc-in{display:grid;gap:10px}.acc-in h2{margin:0}.acc-in .ap-d{grid-template-columns:repeat(2,minmax(0,1fr));max-width:520px}
+.fg-ok{display:grid;gap:10px;margin-top:16px}.fg-ok .pw{font-family:ui-monospace,Menlo,monospace;letter-spacing:.04em}
+.fg-ok .btn{justify-self:start}
+/* Продажа следующего тарифа в карточках */
+.ups{list-style:none;margin:14px 0 0;padding:12px 0 0;border-top:1px dashed var(--line);display:grid;gap:8px;font-size:14.5px}
+.ups li{display:grid;grid-template-columns:18px minmax(0,1fr);gap:8px;align-items:start;line-height:1.35}
+.ups svg{width:18px;height:18px;margin-top:1px}
+.ups li.ok{color:var(--ink)}.ups li.ok svg{color:var(--ok)}
+.ups li.lk{color:var(--ink-2)}.ups li.lk svg{color:var(--orange-ink)}
+.ups-n{display:block;margin-top:12px;padding:8px 12px;border-radius:10px;background:#FFF1E6;color:var(--orange-ink);font-size:13.5px;font-weight:600;line-height:1.35}
+@media (max-width:720px){.ap{grid-template-columns:1fr}.ap-img{max-width:260px}.ap-d{grid-template-columns:1fr 1fr}}
+.aud .card p{flex:0 0 auto}
+.aud .card .more{margin-top:auto;padding-top:14px}
+.aud .tcard .tc-l{margin-bottom:4px}
+@media (max-width:720px){.aud .ups,.aud .ups-n,.aud .tc-l{display:none}}
+.ap .ap-img{border:0;padding:0;cursor:zoom-in;width:100%}
+.ap.big{grid-template-columns:1fr}.ap.big .ap-img{aspect-ratio:auto;max-width:640px;cursor:zoom-out}.ap.big .ap-img img{object-fit:contain}
