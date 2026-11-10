@@ -1237,6 +1237,49 @@ function upsell(kind){const lv=S.admin?750:S.tier||0;if(lv!==350&&lv!==500)retur
 const _RHome2=R.home;R.home=(...a)=>{const v=_RHome2(...a);if(!S.auth||!v.html)return v;
  v.html=v.html.replace('<p>Темы, формат контроля и типичные ошибки по программе.</p>','<p>Темы, формат контроля и типичные ошибки по программе.</p>'+upsell('learn')).replace('<p>Варианты прошлых потоков с разбором логики.</p>','<p>Варианты прошлых потоков с разбором логики.</p>'+upsell('exam')).replace('<p>Канбан, диаграмма Ганта и заметки для команды.</p>','<p>Канбан, диаграмма Ганта и заметки для команды.</p>'+upsell('proj'));return v};
 
+
+/* ===================== Связь с сервером api.latisha.ru (если он доступен) =====================
+   Сервер отвечает — вход, заявки и пароли идут через него и бота.
+   Не отвечает — сайт работает в демо-режиме, как раньше. */
+const API=store.get('apiBase','')||'https://api.latisha.ru';
+let API_ON=false,API_APPS=null;
+const apiTok=()=>store.get('apiTok',''),apiRole=()=>store.get('apiRole','');
+async function api(p,b,method){const t=apiTok();const r=await fetch(API+p,{method:method||(b?'POST':'GET'),headers:{'content-type':'application/json',...(t?{authorization:'Bearer '+t}:{})},body:b?JSON.stringify(b):undefined});let j={};try{j=await r.json()}catch{}if(!r.ok)throw Object.assign(new Error(j.error||'Сервер недоступен'),{status:r.status});return j}
+(async()=>{try{const c=new AbortController();setTimeout(()=>c.abort(),2500);const r=await fetch(API+'/api/health',{signal:c.signal});API_ON=r.ok}catch{API_ON=false}
+ if(!API_ON)return;
+ if(apiTok()){try{const {user}=await api('/api/me');if(user.role!=='admin'&&S.auth&&S.tier!==(user.tier||0)){S.tier=user.tier||0;store.set('tier',S.tier)}}catch(e){if(e.status===401){store.set('apiTok','');store.set('apiRole','');if(S.adminSess){S.adminSess=false;store.set('adminSess',false);setDemo('guest')}else if(S.auth){setDemo('guest')}}}}
+ if(['register','login','forgot','admin'].includes((LOC.hash.replace(/^#/,'').split('/')[1]||'').split('?')[0]))rerender()})();
+function apiErr(el,msg){if(!el)return toast(msg);el.hidden=false;el.textContent=msg}
+/* вход */
+document.addEventListener('submit',async e=>{const f=e.target;if(f.id!=='admF'||!API_ON)return;e.preventDefault();e.stopImmediatePropagation();const er=$('#admE'),u=f.u.value.trim(),pw=f.p.value;
+ if(!u||!pw)return apiErr(er,'Введи логин и пароль');
+ try{const {token,user}=await api('/api/login',{login:u,password:pw});store.set('apiTok',token);store.set('apiRole',user.role);
+  if(user.role==='admin'){S.adminSess=true;store.set('adminSess',true);setDemo('admin');shell();toast('Вход выполнен: режим администратора');LOC.hash='/admin?tab=apps';return}
+  S.myLogin=user.login;store.set('myLogin',user.login);S.accs[user.login]={login:user.login,tg:user.tg,tier:user.tier||0,h:''};saveAcc();setDemo(user.tier?String(user.tier):'free');shell();goal('login');toast(`С возвращением, ${user.login}`);LOC.hash='/account'}
+ catch(x){f.p.value='';apiErr(er,x.message)}},true);
+/* забыл пароль */
+document.addEventListener('submit',async e=>{const f=e.target;if(f.id!=='fgF'||!API_ON)return;e.preventDefault();e.stopImmediatePropagation();const er=$('#fgE'),u=f.u.value.trim();if(!u)return apiErr(er,'Введи логин или ник в Telegram');
+ try{const r=await api('/api/forgot',{login:u});f.outerHTML=`<div class="card pad fg-ok"><p><b>Готово.</b> ${r.sent?`${HELP} отправила новый пароль в Telegram ${esc(r.tg)}.`:'Пароль сброшен, но Telegram не привязан: напиши в поддержку.'}</p><a class="btn btn-o btn-sm" href="/login">Войти</a></div>`}catch(x){apiErr(er,x.message)}},true);
+/* выход */
+document.addEventListener('click',e=>{if(e.target.closest('#logout,#admOut,#admOut2')&&apiTok()){api('/api/logout',{}).catch(()=>{});store.set('apiTok','');store.set('apiRole','')}},true);
+/* регистрация: при живом сервере — только настоящий бот */
+const _RReg2=R.register;R.register=p=>{if(!API_ON||S.auth)return _RReg2(p);return{title:`Регистрация через Telegram: ${D.brand}`,html:`<div class="wrap narrow"><div class="phead"><h1 tabindex="-1">Регистрация</h1><p class="d">Через Telegram, бесплатно. Уже есть аккаунт? <a href="/login">Войти по логину и паролю</a></p></div><div class="card reg rg">${spr('lat_wave',LN,'reg-cat')}<ol class="reg-s"><li>Открой бота @${D.bot} и нажми «Старт»</li><li>Придумай логин и пароль: по ним будешь входить на сайт</li><li>Пришли фото студенческого или скрин из lk.msu.ru</li><li>Администратор проверит заявку, бот напишет, когда доступ откроется</li></ol><a class="btn btn-o btn-full cta1" href="https://t.me/${D.bot}?start=register" target="_blank" rel="noopener" data-goal="register_bot">Зарегистрироваться через Telegram</a><p class="small muted">Регистрируясь, ты принимаешь <a href="/rules">правила сервиса</a> и соглашаешься на обработку ника в Telegram и фото студенческого. Фото видит только администратор.</p></div></div>`}};
+/* заявки в админке: с сервера */
+const _appsHtml=appsHtml;appsHtml=function(){if(!(API_ON&&apiRole()==='admin'))return _appsHtml();setTimeout(loadApps,0);return `<section class="stack" id="apiApps"><div class="card pad"><p class="muted">Загружаю заявки с сервера…</p></div></section>`};
+const _appsPending=appsPending;appsPending=function(){return API_ON&&apiRole()==='admin'&&API_APPS?API_APPS.filter(a=>a.status==='pending').length:_appsPending()};
+async function loadApps(){const box=$('#apiApps');if(!box)return;try{const {apps}=await api('/api/admin/apps');API_APPS=apps;box.outerHTML=apiAppsHtml(apps)}catch(x){box.innerHTML=`<div class="card pad"><p>${esc(x.message)}</p></div>`}}
+function apiAppsHtml(apps){const t=encodeURIComponent(apiTok()),pend=apps.filter(a=>a.status==='pending'),done=apps.filter(a=>a.status!=='pending');
+ const proof=a=>a.proof&&a.proof.has&&(a.proof.mime||'').startsWith('image/')?`<button type="button" class="ap-img" data-apzoom aria-expanded="false" aria-label="Увеличить доказательство"><img loading="lazy" decoding="async" src="${API}/api/admin/apps/${a.id}/proof?t=${t}" alt="Доказательство от ${esc(a.tg)}"></button>`:a.proof&&a.proof.has?`<a class="ap-img ap-noimg" href="${API}/api/admin/apps/${a.id}/proof?t=${t}" target="_blank" rel="noopener">${I_CLIP}<span>${esc(a.proof.name)}</span></a>`:`<div class="ap-img ap-noimg">${I_CLIP}<span>Файла нет</span></div>`;
+ const d=ms=>{const x=new Date(ms);return fmtD(iso(x))+', '+String(x.getHours()).padStart(2,'0')+':'+String(x.getMinutes()).padStart(2,'0')};
+ return `<section class="stack" id="apiApps">${pend.length?pend.map(a=>`<article class="card pad ap" data-app="${a.id}">${proof(a)}<div class="ap-b"><div class="ap-h"><b>${esc(a.tg)}</b><span class="tag soon">На проверке</span></div><dl class="ap-d"><div><dt>Логин</dt><dd>${esc(a.login)}</dd></div><div><dt>Пришла</dt><dd>${d(a.at)}</dd></div><div><dt>Заявка</dt><dd>№${a.id}</dd></div></dl><p class="small muted">Проверь: ФИО совпадает с ником, факультет ВШБ, документ действует.</p><input type="text" class="reason" placeholder="Причина отказа, её увидит студент в боте" aria-label="Причина отказа для ${esc(a.tg)}"><div class="ap-a"><button class="btn btn-oo btn-sm" data-sno="${a.id}">Отклонить</button><button class="btn btn-o btn-sm" data-sok="${a.id}">Открыть доступ</button></div></div></article>`).join(''):`<div class="card pad empty">${spr('lat_sleep',LN)}<p>Новых заявок нет. Бот пришлёт уведомление, когда появятся.</p></div>`}
+ ${done.length?`<section class="sec"><div class="sec-head"><h2 class="sec-t">Решения по заявкам</h2></div><div class="card pad">${done.map(a=>`<div class="prow"><div><b>${esc(a.tg)}: ${esc(a.login)}</b><span class="muted small">${d(a.at)}${a.reason?`. ${esc(a.reason)}`:''}</span></div><span class="tag ${a.status==='ok'?'live':'bad'}">${a.status==='ok'?'Доступ открыт':'Отклонена'}</span></div>`).join('')}</div></section>`:''}</section>`}
+document.addEventListener('click',async e=>{const b=e.target.closest('[data-sok],[data-sno]');if(!b)return;const id=b.dataset.sok||b.dataset.sno;
+ try{if(b.dataset.sok){await api(`/api/admin/apps/${id}/approve`,{});jlog(`Открыл доступ по заявке №${id}`);toast('Доступ открыт, бот написал студенту')}
+  else{const r=b.closest('.ap').querySelector('.reason'),why=r.value.trim();if(!why){toast('Напиши причину отказа: её увидит студент');r.focus();return}await api(`/api/admin/apps/${id}/reject`,{reason:why});jlog(`Отклонил заявку №${id}: ${why}`);toast('Заявка отклонена, бот сообщил причину')}
+  rerender()}catch(x){toast(x.message)}});
+/* тариф пользователя хранится на сервере */
+let apiTierSent=null;const _route=route;route=function(){_route();if(API_ON&&apiTok()&&apiRole()==='user'&&S.auth&&apiTierSent!==S.tier){apiTierSent=S.tier;api('/api/tier',{tier:S.tier||0}).catch(()=>{})}};
+
 window.addEventListener('popstate',LOC.pop);shell();route();
 
 /* (см. CSS .dark-cat) */
