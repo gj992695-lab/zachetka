@@ -1448,11 +1448,11 @@ Object.entries(typeof BASE_LINKS==='object'?BASE_LINKS:{}).forEach(([tid,subs])=
 const _wApply=wApplyCatalog;wApplyCatalog=function(){_wApply();TEACH.forEach(t=>{S.tEdit[t.id]={...(S.tEdit[t.id]||{}),subs:teachSubjects(t.id).map(s=>s.id)}})};wApplyCatalog();
 const WTABS={};
 /* catDraw вызывает .map(gcard): индекс попадал во второй аргумент, и все карточки кроме первой становились неактивными div */
-const _gcard=gcard;gcard=function(sb,flat){return _gcard(sb,flat===true)};
+const _gcard=gcard;gcard=function(sb,flat){return _gcard(sb,flat===true).replace('<span>нагрузка</span>','<span>сложность</span>')};
 /* семестры из вики: курс выводится из семестра */
 SUBJECTS.forEach(x=>{x._sems0=x.sems?[...x.sems]:null;x._courses0=[...(x.courses||[])]});
 const semCourses=a=>[...new Set(a.map(n=>Math.ceil(n/2)))].sort((x,y)=>x-y);
-const _wApply2=wApplyCatalog;wApplyCatalog=function(){SUBJECTS.forEach(x=>{const pg=WCAT.pages['subject:'+x.id];if(pg&&Array.isArray(pg.sems)&&pg.sems.length){x.sems=[...pg.sems];x.courses=semCourses(pg.sems)}else{x.sems=x._sems0?[...x._sems0]:x.sems;x.courses=[...x._courses0]}});_wApply2()};wApplyCatalog();
+const _wApply2=wApplyCatalog;wApplyCatalog=function(){SUBJECTS.forEach(x=>{const pg=WCAT.pages['subject:'+x.id];if(pg&&Array.isArray(pg.sems)&&pg.sems.length){x.sems=[...pg.sems];x.courses=semCourses(pg.sems)}else{x.sems=x._sems0?[...x._sems0]:x.sems;x.courses=[...x._courses0]}});_wApply2();SUBJECTS.forEach(x=>{x.load=WLV[x.id]||0})};wApplyCatalog();
 const fmt1=x=>(+x||0).toFixed(1).replace('.',',');
 const lvTag=lv=>{const L=lvl(lv);return L?`<span class="tag dif ${L.id===1?'gold':''}" style="--c2:${L.c2}">${L.name}</span>`:'<span class="tag">Сложность не оценена</span>'};
 const wEmpty=m=>`<p class="muted">${m}${wCanEdit()?' Нажми «Править страницу» справа, чтобы заполнить.':''}</p>`;
