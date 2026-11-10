@@ -757,6 +757,7 @@ a.kpi:hover{box-shadow:0 0 0 2px var(--orange-btn)}
 .tform label.ck0{display:flex;align-items:center;gap:10px;font-weight:600}
 .tform label.tf-add{display:inline-flex;align-items:center;gap:6px;color:var(--orange-ink);justify-self:start}
 @media (max-width:720px){.kpis>:last-child{grid-column:1/-1}.prow>div.prow-a{width:100%;justify-content:space-between}}
+.mine-e img{height:110px}
 </style>
 </head>
 <body>
@@ -1716,7 +1717,7 @@ function refreshSide(){if(!curS)return;const c=$('.side .pg');if(c)c.outerHTML=p
 
 /* ===== Предметы: дедлайны ===== */
 const SES_Z='2026-12-21',SES_E='2027-01-11';
-function dlSeed(s){if(!s.full||!s.sems||!s.sems.includes(+S.me.sem))return [];const h=hsh(s.id),o=[];if(s.control!=='Зачёт')o.push({t:'Контрольная',d:addD(T0,6+h%20),ex:1});o.push({t:s.control||'Зачёт',d:s.control==='Экзамен'?addD(SES_E,h%14):addD(SES_Z,h%9),ex:1});return o}
+function dlSeed(s){if(!s.full)return [];const h=hsh(s.id),o=[];if(s.control!=='Зачёт')o.push({t:'Контрольная',d:addD(T0,6+h%20),ex:1});o.push({t:s.control||'Зачёт',d:s.control==='Экзамен'?addD(SES_E,h%14):addD(SES_Z,h%9),ex:1});return o}
 const dlOf=s=>[...dlSeed(s),...(S.dl[s.id]||[]).map((x,k)=>({...x,own:1,k}))].sort((a,b)=>a.d<b.d?-1:1);
 const dlWhen=d=>{const n=dDiff(T0,d);return n<0?'прошло':n===0?'сегодня':n===1?'завтра':`через ${plural(n,'день','дня','дней')}`};
 const dlCard=s=>{const a=dlOf(s);return `<div class="card pad dlc"><div class="pg-h"><b>Дедлайны</b>${a.length?`<button class="link" data-ics="${s.id}">${I_CAL} Всё в календарь</button>`:''}</div>${a.length?a.map((x,i)=>`<div class="dl-r ${x.d<T0?'past':''}"><span><b>${esc(x.t)}</b><small>${fmtD(x.d)}, ${dlWhen(x.d)}${x.ex?' · пример':''}</small></span><span class="dl-a"><button class="ib" data-ics1="${s.id}|${i}" aria-label="Добавить «${esc(x.t)}» в календарь">${I_CAL}</button>${x.own?`<button class="ib" data-dldel="${s.id}|${x.k}" aria-label="Удалить «${esc(x.t)}»">${I.x}</button>`:''}</span></div>`).join(''):'<p class="small muted">Дат пока нет.</p>'}<form class="dl-f" data-dladd="${s.id}" novalidate><input type="text" name="t" placeholder="Что сдаём" maxlength="40" aria-label="Что сдаём"><input type="date" name="d" aria-label="Дата" min="${T0}"><button class="btn btn-oo btn-sm">Добавить дату</button></form></div>`};
@@ -1727,8 +1728,10 @@ function icsDownload(items,name){const d=x=>x.replace(/-/g,''),e=t=>String(t).re
 /* ===== Мой семестр на главной ===== */
 const mySem=()=>SUBJECTS.filter(s=>s.sems&&s.sems.includes(+S.me.sem));
 let mineAll=false;
-function homeMine(){const all=mySem(),fv=s=>S.fav.includes(s.id)?2:0,pp=s=>(progOf(s)||{p:0}).p,list=[...all].sort((a,b)=>(fv(b)+(pp(b)>0))-(fv(a)+(pp(a)>0))||(a.req==='v')-(b.req==='v')),shown=mineAll?list:list.slice(0,7),dls=list.flatMap(s=>dlOf(s).filter(x=>x.d>=T0).map(x=>({...x,s:s.name,sid:s.id}))).sort((a,b)=>a.d<b.d?-1:1),avg=list.length?Math.round(list.reduce((a,s)=>a+pp(s),0)/list.length):0;
- return `<section class="sec" id="mine"><div class="sec-head"><h2 class="sec-t">Мой семестр</h2><label class="sem-pick"><span class="small muted">Семестр</span><select class="f" id="mySem">${[1,2,3,4,5,6,7,8].map(n=>`<option value="${n}" ${n==S.me.sem?'selected':''}>${n}-й, ${Math.ceil(n/2)} курс</option>`).join('')}</select></label></div><div class="mine-g"><div class="card pad"><div class="pg-h"><h3>${plural(list.length,'предмет','предмета','предметов')}</h3><span class="small muted">Готовность в среднем ${avg}%</span></div><p class="small muted" style="margin:-2px 0 6px">Сначала избранные и начатые. ★ ставится кнопкой «В мои предметы» на странице предмета.</p>${shown.map(s=>{const g=progOf(s);return `<a class="mrow" href="#/subject/${s.id}"><span class="mn">${esc(s.name)}${S.fav.includes(s.id)?' <span class="star" title="В избранном">★</span>':''}</span><span class="mbar"><i style="width:${g?g.p:0}%"></i></span><b>${g?g.p:0}%</b></a>`}).join('')||'<p class="muted small">В этом семестре предметов нет.</p>'}${list.length>7?`<button class="link" data-mineall="1" aria-expanded="${mineAll}">${mineAll?'Свернуть':`Показать все ${list.length}`}</button>`:''}</div><div class="card pad"><h3>Ближайшие дедлайны</h3>${dls.length?dls.slice(0,6).map(x=>`<a class="dl" href="#/subject/${x.sid}"><span><b>${esc(x.t)}</b><small>${esc(x.s)}${x.ex?' · пример':''}</small></span><span class="dr">${fmtD(x.d)}, ${dlWhen(x.d)}</span></a>`).join('')+`<button class="btn btn-oo btn-sm" data-icsall="1" style="margin-top:12px">${I_CAL} Все дедлайны в календарь</button>`:'<p class="muted small">Дедлайнов нет.</p>'}</div></div></section>`}
+const myFav=()=>S.fav.map(byId).filter(Boolean);
+function homeMine(){const list=myFav(),pp=s=>(progOf(s)||{p:0}).p,shown=mineAll?list:list.slice(0,7),dls=list.flatMap(s=>dlOf(s).filter(x=>x.d>=T0).map(x=>({...x,s:s.name,sid:s.id}))).sort((a,b)=>a.d<b.d?-1:1),avg=list.length?Math.round(list.reduce((a,s)=>a+pp(s),0)/list.length):0;
+ if(!list.length)return `<section class="sec" id="mine"><div class="sec-head"><h2 class="sec-t">Мои предметы</h2></div><div class="card empty mine-e">${spr('lat_read',LN)}<h3>Здесь будут твои предметы</h3><p class="muted">Открой предмет и нажми «В мои предметы». Он появится здесь с прогрессом и дедлайнами.</p><a class="btn btn-o cta1" href="#/subjects">Выбрать предметы</a></div></section>`;
+ return `<section class="sec" id="mine"><div class="sec-head"><h2 class="sec-t">Мои предметы</h2><a class="more" href="#/subjects">Добавить ещё</a></div><div class="mine-g"><div class="card pad"><div class="pg-h"><h3>${plural(list.length,'предмет','предмета','предметов')}</h3><span class="small muted">Готовность в среднем ${avg}%</span></div>${shown.map(s=>{const g=progOf(s);return `<a class="mrow" href="#/subject/${s.id}"><span class="mn">${esc(s.name)}</span><span class="mbar"><i style="width:${g?g.p:0}%"></i></span><b>${g?g.p:0}%</b></a>`}).join('')}${list.length>7?`<button class="link" data-mineall="1" aria-expanded="${mineAll}">${mineAll?'Свернуть':`Показать все ${list.length}`}</button>`:''}</div><div class="card pad"><h3>Ближайшие дедлайны</h3>${dls.length?dls.slice(0,6).map(x=>`<a class="dl" href="#/subject/${x.sid}"><span><b>${esc(x.t)}</b><small>${esc(x.s)}${x.ex?' · пример':''}</small></span><span class="dr">${fmtD(x.d)}, ${dlWhen(x.d)}</span></a>`).join('')+`<button class="btn btn-oo btn-sm" data-icsall="1" style="margin-top:12px">${I_CAL} Все дедлайны в календарь</button>`:'<p class="muted small">Дедлайнов нет. Добавь дату на странице предмета.</p>'}</div></div></section>`}
 
 /* ===== Поиск по тексту конспектов ===== */
 function noteHits(){const rows=$('#rows');if(!rows)return;let box=$('#nHits');if(!box){box=document.createElement('section');box.id='nHits';box.className='sec';rows.after(box)}const q=norm(cat.q.trim());if(q.length<3){box.innerHTML='';return}
@@ -1830,7 +1833,7 @@ document.addEventListener('click',e=>{const q=s=>e.target.closest(s);let b;
   const keep='qzpick' in b.dataset?b.dataset.qzpick:null;box.outerHTML=qzHtml(id);const nb=$(`[data-qz="${id}"]`);if(nb){const el=keep!=null?$(`[data-qzpick="${keep}"]`,nb):$(foc,nb);el&&el.focus({preventScroll:true})}}
  if(b=q('[data-ics]')){const s=byId(b.dataset.ics);icsDownload(dlOf(s).map(x=>({...x,s:s.name})),'latisha-'+s.id)}
  if(b=q('[data-ics1]')){const[sid,i]=b.dataset.ics1.split('|'),s=byId(sid),x=dlOf(s)[+i];icsDownload([{...x,s:s.name}],'latisha-'+sid+'-'+x.d)}
- if(q('[data-icsall]')){const a=mySem().flatMap(s=>dlOf(s).filter(x=>x.d>=T0).map(x=>({...x,s:s.name})));icsDownload(a,'latisha-semestr-'+S.me.sem)}
+ if(q('[data-icsall]')){const a=myFav().flatMap(s=>dlOf(s).filter(x=>x.d>=T0).map(x=>({...x,s:s.name})));icsDownload(a,'latisha-moi-predmety')}
  if(b=q('[data-dldel]')){const[sid,k]=b.dataset.dldel.split('|');(S.dl[sid]||[]).splice(+k,1);saveK('dl');refreshSide();toast('Дата удалена')}
  if(b=q('[data-vw]')){const c=b.closest('.adm'),s=b.dataset.vw==='s';$$('[data-vw]',c).forEach(x=>x.setAttribute('aria-pressed',x===b));$('.diff',c).hidden=s;$('.bs',c).hidden=!s}
  if(q('#mOk'))massRun(true);if(q('#mNo'))massRun(false);
@@ -1848,7 +1851,6 @@ document.addEventListener('click',e=>{const q=s=>e.target.closest(s);let b;
 document.addEventListener('change',e=>{const t=e.target;
  if(t.dataset.read!==undefined&&curS){const r=S.read[curS.id]||(S.read[curS.id]=[]);r[+t.dataset.read]=t.checked;saveK('read');t.closest('details').classList.toggle('done',t.checked);refreshSide()}
  if(t.dataset.step!==undefined)refreshSide();
- if(t.id==='mySem'){S.me.sem=+t.value;saveK('me');rerender();toast(`Показан ${t.value}-й семестр`)}
  if(t.id==='tgOn'){S.tg.on=t.checked;saveK('tg');toast(t.checked?`Бот @${D.bot} будет присылать уведомления`:'Уведомления в Telegram выключены')}
  if(t.dataset.msel!==undefined)massSync();
  if(t.id==='mAll'){$$('[data-msel]').forEach(x=>x.checked=t.checked);massSync()}
