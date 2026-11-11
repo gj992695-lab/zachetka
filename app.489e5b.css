@@ -1376,3 +1376,4 @@ body.th-vuc:not(.vk-dark) .vk-ch{background:#DCE4C8}
 .tipbar p{margin:0;font-size:15.5px;line-height:1.4;color:var(--ink)}
 .aud .card .more{margin-top:auto}
 @media(max-width:700px){.tipbar{align-items:flex-start;padding:10px 12px}.tipbar img{height:36px}.tipbar-k{display:none}.tipbar p{font-size:14.5px}}
+.wk-fab.lock{background:#8C8C92;cursor:pointer}.wk-fab.lock svg{width:18px;height:18px}
