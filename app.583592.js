@@ -1770,6 +1770,14 @@ const _RT4=R.teachers;R.teachers=(...a)=>{const v=_RT4(...a);v.after=fcDraw;v.ht
 document.addEventListener('change',e=>{if(e.target.id==='flv'){fc.lv=e.target.value;fc.n=12;fcDraw()}});
 document.addEventListener('click',e=>{if(e.target.closest('#reset')&&$('#flv')){fc.lv='';setTimeout(fcDraw,0)}},true);
 
+/* ===================== v5: мероприятия из Telegram-каналов ВШБ ===================== */
+let TG_EV=null;const EV_BG={bs_msu:'orange',vhsbcareer:'teal'};
+const MON_G=['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+const tgEvCard=e=>{const d=parseD(e.date),soon=e.date===T0?'сегодня':Math.round((d-parseD(T0))/864e5)===1?'завтра':'';return `<article class="card ev"><div class="date bg-${EV_BG[e.ch]||'mustard'}"><b>${d.getDate()}</b><span>${MON_G[d.getMonth()]}</span></div><div class="body"><div class="tags"><span class="tag soon">${esc(e.chName)}${e.time?', '+esc(e.time):''}</span>${soon?`<span class="tag live">${soon}</span>`:''}</div><h3>${esc(e.title)}</h3>${e.text?`<p>${esc(e.text)}${e.text.length>=420?'…':''}</p>`:''}<a class="link" href="${esc(e.url)}" target="_blank" rel="noopener">Открыть пост в Telegram</a></div></article>`};
+const tgEvHtml=()=>!TG_EV?'<div class="card pad"><p class="muted">Загружаю анонсы из каналов…</p></div>':TG_EV.events.length?TG_EV.events.map(tgEvCard).join(''):'<div class="card pad"><p class="muted">В каналах сейчас нет анонсов с будущей датой.</p></div>';
+async function loadTgEv(){await API_READY;if(!(API_ON&&window.API_H&&API_H.wiki>=4)){const b=$('#tgEv');if(b)b.closest('section').hidden=true;return}try{const r=await api('/api/events');if(r.ok||r.events.length)TG_EV=r;const b=$('#tgEv');if(b){if(TG_EV)b.innerHTML=tgEvHtml();else b.closest('section').hidden=true}}catch{const b=$('#tgEv');if(b&&!TG_EV)b.closest('section').hidden=true}}
+const _REv5=R.events;R.events=(...a)=>{const v=_REv5(...a);v.html=v.html.replace('<div style="display:grid;gap:14px">',`<section class="sec" style="margin-top:0"><div class="sec-head"><h2 class="sec-t">Анонсы из каналов ВШБ</h2></div><p class="sec-sub">Собираются сами из каналов студсовета и «Кузницы карьеры», обновляются каждые полчаса.</p><div id="tgEv" style="display:grid;gap:14px">${tgEvHtml()}</div></section><div class="sec-head"><h2 class="sec-t">С сайта школы</h2></div><div style="display:grid;gap:14px">`).replace('События школы в одной ленте.','Анонсы из Telegram-каналов школы и события с mgubs.ru.');const af=v.after;v.after=()=>{af&&af();loadTgEv()};return v};
+
 window.addEventListener('popstate',LOC.pop);shell();route();
 
 /* (см. CSS .dark-cat) */
