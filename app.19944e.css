@@ -1321,3 +1321,15 @@ body.th-vuc.vk-dark{--peach:#0D110C;--card:#151B13;--ink:#E2E6D8;--ink-2:#A2AC96
 .upd{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);z-index:300;display:flex;align-items:center;gap:12px;padding:10px 10px 10px 18px;border-radius:16px;background:#2F2F33;color:#fff;box-shadow:0 10px 30px rgba(0,0,0,.3);font-weight:600;font-size:15px;white-space:nowrap}
 .upd .ib{color:#C9C9CE;width:32px;height:32px}
 @media(max-width:700px){.upd{bottom:76px}}
+/* v10.1: военка светлее и читабельнее (вариант C) */
+body.th-vuc.vk-dark{--peach:#18201A;--card:#222C21;--ink:#F3F5EE;--ink-2:#CDD5C3;--orange-ink:#CFE3A0;--line:#36432F;--tag-bg:#2C3828;background-color:#18201A}
+.vk-dark #main{font-weight:450;letter-spacing:.005em}
+.vk-dark .small,.vk-dark .muted,.vk-dark .sec-sub{font-weight:500}
+.vk-dark .vk-tm,.vk-dark .vk-r,.vk-dark .vk-rank,.vk-dark .vk-facts .w,.vk-dark .vk-card .vk-more,.vk-dark .vk-editl a{color:#CFE3A0}
+.vk-dark .card,.vk-dark .vk-card,.vk-dark .vk-tch,.vk-dark .vk-day{box-shadow:0 0 0 1px #33402F,0 10px 26px rgba(0,0,0,.3)}
+.vk-dark .vk-card,.vk-dark .vk-ld{background:#222C21}
+.vk-dark .vk-day.past{opacity:.8}
+.vk-dark .vk-facts p,.vk-dark .vk-card .small,.vk-dark .vk-tch .small{font-size:15px;line-height:1.45}
+.vk-dark .vk-rows{font-size:15px}
+.vk-dark .vk-jump a{background:#222C21;border-color:#3A4834;color:#EEF1E6}
+.vk-dark .vk-tch.tbd{background:repeating-linear-gradient(135deg,#222C21 0 14px,#252F23 14px 28px)}
