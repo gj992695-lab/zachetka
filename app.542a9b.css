@@ -1033,3 +1033,20 @@ a.vk-card{text-decoration:none;color:inherit}.vk-more{color:#3F4D22;font-weight:
 .md-d{display:flex;flex-direction:column}.md-d b{font-size:16px}.md-b{display:flex;flex-direction:column;gap:2px;min-width:0}
 .md-w{display:flex;flex-direction:column;align-items:flex-end;gap:2px;font-size:14px;color:var(--ink-2);white-space:nowrap}
 @media(max-width:600px){.md-l li{grid-template-columns:60px 1fr}.md-w{grid-column:2;align-items:flex-start;flex-direction:row;gap:10px}}
+/* v7: единый стиль достижений — эталон «Босс маркетинга» */
+.ach,.tc-resp{background:linear-gradient(180deg,#F1D78C 0%,#C99A3A 45%,#9C7020 100%)!important;color:#3E2A06!important;font-size:13px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;border:1px solid #6E4F14;border-radius:6px;padding:2px 14px;white-space:nowrap;text-shadow:0 1px 0 rgba(255,240,200,.6);box-shadow:inset 0 1px 0 rgba(255,250,220,.7),0 3px 8px rgba(60,40,10,.3)}
+.ach{display:inline-flex;align-items:center;line-height:1.5;vertical-align:middle}
+.cb-h h1+.ach{margin:4px 0 0}
+.tc-top{position:relative}.tc-pts{position:absolute;right:-4px;top:-4px;min-width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--c2,#5B5B60);color:#fff;font-weight:700;font-size:16px;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.tc-top:has(.tc-pts) h3{padding-right:40px}
+.pt-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}.pt-n{min-width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:#8A1C1C;color:#fff;font-weight:700;font-size:22px}.pt-n.none{background:var(--tag-bg);color:var(--ink-2)}
+.pt-r{display:flex;justify-content:space-between;padding:7px 0;border-top:1px solid var(--line)}.pt-r b{font-size:18px}.pt p{margin:8px 0 0}
+#moreAll{margin-left:16px}
+.wk-add{margin:10px 0 0}
+.cabnav{display:flex;flex-direction:column;gap:8px;margin:0 0 18px}
+.cn-row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.cn-adm{background:#313135;border-radius:14px;padding:8px 10px}.cn-adm .tab{background:rgba(255,255,255,.1);color:#fff}.cn-adm .tab[aria-current]{background:#fff;color:var(--ink)}
+.cn-l{color:#fff;font-weight:700;font-size:13px;letter-spacing:.5px;text-transform:uppercase;margin:0 8px 0 4px;opacity:.75}
+.cn-c{display:inline-grid;place-items:center;min-width:20px;height:20px;border-radius:10px;background:var(--orange-btn);color:#fff;font-size:12.5px;font-weight:700;padding:0 5px;margin-left:6px}
+.cb-t .cn-c{align-self:flex-start;margin:6px 0 0}
+.au-ach{margin-top:12px}
