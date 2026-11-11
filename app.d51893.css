@@ -1369,3 +1369,10 @@ body.th-vuc:not(.vk-dark) .vk-ch{background:#DCE4C8}
 .vk-tav.ph::before{display:none}.vk-tav.ph img{width:100%;height:100%;object-fit:cover;image-rendering:auto}
 .vp-av:not(.ph) img{zoom:1;width:152px;height:auto}
 #vkEdL,#vkEdT,#vkEdD{scroll-margin-top:96px}
+/* совет — одной тонкой строкой под карточками */
+.tipbar{display:flex;align-items:center;gap:12px;margin-top:14px;padding:8px 18px 8px 10px;background:var(--card,#fff);border-radius:16px;box-shadow:0 4px 16px rgba(49,49,53,.07)}
+.tipbar img{height:44px;width:auto;image-rendering:pixelated;flex:none}
+.tipbar-k{flex:none;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--orange-ink);background:var(--peach);padding:4px 10px;border-radius:999px}
+.tipbar p{margin:0;font-size:15.5px;line-height:1.4;color:var(--ink)}
+.aud .card .more{margin-top:auto}
+@media(max-width:700px){.tipbar{align-items:flex-start;padding:10px 12px}.tipbar img{height:36px}.tipbar-k{display:none}.tipbar p{font-size:14.5px}}

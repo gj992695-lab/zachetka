@@ -2157,7 +2157,8 @@ const _RHome10=R.home;R.home=(...a)=>{const v=_RHome10(...a);if(!homePro()||!v.h
   else if(h.includes('tab=dl')){kind='dl';if(dls.length>1)extra=`<ul class="aud-l">${dls.slice(1,4).map(x=>`<li><b>${fmtD(iso(new Date(x.at)))}</b><span>${esc(x.t.slice(0,60))}</span></li>`).join('')}</ul>`}
   else if(h.includes('projects')||h.includes('chats'))kind='team';
   if(extra){p.insertAdjacentHTML('afterend',extra);p.classList.add('aud-p0')}
-  more.insertAdjacentHTML('beforebegin',tipHtml(kind,i))});
+  });
+ {const t=S.tier||0,all=TIPS.filter(x=>t>=x[2]&&(x[3]==null||t<=x[3])),tip=all.length?all[tipSlot()%all.length][1]:'';if(tip)aud.insertAdjacentHTML('afterend',`<aside class="tipbar" aria-label="Совет">${spr('lat_wave','')}<span class="tipbar-k">Совет</span><p>${esc(tip)}</p></aside>`)}
  v.html=tpl.innerHTML;return v};
 
 /* ---------- кружок очков сложности: цвет уровня, ровный круг ---------- */
