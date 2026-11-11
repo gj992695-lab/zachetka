@@ -1333,3 +1333,26 @@ body.th-vuc.vk-dark{--peach:#18201A;--card:#222C21;--ink:#F3F5EE;--ink-2:#CDD5C3
 .vk-dark .vk-rows{font-size:15px}
 .vk-dark .vk-jump a{background:#222C21;border-color:#3A4834;color:#EEF1E6}
 .vk-dark .vk-tch.tbd{background:repeating-linear-gradient(135deg,#222C21 0 14px,#252F23 14px 28px)}
+/* v11: светло-зелёная военка — новые блоки в светлой палитре */
+body.th-vuc:not(.vk-dark) .vk-tch{background:#fff;box-shadow:0 0 0 1px #D3DBC2,0 6px 20px rgba(40,50,20,.08)}
+body.th-vuc:not(.vk-dark) .vk-tch.tbd{background:repeating-linear-gradient(135deg,#fff 0 14px,#F4F7EC 14px 28px)}
+body.th-vuc .vk-rank{color:#4A6A28}
+body.th-vuc:not(.vk-dark) .vk-chip{background:#E7EDD9;color:#2F4A18!important;border-color:#C9D5B0}
+body.th-vuc:not(.vk-dark) .vk-editl a{color:#3F5A23}
+body.th-vuc:not(.vk-dark) .vk-jump a{background:#fff;border-color:#C9D5B0;color:#2F3A24}
+body.th-vuc:not(.vk-dark) .vk-jump a:hover{border-color:#5B6B34;color:#1E2A12}
+body.th-vuc:not(.vk-dark) .vk-ch{background:#DCE4C8}
+[data-vp]{cursor:pointer;transition:transform .15s,box-shadow .15s}[data-vp]:hover{transform:translateY(-3px)}[data-vp]:focus-visible{outline:3px solid #E8892B;outline-offset:3px}
+.vk-ld[data-vp] .vk-li::after,.vk-tch[data-vp] .vk-tin::after{content:"Отзывы и подробнее →";font-size:13.5px;font-weight:700;color:#3F5A23;margin-top:6px}
+.vp{padding-bottom:40px}.vp .crumbs{padding-top:18px}
+.vp-h{display:flex;flex-direction:row!important;gap:22px;align-items:center;margin:14px 0 18px}
+.vp-av{flex:none;width:200px;height:220px;border-radius:16px;overflow:hidden;display:flex;align-items:flex-end;justify-content:center;background:#DCE4C8}
+.vp-av.ph img{width:100%;height:100%;object-fit:cover;object-position:50% 20%}.vp-av:not(.ph) img{zoom:2;image-rendering:pixelated}
+.vp-i{display:flex;flex-direction:column;gap:6px;min-width:0}.vp-i h1{font-size:clamp(26px,3.4vw,38px);line-height:1.1;margin:0}.vp-i .tag{align-self:flex-start}.vp-note{margin:6px 0 0;font-style:italic;color:var(--ink-2)}
+@media(max-width:640px){.vp-h{flex-direction:column!important;align-items:flex-start}.vp-av{width:100%;height:240px}}
+.note-ed{display:inline-flex;align-items:center;gap:6px;font-size:14.5px;font-weight:600;margin-right:auto}.note-ed svg{width:16px;height:16px}
+.note-edb{display:inline-flex;align-items:center;gap:6px;margin-top:10px}.note-edb svg{width:16px;height:16px}
+.wk-tf{display:flex;gap:10px 16px;flex-wrap:wrap;align-items:center}
+.note-ef .te-ed{min-height:420px}
+.th-vuc .hdr .bal-chip{background:rgba(255,255,255,.14);color:#fff}
+.th-vuc .hdr .bal-chip *{color:#fff}
