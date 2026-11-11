@@ -1104,12 +1104,12 @@ html,body{overflow-x:clip}
 .gx-tr{position:relative;height:100%}
 .gx-tk span{position:absolute;bottom:6px;font-size:12px;color:var(--ink-2);white-space:nowrap;padding-left:4px;font-variant-numeric:tabular-nums}
 .gx-n{all:unset;box-sizing:border-box;cursor:pointer;font-size:14.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px}.gx-n:hover,.gx-n:focus-visible{color:var(--gd);text-decoration:underline}
-.gx-b{position:absolute;top:50%;height:14px;margin-top:-7px;border:0;padding:0;border-radius:7px;cursor:pointer;background:var(--gl);transition:box-shadow .12s}
-.gx-b.s-go{background:repeating-linear-gradient(90deg,var(--gb) 0 30px,var(--gb2) 30px 60px)}.gx-b.s-ok{background:var(--gd)}.gx-b.late{box-shadow:0 0 0 2px #fff,0 0 0 4px #C9705A}
+.gx-b{position:absolute;top:50%;height:14px;margin-top:-7px;border:0;padding:0;border-radius:7px;cursor:pointer;background:#5B9BD5;transition:box-shadow .12s}
+.gx-b.s-go{background:#F0A35E}.gx-b.s-ok{background:#6DB37F}.gx-b.late{box-shadow:0 0 0 2px #fff,0 0 0 4px #C9705A}
 .gx-b:hover,.gx-b:focus-visible{box-shadow:0 0 0 3px rgba(74,144,200,.35);outline:none}
 .gx-t{position:absolute;top:50%;transform:translateY(-50%);font-size:12.5px;color:var(--ink-2);white-space:nowrap;pointer-events:none}.gx-t.late{color:#A8452E;font-weight:600}
 .gx-lg{display:flex;gap:6px 18px;flex-wrap:wrap;align-items:center;margin:16px 0 0}.gx-lg span{display:inline-flex;align-items:center;gap:6px}
-.gx-sw{display:inline-block;width:26px;height:10px;border-radius:5px;background:#CFE2F3}.gx-sw.s-go{background:linear-gradient(90deg,#4A90C8 50%,#5DA9DD 50%)}.gx-sw.s-ok{background:#2C6CA6}
+.gx-sw{display:inline-block;width:26px;height:10px;border-radius:5px;background:#5B9BD5}.gx-sw.s-go{background:#F0A35E}.gx-sw.s-ok{background:#6DB37F}
 @media(max-width:700px){.gx-r{grid-template-columns:130px minmax(0,1fr);gap:10px}.gx-ov{left:140px}.gx-n{max-width:130px}.gx-in{min-width:640px}}
 .ws-nb{margin-bottom:12px}
 .ws-notes{columns:3 260px;column-gap:14px}
