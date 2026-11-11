@@ -2222,6 +2222,14 @@ R.note=(p,id)=>{const s=sById(id);if(!s)return R.notfound(p);const tid=p.t||'';
 /* чек-лист к пятнице убран со страницы */
 const _vucChkDraw10=vucChkDraw;vucChkDraw=function(){if($('#vkC'))_vucChkDraw10()};
 
+/* ---------- новая версия сайта: плашка «Обновить» вместо ожидания кеша ---------- */
+(()=>{const mine=()=>{const j=document.querySelector('script[src*="/app."]'),c=document.querySelector('link[rel=stylesheet][href*="/app."]');const f=x=>x?(x.getAttribute('src')||x.getAttribute('href')||'').split('/').pop():'';return j?f(j)+'|'+f(c):''};
+ const V=mine();if(!V||location.hostname==='localhost'&&!/[?&]vtest/.test(location.search))return;let shown=false,busy=false,last=0;
+ const show=()=>{if(shown)return;shown=true;const b=document.createElement('div');b.className='upd';b.setAttribute('role','status');b.innerHTML='<span>Сайт обновился</span><button type="button" class="btn btn-o btn-sm" id="updGo">Обновить</button><button type="button" class="ib" id="updX" aria-label="Позже">'+I.x+'</button>';document.body.appendChild(b)};
+ const check=async()=>{if(busy||shown||document.visibilityState!=='visible'||Date.now()-last<55e3)return;busy=true;last=Date.now();try{const r=await fetch('/version.json?t='+Date.now(),{cache:'no-store'});if(r.ok){const j=await r.json();if(j&&j.v&&j.v!==V)show()}}catch{}busy=false};
+ setInterval(check,60e3);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')check()});setTimeout(check,8e3);
+ document.addEventListener('click',async e=>{if(e.target.closest('#updX')){const b=$('.upd');b&&b.remove();return}if(!e.target.closest('#updGo'))return;e.target.closest('#updGo').disabled=true;try{await fetch(location.pathname+location.search,{cache:'reload'})}catch{}location.reload()})})();
+
 window.addEventListener('popstate',LOC.pop);shell();route();
 
 /* (см. CSS .dark-cat) */
