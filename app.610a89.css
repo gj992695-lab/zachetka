@@ -1123,3 +1123,18 @@ html,body{overflow-x:clip}
 .ws-subs{border:0;padding:0;margin:0}.ws-sr{display:grid;grid-template-columns:24px 1fr 36px;gap:8px;align-items:center;margin-bottom:6px}.ws-sr input[type=checkbox]{width:20px;height:20px;accent-color:var(--ok)}
 .ws-df{display:flex;justify-content:space-between;align-items:center;gap:10px;border-top:1px solid var(--line);padding-top:12px;margin-top:4px}
 .te-float{z-index:200}
+/* v9: отзывы по преподавателям, обложки, коллекция */
+.wk-rt{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.wk-avg{grid-template-columns:repeat(auto-fit,minmax(130px,1fr))}
+.gc-art{position:relative}.gc-cov{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}.gc-art .gc-ctl,.gc-art .gc-dif{z-index:1}
+.wk-cov img,.wk-cov .wk-ini{border-radius:14px}
+.hp #mine .card:has(>h3){display:none}.hp #mine>div:last-child{grid-template-columns:1fr}
+.col-s{margin-bottom:16px}.col-sn{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center}.col-sn>div{display:flex;flex-direction:column}
+@media(max-width:600px){.col-sn{grid-template-columns:1fr;gap:12px}}
+.col-bar{position:relative;height:14px;border-radius:7px;margin:6px 0;background:linear-gradient(90deg,#3E8E4E,#C9A43A,#E0762F,#B3261E)}.col-bar i{position:absolute;top:-4px;width:6px;height:22px;border-radius:3px;background:var(--ink);transform:translateX(-50%);box-shadow:0 0 0 2px #fff}
+.col-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px}
+.cc{display:block;border-radius:16px;padding:5px;background:linear-gradient(160deg,var(--c1,#C9C5C0),var(--c2,#A9A5A0));text-decoration:none;color:var(--ink);box-shadow:0 3px 10px rgba(49,49,53,.18);transition:transform .12s}.cc:hover,.cc:focus-visible{transform:translateY(-3px) rotate(-.6deg)}
+.cc-in{display:flex;flex-direction:column;gap:4px;background:#FFFAF3;border-radius:12px;padding:10px;min-height:150px;height:100%;box-sizing:border-box}
+.cc-k{font-size:11.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--ink-2);font-weight:700}
+.cc img{width:100%;aspect-ratio:1.4;object-fit:cover;border-radius:8px}
+.cc b{font-size:15px;line-height:1.25}.cc-l{margin-top:auto;font-weight:700;font-size:13px;color:var(--c2,#77736E)}.cc small{font-size:11.5px;color:var(--ink-2)}
