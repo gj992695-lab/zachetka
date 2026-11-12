@@ -1409,3 +1409,6 @@ body.th-vuc:not(.vk-dark) .vk-ch{background:#DCE4C8}
 @media(max-width:700px){.filters .wide{grid-column:1/-1;width:100%;max-width:none}.filters{grid-template-columns:1fr!important}}
 @media(max-width:700px){.phead.ph-row>.filters,.phead.ph-row>div:has(.filters){width:100%;flex:1 1 100%}.ph-row{flex-wrap:wrap}}
 @media(max-width:700px){.ws-h{flex-direction:column;align-items:stretch!important}.ws-h>div{min-width:0;max-width:100%}.ws-h h1{overflow-wrap:anywhere}}
+.pp-cb{flex:1;min-width:0}.pp-cb>input{width:100%}
+.wk-row:has(.pp-cb){align-items:flex-start}
+.pp-sug{min-width:260px;right:auto}.pp-sug .dm-o{white-space:nowrap}
