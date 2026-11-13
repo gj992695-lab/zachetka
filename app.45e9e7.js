@@ -2447,7 +2447,7 @@ function pfDecorDM(){$$('#dmList .dm-t').forEach(a=>{const id=new URLSearchParam
 const pfTeam=()=>{const ul=$('.ws-tl');if(!ul||!WS||!WS.p)return;const ls=WS.p.members.map(m=>m.login);const draw=()=>$$('.ws-tl li').forEach((li,k)=>{const l=ls[k],b=$('b',li);if(!l||!b||li.querySelector('.pf-chip'))return;b.outerHTML=`<b>${pfChip(l)}</b>`});draw();pfFetch(ls).then(draw)};
 const _routePF=route;route=function(){_routePF();try{if(/^\/project\//.test(location.pathname))setTimeout(pfTeam,600)}catch{}};
 /* ===== Кабинет на компьютере: рабочее пространство в духе Obsidian, в стилистике сайта (пиксельные значки на узорах). На телефоне всё как было ===== */
-const OW_MQ=matchMedia('(min-width:1100px)'),NB_LVL=750,NB_JS='/nb.48a7d8.js';
+const OW_MQ=matchMedia('(min-width:1100px)'),NB_LVL=750,NB_JS='/nb.1f1ee0.js';
 /* пиксельные значки разделов 12×12, как эмблемы на карточках предметов */
 Object.assign(PX,{
  c_over:['.....##.....','....####....','...######...','..########..','.##########.','############','.##########.','.##########.','.####..####.','.####..####.','.####..####.','.####..####.'],
@@ -2559,7 +2559,7 @@ function owApply(){document.body.classList.remove('ow-on');if(NB.api&&!$('#nbBox
  document.body.classList.add('ow-on');w.classList.add('cb','ow');
  const c=document.createElement('div');c.className='ow-c';while(w.firstChild)c.appendChild(w.firstChild);
  const crumb=(OW_TABS.find(t=>t[0]===cur)||[0,cur==='adm'?'Модерация':'Раздел'])[1];
- c.insertAdjacentHTML('afterbegin',`<div class="ow-tabs"><button type="button" class="ow-ib" data-owback aria-label="Назад">←</button><button type="button" class="ow-ib" data-owfwd aria-label="Вперёд">→</button><span class="ow-crumb">Кабинет <span>/</span> <b>${esc(crumb)}</b></span></div>`);
+ c.insertAdjacentHTML('afterbegin',`<div class="ow-tabs"><button type="button" class="ow-ib ow-side" data-owside="l" aria-pressed="${!document.body.classList.contains('ow-lc')}" title="Скрыть или показать разделы" aria-label="Скрыть или показать левую панель"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M9 4v16"/></svg></button><button type="button" class="ow-ib" data-owback title="Назад" aria-label="Назад">←</button><button type="button" class="ow-ib" data-owfwd title="Вперёд" aria-label="Вперёд">→</button><span class="ow-crumb"><a href="/account">Кабинет</a> <span>/</span> <b>${esc(crumb)}</b></span><button type="button" class="ow-ib ow-side" data-owside="r" aria-pressed="${!document.body.classList.contains('ow-rc')}" title="Скрыть или показать правую панель" aria-label="Скрыть или показать правую панель"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M15 4v16"/></svg></button></div>`);
  if(cur==='over'){const ph=$('.phead',c);if(ph){ph.insertAdjacentHTML('beforebegin',owHero());ph.classList.add('ow-ttl');const h=$('h1',ph);if(h)h.textContent=mpName();const t=owTier(),d=$('p.d',ph);
    if(d)d.innerHTML=`${S.prof.st?`<span class="mp-st2">${esc(S.prof.st)}</span>`:''}<span>${S.myLogin?'@'+esc(S.myLogin)+' · ':''}${S.prof.grp?esc(S.prof.grp)+' · ':''}${t?esc(t.name)+' · '+rub(t.level)+' в месяц':'Без подписки'} · ${esc(d.textContent)}</span>`}
   const g=$('.cb-g',c);if(g)g.insertAdjacentHTML('beforebegin','<hr class="ow-hr">'+owTiles())}
@@ -2570,6 +2570,8 @@ function owApply(){document.body.classList.remove('ow-on');if(NB.api&&!$('#nbBox
 /* Moodle: не дёргаем сервер на каждую перерисовку — не чаще раза в минуту, параллельные запросы склеиваем */
 const _mdLoadOW=mdLoad;let owMdP=null,owMdAt=0;mdLoad=function(){if(owMdP)return owMdP;if(Date.now()-owMdAt<6e4)return Promise.resolve();owMdAt=Date.now();return owMdP=_mdLoadOW().finally(()=>{owMdP=null})};
 const _routeOW=route;route=function(){_routeOW();try{owTrack();owApply()}catch(e){console.error(e)}};
+const OW_SIDE=store.get('ow_side',{});document.body.classList.toggle('ow-lc',!!OW_SIDE.l);document.body.classList.toggle('ow-rc',!!OW_SIDE.r);
+document.addEventListener('click',e=>{const b=e.target.closest('[data-owside]');if(!b)return;const k=b.dataset.owside,cl='ow-'+k+'c',on=!document.body.classList.contains(cl);document.body.classList.toggle(cl,on);OW_SIDE[k]=on;store.set('ow_side',OW_SIDE);b.setAttribute('aria-pressed',String(!on))});
 let owWas=OW_MQ.matches;OW_MQ.addEventListener&&OW_MQ.addEventListener('change',()=>{if(OW_MQ.matches!==owWas){owWas=OW_MQ.matches;if(S.auth&&$('#main .cabnav, #main .ow-l'))rerender()}});
 document.addEventListener('click',e=>{const f=e.target.closest('[data-owfold]');if(f){const w=f.parentElement,o=!w.classList.contains('open');w.classList.toggle('open',o);f.setAttribute('aria-expanded',o);OW_FOLD[f.dataset.owfold]=o;store.set('ws_fold',OW_FOLD);return}
  const b=e.target.closest('[data-owback],[data-owfwd]');if(!b)return;if(b.hasAttribute('data-owback'))history.back();else history.forward()});
@@ -2633,14 +2635,14 @@ const _RAccNB=R.account;R.account=p=>{p=p||{};if(!S.auth||p.tab!=='nb')return _R
  let n=NB.list.find(x=>x.id===p.n)||NB.list[0];if(!n)n=nbNew();NB.cur=n.id;
  const sync=API_ON&&apiTok()?'Синхронизируется между твоими устройствами.':'Сервер сейчас недоступен: заметки сохраняются в этом браузере и уйдут на сервер, когда он ответит.';
  return{title:`${n.title||'Блокнот'}: ${D.brand}`,html:`<div class="wrap cb">${cabNav('nb','')}<div class="nb-adm"><span class="nb-tag">Бета для администратора</span><span class="small muted">${sync} Пользователи видят экран «В разработке».</span></div>
- <div class="nb-bar">${nbSelHtml(n)}${n.src?`<a class="small link" href="/subject/${esc(n.src.s)}">Конспект с сайта: ${esc((byId(n.src.s)||{name:''}).name)}</a>`:''}<span class="sp"></span><span class="nb-st" id="nbSt" aria-live="polite">Сохранено</span><button type="button" class="link" data-nbdel="${n.id}">Удалить</button></div>
- <details class="nb-mlist"><summary>Все заметки (${NB.list.length})</summary><div class="nb-mk">${nbTreeKids()}</div></details>
+ <div class="nb-bar">${nbSelHtml(n)}${n.src?`<a class="small link" href="/subject/${esc(n.src.s)}">Конспект с сайта: ${esc((byId(n.src.s)||{name:''}).name)}</a>`:''}<span class="sp"></span><span class="nb-st" id="nbSt" aria-live="polite" title="Заметка сохраняется сама после каждой правки. Ctrl+S — сохранить сразу">✓ Сохраняется автоматически</span><button type="button" class="btn btn-o btn-sm" data-nbnew="${esc(n.f||'')}">＋ Новая заметка</button><button type="button" class="link nb-delb" data-nbdel="${n.id}">Удалить</button></div>
+ <details class="nb-mlist"><summary>Мои заметки (${NB.list.length}) — открыть другую</summary><div class="nb-mk">${nbTreeKids()}</div></details>
  <div class="nb-wrap" id="nbBox"><p class="muted">Загружаем редактор…</p></div><details class="nb-prev"><summary>Как видят блокнот пользователи</summary>${nbPromo()}</details></div>`,
   after:()=>{cabCounts();nbMount(n)}}};
 async function nbMount(n){const box=$('#nbBox');if(!box)return;if(NB.api){try{NB.api.destroy()}catch{}NB.api=null}
  try{await nbLoad()}catch(e){box.innerHTML=`<p class="muted">${esc(e.message)}. Обнови страницу.</p>`;return}
  if(!$('#nbBox')||NB.cur!==n.id)return;
- NB.api=window.LatNB.mount(box,{doc:n.doc,upload:nbUpload,notes:()=>NB.list.filter(x=>x.id!==n.id),openNote:h=>{LOC.hash=h},onChange:(doc,title)=>{n.doc=doc;n.at=Date.now();n.txt=nbText(doc);const ch=n.title!==title;n.title=title;clearTimeout(NB.t);NB.t=setTimeout(()=>{nbSave();const st=$('#nbSt');if(st)st.textContent='Сохранено'},500);const st=$('#nbSt');if(st)st.textContent='Сохраняем…';
+ NB.api=window.LatNB.mount(box,{doc:n.doc,upload:nbUpload,notes:()=>NB.list.filter(x=>x.id!==n.id),openNote:h=>{LOC.hash=h},siteImport:nbSiteImport,appendTo:(id,nodes,html,move)=>nbAppend(n,id,nodes,html,move),onSave:()=>{clearTimeout(NB.t);nbSave();const st=$('#nbSt');if(st)st.textContent='✓ Сохранено';toast('Заметка сохранена')},onChange:(doc,title)=>{n.doc=doc;n.at=Date.now();n.txt=nbText(doc);const ch=n.title!==title;n.title=title;clearTimeout(NB.t);NB.t=setTimeout(()=>{nbSave();const st=$('#nbSt');if(st)st.textContent='✓ Сохранено'},500);const st=$('#nbSt');if(st)st.textContent='Сохраняем…';
   if(ch)$$(`a[data-nid="${n.id}"] span`).forEach(a=>a.textContent=title||'Без названия');const ol=$('#nbOl');if(ol)ol.innerHTML=owOutline()}});
  if(typeof n.doc==='string'){n.doc=NB.api.editor.getJSON();n.txt=nbText(n.doc);nbSave()}
  const ol=$('#nbOl');if(ol)ol.innerHTML=owOutline();else{const r=$('.ow-r');if(r)r.insertAdjacentHTML('afterbegin',`<div id="nbOl">${owOutline()}</div>`)}
@@ -2652,6 +2654,36 @@ document.addEventListener('click',e=>{let b;
  if(b=e.target.closest('[data-nbtake]')){e.preventDefault();nbTake(b)}});
 document.addEventListener('change',e=>{if(e.target.id!=='nbF')return;const n=NB.list.find(x=>x.id===NB.cur);if(!n)return;n.f=e.target.value;nbSave();$$('#nbQ').forEach(i=>{const k=i.closest('.ow-kids, .nb-mk');if(k)k.innerHTML=nbTreeKids()});toast('Заметка перенесена: '+nbFName(n.f))});
 document.addEventListener('input',e=>{if(e.target.id!=='nbQ')return;NB.q=e.target.value;const pos=e.target.selectionStart;$$('#nbQ').forEach(i=>{const k=i.closest('.ow-kids, .nb-mk');if(k){k.innerHTML=nbTreeKids()}});const ni=$$('#nbQ').find(i=>i.closest('.ow-l'))||$('#nbQ');if(ni){ni.focus();try{ni.setSelectionRange(pos,pos)}catch{}}});
+
+/* перенос или копия выделенного текста в другую заметку */
+function nbAppend(cur,id,nodes,html,move){let t=id?NB.list.find(x=>x.id===id):null;
+ if(!t){t=nbNew({doc:html,f:cur.f||'',title:''});}
+ else{if(t.doc&&typeof t.doc==='object'){t.doc.content=[...(t.doc.content||[]),...nodes]}else t.doc=(t.doc||'')+html;t.at=Date.now();t.txt=nbText(t.doc)}
+ t.txt=nbText(t.doc);nbSave();
+ toast(`${move?'Перенесено':'Скопировано'} в «${t.title||'новую заметку'}»`);
+ const k=$$('#nbQ').map(i=>i.closest('.ow-kids, .nb-mk')).filter(Boolean);k.forEach(x=>x.innerHTML=nbTreeKids());return true}
+/* «С сайта»: конспекты тем и файлы предметов прямо в заметку */
+let NBS=null;
+function nbSiteImport(insert){NBS={insert,sid:null};const fav=myFav(),rest=SUBJECTS.filter(s=>!S.fav.includes(s.id)&&!s.vuc);
+ document.body.insertAdjacentHTML('beforeend',`<div class="nbs-bg" id="nbsBg"><div class="nbs" role="dialog" aria-modal="true" aria-labelledby="nbsH"><div class="nbs-h"><h2 id="nbsH">Вставить с сайта</h2><button type="button" class="ow-ib" data-nbsx aria-label="Закрыть">✕</button></div><input type="search" id="nbsQ" placeholder="Найти предмет" aria-label="Найти предмет"><div class="nbs-b" id="nbsB">${nbsSubj(fav,rest,'')}</div></div></div>`);
+ $('#nbsQ').focus()}
+const nbsSubj=(fav,rest,q)=>{q=norm(q);const f=s=>!q||norm(s.name+' '+(s.alias||'')).includes(q);const row=s=>`<button type="button" class="nbs-i" data-nbss="${s.id}"><i class="ow-dot bg-${(KIND[kindOf(s)]||[])[1]||'orange'}"></i>${esc(s.name)}</button>`;const a=fav.filter(f),b=rest.filter(f).slice(0,40);
+ return (a.length?`<p class="nbs-c">Мои предметы</p>${a.map(row).join('')}`:'')+(b.length?`<p class="nbs-c">Все предметы</p>${b.map(row).join('')}`:'')+(!a.length&&!b.length?'<p class="muted">Ничего не нашлось</p>':'')};
+async function nbsOpen(sid){const s=byId(sid),B=$('#nbsB');if(!B)return;NBS.sid=sid;$('#nbsQ').hidden=true;B.innerHTML='<p class="muted">Загружаем…</p>';let d=null;try{const r=await wLoad(wKey('subject',sid));d=r&&r.data}catch{}
+ if(!$('#nbsB'))return;d=d||{};const tops=(d.topics||[]).filter(t=>t.body),mats=d.materials||[],cn=has('notes')||S.admin,ct=has('tests')||S.admin;
+ B.innerHTML=`<button type="button" class="link nbs-back" data-nbsback>← Все предметы</button><h3>${esc(s?s.name:'')}</h3>
+ <p class="nbs-c">Конспекты тем</p>${!cn?lockNote('notes','Конспекты'):tops.length?tops.map((t,i)=>`<button type="button" class="nbs-i" data-nbst="${i}"><span>${i+1}. ${esc(t.title)}</span><em>Вставить</em></button>`).join('')+`<button type="button" class="nbs-i nbs-all" data-nbst="all"><span>Все конспекты предмета</span><em>Вставить</em></button>`:'<p class="muted small">Конспектов пока нет.</p>'}
+ <p class="nbs-c">Файлы: контрольные и экзамены прошлых лет</p>${!ct?lockNote('tests','Файлы'):mats.some(m=>(m.files||[]).length)?mats.flatMap((m,mi)=>(m.files||[]).map((f,fi)=>`<button type="button" class="nbs-i" data-nbsf="${mi}|${fi}"><span>📎 ${esc(f.name)}<small>${esc(m.title||m.kind||'')}${m.year?', '+m.year:''}</small></span><em>Вставить</em></button>`)).join(''):'<p class="muted small">Файлов пока нет.</p>'}`;
+ NBS.d=d;NBS.s=s}
+const nbsClose=()=>{const b=$('#nbsBg');if(b)b.remove();NBS=null};
+document.addEventListener('click',e=>{if(!NBS)return;let b;
+ if(e.target.id==='nbsBg'||e.target.closest('[data-nbsx]'))return nbsClose();
+ if(b=e.target.closest('[data-nbss]'))return nbsOpen(b.dataset.nbss);
+ if(e.target.closest('[data-nbsback]')){$('#nbsQ').hidden=false;$('#nbsB').innerHTML=nbsSubj(myFav(),SUBJECTS.filter(s=>!S.fav.includes(s.id)&&!s.vuc),$('#nbsQ').value);return}
+ if(b=e.target.closest('[data-nbst]')){const tops=(NBS.d.topics||[]).filter(t=>t.body),list=b.dataset.nbst==='all'?tops:[tops[+b.dataset.nbst]];const html=list.map(t=>`<h2>${esc(t.title)}</h2><p><em>Конспект с сайта · ${esc(NBS.s.name)}</em></p>${wClean(t.body)}`).join('');NBS.insert(html);toast(list.length>1?`Вставлено конспектов: ${list.length}`:'Конспект вставлен');return nbsClose()}
+ if(b=e.target.closest('[data-nbsf]')){const [mi,fi]=b.dataset.nbsf.split('|').map(Number),m=NBS.d.materials[mi],f=m.files[fi];const img=/^image\//.test(f.mime||'')||/\.(png|jpe?g|webp|gif)$/i.test(f.name||'');NBS.insert(img?`<p><img src="${esc(f.url)}" alt="${esc(f.name)}"></p>`:`<p><a href="${esc(f.url)}">📎 ${esc(f.name)}</a> <em>(${esc(m.title||m.kind||'')}${m.year?', '+m.year:''})</em></p>`);toast('Файл вставлен в заметку');return nbsClose()}});
+document.addEventListener('input',e=>{if(e.target.id==='nbsQ'&&NBS)$('#nbsB').innerHTML=nbsSubj(myFav(),SUBJECTS.filter(s=>!S.fav.includes(s.id)&&!s.vuc),e.target.value)});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&NBS)nbsClose()});
 /* «В блокнот» под конспектом темы: копия конспекта становится твоей заметкой в папке предмета */
 const _topicViewNB=topicView;topicView=function(s,t,i,canNotes,canTr){const h=_topicViewNB.apply(this,arguments);if(!(canNotes&&S.auth&&nbOpen()&&t.body))return h;return h.replace('<div class="wk-tf">',`<div class="wk-tf"><button type="button" class="btn btn-oo btn-sm" data-nbtake="${esc(s.id)}|${esc(t.id)}">В блокнот</button>`)};
 function nbTake(b){const [sid,tid]=b.dataset.nbtake.split('|'),box=b.closest('.wk-tb'),det=b.closest('.wk-topic');if(!box)return;
