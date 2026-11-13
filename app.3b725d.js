@@ -2447,7 +2447,7 @@ function pfDecorDM(){$$('#dmList .dm-t').forEach(a=>{const id=new URLSearchParam
 const pfTeam=()=>{const ul=$('.ws-tl');if(!ul||!WS||!WS.p)return;const ls=WS.p.members.map(m=>m.login);const draw=()=>$$('.ws-tl li').forEach((li,k)=>{const l=ls[k],b=$('b',li);if(!l||!b||li.querySelector('.pf-chip'))return;b.outerHTML=`<b>${pfChip(l)}</b>`});draw();pfFetch(ls).then(draw)};
 const _routePF=route;route=function(){_routePF();try{if(/^\/project\//.test(location.pathname))setTimeout(pfTeam,600)}catch{}};
 /* ===== Кабинет на компьютере: рабочее пространство в духе Obsidian, в стилистике сайта (пиксельные значки на узорах). На телефоне всё как было ===== */
-const OW_MQ=matchMedia('(min-width:1100px)'),NB_LVL=750,NB_JS='/nb.54612a.js';
+const OW_MQ=matchMedia('(min-width:1100px)'),NB_LVL=750,NB_JS='/nb.48a7d8.js';
 /* пиксельные значки разделов 12×12, как эмблемы на карточках предметов */
 Object.assign(PX,{
  c_over:['.....##.....','....####....','...######...','..########..','.##########.','############','.##########.','.##########.','.####..####.','.####..####.','.####..####.','.####..####.'],
@@ -2640,7 +2640,7 @@ const _RAccNB=R.account;R.account=p=>{p=p||{};if(!S.auth||p.tab!=='nb')return _R
 async function nbMount(n){const box=$('#nbBox');if(!box)return;if(NB.api){try{NB.api.destroy()}catch{}NB.api=null}
  try{await nbLoad()}catch(e){box.innerHTML=`<p class="muted">${esc(e.message)}. Обнови страницу.</p>`;return}
  if(!$('#nbBox')||NB.cur!==n.id)return;
- NB.api=window.LatNB.mount(box,{doc:n.doc,upload:nbUpload,onChange:(doc,title)=>{n.doc=doc;n.at=Date.now();n.txt=nbText(doc);const ch=n.title!==title;n.title=title;clearTimeout(NB.t);NB.t=setTimeout(()=>{nbSave();const st=$('#nbSt');if(st)st.textContent='Сохранено'},500);const st=$('#nbSt');if(st)st.textContent='Сохраняем…';
+ NB.api=window.LatNB.mount(box,{doc:n.doc,upload:nbUpload,notes:()=>NB.list.filter(x=>x.id!==n.id),openNote:h=>{LOC.hash=h},onChange:(doc,title)=>{n.doc=doc;n.at=Date.now();n.txt=nbText(doc);const ch=n.title!==title;n.title=title;clearTimeout(NB.t);NB.t=setTimeout(()=>{nbSave();const st=$('#nbSt');if(st)st.textContent='Сохранено'},500);const st=$('#nbSt');if(st)st.textContent='Сохраняем…';
   if(ch)$$(`a[data-nid="${n.id}"] span`).forEach(a=>a.textContent=title||'Без названия');const ol=$('#nbOl');if(ol)ol.innerHTML=owOutline()}});
  if(typeof n.doc==='string'){n.doc=NB.api.editor.getJSON();n.txt=nbText(n.doc);nbSave()}
  const ol=$('#nbOl');if(ol)ol.innerHTML=owOutline();else{const r=$('.ow-r');if(r)r.insertAdjacentHTML('afterbegin',`<div id="nbOl">${owOutline()}</div>`)}
