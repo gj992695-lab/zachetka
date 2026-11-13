@@ -1431,3 +1431,26 @@ body.th-vuc:not(.vk-dark) .vk-ch{background:#DCE4C8}
 .mt-link form{margin-top:8px;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) auto;gap:8px}
 @media(max-width:700px){.mt-drop{padding:18px 12px}.mt-drop small{display:none}.mt-link form{grid-template-columns:1fr}.mt-q li{grid-template-columns:1fr}}
 .mt-m{display:none}@media(hover:none) and (pointer:coarse){.mt-d{display:none}.mt-m{display:inline;color:var(--orange-ink);font-size:16px}}
+/* v14: кабинет на телефоне, шапка, первый экран до загрузки */
+.cn-back,.cn-grid{display:none}
+.hero-pre{min-height:440px}
+@media(max-width:760px){
+ .hero-pre{min-height:520px}
+ .cabnav .cn-main{display:none}
+ .cabnav:not(:has(.cn-back)):not(:has(.cn-adm)){display:none}
+ .cn-back{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;min-height:40px;padding:0 14px 0 10px;border-radius:20px;background:#fff;box-shadow:0 1px 0 var(--line);font-weight:600;font-size:15px;color:var(--ink);text-decoration:none}
+ .cn-back span{color:var(--orange-btn);font-size:18px;line-height:1}
+ .cn-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:2px 0 16px}
+ .cn-grid a{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-height:72px;padding:10px 2px 8px;background:#fff;border-radius:14px;box-shadow:0 1px 0 var(--line);color:var(--ink);text-decoration:none;font-size:12.5px;font-weight:600;line-height:1.15;text-align:center}
+ .cn-grid a:active{background:var(--peach)}
+ .cn-grid svg{width:24px;height:24px;color:var(--orange-btn)}
+ .cn-grid .cn-c{position:absolute;top:6px;right:8px;min-width:18px;height:18px;padding:0 4px;border-radius:9px;background:#C8322C;color:#fff;font-size:11.5px;font-style:normal;font-weight:700;display:grid;place-items:center}
+ .hdr .cab-b{width:42px;height:42px;min-height:42px;padding:0;border-radius:50%;font-size:0;display:inline-grid;place-items:center}
+ .hdr .cab-b::before{content:attr(data-ini);font-size:18px;font-weight:700;line-height:1;padding-top:2px}
+ .hdr .cab-b .cab-n{position:absolute;top:-4px;right:-6px;margin:0;font-size:11.5px;min-width:18px;height:18px}
+ .topbar .wrap{min-height:32px}.topbar a{min-height:32px;font-size:13px}
+ .cb-w #myEd .ph-r:nth-of-type(n+2){display:none}
+ .cb-w .tl li{font-size:13.5px}
+}
+
+@media (max-width:720px){:root{--hero:url('/img/hero-m.7c836a.webp')}}
