@@ -2460,7 +2460,7 @@ const _schedHtmlV=schedHtml;schedHtml=function(){const h=_schedHtmlV.apply(this,
  return h+`<section class="card pad sc-vuc"><label class="sc-vt"><input type="checkbox" data-vucon ${on?'checked':''}><span><b>Я учусь на военной кафедре</b><small class="muted">По пятницам в расписании появится учебный день 8:20–15:30 с темой занятия и аудиторией, а итоговые занятия и нормативы — в сроках.</small></span></label>${on?`<a class="link small" href="/vuc">Расписание пятниц и чек-лист</a>`:''}</section>`};
 document.addEventListener('change',e=>{if(!e.target.matches||!e.target.matches('[data-vucon]'))return;store.set('vucOn',e.target.checked);toast(e.target.checked?'Пятницы военки добавлены в расписание':'Пятницы военки убраны из расписания');rerender()});
 /* ===== Кабинет на компьютере: рабочее пространство в духе Obsidian, в стилистике сайта (пиксельные значки на узорах). На телефоне всё как было ===== */
-const OW_MQ=matchMedia('(min-width:1100px)'),NB_LVL=750,NB_JS='/nb.1f1ee0.js';
+const OW_MQ=matchMedia('(min-width:1100px)'),NB_LVL=750,NB_JS='/nb.ce8667.js';
 /* пиксельные значки разделов 12×12, как эмблемы на карточках предметов */
 Object.assign(PX,{
  c_over:['.....##.....','....####....','...######...','..########..','.##########.','############','.##########.','.##########.','.####..####.','.####..####.','.####..####.','.####..####.'],
