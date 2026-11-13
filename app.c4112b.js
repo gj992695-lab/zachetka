@@ -2621,17 +2621,20 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-mpdel]');i
    Фото при включённом сервере загружаются в /api/files, в заметке остаётся только ссылка. */
 PERSONAL.add('nb');
 const nbRead=()=>{let l=store.get('nb',null);if(!Array.isArray(l)){l=_sget('nb_notes',null);if(!Array.isArray(l))try{l=JSON.parse(localStorage.getItem('latisha_nb_notes')||'null')}catch{l=null}l=Array.isArray(l)?l:[];if(l.length)store.set('nb',l)}return l};
-const NB={list:nbRead(),cur:null,api:null,t:0,loading:null,q:''};
-const _wlpNB=wLoadPersonal;wLoadPersonal=function(){_wlpNB.apply(this,arguments);NB.list=nbRead()};
+PERSONAL.add('nbf');
+const NB={list:nbRead(),dirs:store.get('nbf',[])||[],cur:null,api:null,t:0,loading:null,q:''};
+const nbDirSave=()=>store.set('nbf',NB.dirs);
+const _wlpNB=wLoadPersonal;wLoadPersonal=function(){_wlpNB.apply(this,arguments);NB.list=nbRead();NB.dirs=store.get('nbf',[])||[]};
 const nbSave=()=>{const j=JSON.stringify(NB.list);if(j.length>4e6){toast('Заметки занимают слишком много места в браузере. Удали пару фото или включи сервер');return false}store.set('nb',NB.list);return true};
 const nbText=d=>{let t='';const w=n=>{if(!n||t.length>4000)return;if(n.text)t+=n.text+' ';(n.content||[]).forEach(w)};if(d&&typeof d==='object')w(d);else if(typeof d==='string')t=d.replace(/<[^>]+>/g,' ');return t.replace(/\s+/g,' ').trim().slice(0,4000)};
 const nbNew=(o={})=>{const n={id:wUid(),title:o.title||'',doc:o.doc||null,at:Date.now(),f:o.f||'',src:o.src||null,txt:nbText(o.doc)};NB.list.unshift(n);nbSave();return n};
-const nbFolders=()=>{const g=new Map();NB.list.forEach(n=>{const k=n.f||'';if(!g.has(k))g.set(k,[]);g.get(k).push(n)});return [...g.entries()].sort((a,b)=>a[0]===''?1:b[0]===''?-1:(byId(a[0])||{name:a[0]}).name.localeCompare((byId(b[0])||{name:b[0]}).name,'ru'))};
-const nbFName=k=>k?(byId(k)||{name:'Предмет'}).name:'Без предмета';
+const nbFolders=()=>{const g=new Map();NB.dirs.forEach(d=>g.set(d.id,[]));NB.list.forEach(n=>{const k=n.f&&(nbDir(n.f)||byId(n.f))?n.f:'';if(!g.has(k))g.set(k,[]);g.get(k).push(n)});const rank=k=>k===''?2:nbDir(k)?0:1;return [...g.entries()].sort((a,b)=>rank(a[0])-rank(b[0])||nbFName(a[0]).localeCompare(nbFName(b[0]),'ru'))};
+const nbDir=k=>NB.dirs.find(d=>d.id===k);
+const nbFName=k=>!k?'Без папки':nbDir(k)?nbDir(k).name:(byId(k)||{name:'Предмет'}).name;
 const nbMatch=(n,q)=>!q||norm((n.title||'')+' '+(n.txt||'')).includes(q);
-function nbTreeKids(){const q=norm(NB.q.trim());const rows=nbFolders().map(([f,ns])=>{const vis=ns.filter(n=>nbMatch(n,q));if(!vis.length)return '';
-  return `<p class="nb-fd"><i class="ow-dot bg-${f&&byId(f)?(KIND[kindOf(byId(f))]||[])[1]||'orange':'orange'}"></i>${esc(nbFName(f))}<button type="button" class="nb-fadd" data-nbnew="${esc(f)}" title="Новая заметка в папке" aria-label="Новая заметка: ${esc(nbFName(f))}">+</button></p>${vis.map(n=>`<a class="ow-k nb-k ${n.id===NB.cur?'on':''}" href="/account?tab=nb&n=${n.id}" data-nid="${n.id}"><span>${esc(n.title||'Без названия')}</span></a>`).join('')}`}).join('');
- return `<label class="nb-q"><input type="search" id="nbQ" placeholder="Поиск по заметкам" value="${esc(NB.q)}" aria-label="Поиск по заметкам"></label>${rows||`<p class="nb-none">${q?'Ничего не нашлось':'Заметок пока нет'}</p>`}<button type="button" class="ow-k ow-new" data-nbnew><i class="ow-plus">+</i><span>Новая заметка</span></button>`}
+function nbTreeKids(){const q=norm(NB.q.trim());const rows=nbFolders().map(([f,ns])=>{const vis=ns.filter(n=>nbMatch(n,q));const own=!!nbDir(f);if(!vis.length&&!(own&&!q))return '';
+  return `<p class="nb-fd"><i class="ow-dot bg-${f&&byId(f)?(KIND[kindOf(byId(f))]||[])[1]||'orange':'orange'}"></i>${esc(nbFName(f))}${own?`<button type="button" class="nb-fadd" data-nbdren="${f}" title="Переименовать папку" aria-label="Переименовать папку ${esc(nbFName(f))}">✎</button><button type="button" class="nb-fadd" data-nbddel="${f}" title="Удалить папку (заметки останутся)" aria-label="Удалить папку ${esc(nbFName(f))}">×</button>`:''}<button type="button" class="nb-fadd" data-nbnew="${esc(f)}" title="Новая заметка в папке" aria-label="Новая заметка: ${esc(nbFName(f))}">+</button></p>${!vis.length?'<p class="nb-none nb-fe">Пустая папка</p>':''}${vis.map(n=>`<a class="ow-k nb-k ${n.id===NB.cur?'on':''}" href="/account?tab=nb&n=${n.id}" data-nid="${n.id}"><span>${esc(n.title||'Без названия')}</span></a>`).join('')}`}).join('');
+ return `<label class="nb-q"><input type="search" id="nbQ" placeholder="Поиск по заметкам" value="${esc(NB.q)}" aria-label="Поиск по заметкам"></label>${rows||`<p class="nb-none">${q?'Ничего не нашлось':'Заметок пока нет'}</p>`}<button type="button" class="ow-k ow-new" data-nbnew><i class="ow-plus">+</i><span>Новая заметка</span></button><button type="button" class="ow-k ow-new" data-nbdnew><i class="ow-plus">▣</i><span>Новая папка</span></button>`}
 function nbLoad(){if(window.LatNB)return Promise.resolve();if(NB.loading)return NB.loading;return NB.loading=new Promise((ok,no)=>{const s=document.createElement('script');s.src=NB_JS;s.onload=ok;s.onerror=()=>{NB.loading=null;no(new Error('Редактор не загрузился'))};document.head.appendChild(s)})}
 /* фото из заметки: на сервер, если он доступен; иначе остаётся внутри заметки */
 async function nbUpload(dataUrl){if(!(await useApi())||!apiTok())return dataUrl;const b=await (await fetch(dataUrl)).blob();const f=new File([b],'photo.'+(b.type.split('/')[1]||'webp'),{type:b.type});const r=await WB.upload(f);return r&&r.url||dataUrl}
@@ -2642,7 +2645,7 @@ function nbPromo(){const t=S.tier||0,ok=t>=NB_LVL;
  <div class="nb-mock" aria-hidden="true"><div class="nb-mt"><b>Финансовые рынки · лекция 3</b><span>Ж К Ч ▒</span></div><p class="nb-mh">Облигации</p><p>Доходность к погашению — <mark>ставка, при которой</mark> цена равна сумме дисконтированных платежей.</p><p class="nb-mc">☑ Перерешать задачи 2–4<br>☐ Спросить про дюрацию</p><div class="nb-mg"><i></i><i></i><i></i></div></div>
  ${ok?`<p class="nb-ok">У тебя «${esc(owTier()?owTier().name:'Максимум')}». Блокнот откроется здесь автоматически, как только запустим.</p>`:`<div class="nb-cta"><a class="btn btn-o cta1" href="/pricing">Подключить «Максимум»</a><span class="small muted">Блокнот войдёт в тариф без доплаты</span></div>`}</section>`}
 
-const nbSelHtml=n=>{const fav=myFav(),cur=n.f||'';const opts=[['','Без предмета'],...fav.map(s=>[s.id,s.name]),...(cur&&!fav.some(s=>s.id===cur)&&byId(cur)?[[cur,byId(cur).name]]:[])];return `<label class="nb-fsel"><span class="small muted">Папка</span><select id="nbF">${opts.map(([v,l])=>`<option value="${esc(v)}" ${v===cur?'selected':''}>${esc(l)}</option>`).join('')}</select></label>`};
+const nbSelHtml=n=>{const fav=myFav(),cur=n.f||'';const o=([v,l])=>`<option value="${esc(v)}" ${v===cur?'selected':''}>${esc(l)}</option>`;const subj=[...fav.map(s=>[s.id,s.name]),...(cur&&!nbDir(cur)&&!fav.some(s=>s.id===cur)&&byId(cur)?[[cur,byId(cur).name]]:[])];return `<label class="nb-fsel"><span class="small muted">Папка</span><select id="nbF">${o(['','Без папки'])}${NB.dirs.length?`<optgroup label="Мои папки">${NB.dirs.map(d=>o([d.id,d.name])).join('')}</optgroup>`:''}${subj.length?`<optgroup label="Предметы">${subj.map(o).join('')}</optgroup>`:''}<option value="__new">＋ Новая папка…</option></select></label>`};
 const _RAccNB=R.account;R.account=p=>{p=p||{};if(!S.auth||p.tab!=='nb')return _RAccNB(p);
  if(!nbOpen())return{title:`Блокнот: ${D.brand}`,html:`<div class="wrap cb">${cabNav('nb','')}<div class="phead cb-h"><div><h1 tabindex="-1">Блокнот</h1><p class="d">Скоро: заметки, фото и конспекты в одном месте</p></div></div>${nbPromo()}</div>`,after:cabCounts};
  let n=NB.list.find(x=>x.id===p.n)||NB.list[0];if(!n)n=nbNew();NB.cur=n.id;
@@ -2665,7 +2668,7 @@ document.addEventListener('click',e=>{let b;
  if(b=e.target.closest('[data-nbgo]')){NB.api&&NB.api.focusPos(+b.dataset.nbgo);return}
  if(b=e.target.closest('[data-nbdel]')){if(!b.dataset.arm){b.dataset.arm=1;b.textContent='Точно удалить?';return}NB.list=NB.list.filter(x=>x.id!==b.dataset.nbdel);nbSave();if(!NB.list.length)nbNew();LOC.hash='/account?tab=nb&n='+NB.list[0].id;return}
  if(b=e.target.closest('[data-nbtake]')){e.preventDefault();nbTake(b)}});
-document.addEventListener('change',e=>{if(e.target.id!=='nbF')return;const n=NB.list.find(x=>x.id===NB.cur);if(!n)return;n.f=e.target.value;nbSave();$$('#nbQ').forEach(i=>{const k=i.closest('.ow-kids, .nb-mk');if(k)k.innerHTML=nbTreeKids()});toast('Заметка перенесена: '+nbFName(n.f))});
+document.addEventListener('change',e=>{if(e.target.id!=='nbF')return;const n=NB.list.find(x=>x.id===NB.cur);if(!n)return;if(e.target.value==='__new'){const d=nbDirNew();if(!d){e.target.value=n.f||'';return}n.f=d.id;nbSave();rerender();toast('Папка «'+d.name+'» создана, заметка в ней');return}n.f=e.target.value;nbSave();$$('#nbQ').forEach(i=>{const k=i.closest('.ow-kids, .nb-mk');if(k)k.innerHTML=nbTreeKids()});toast('Заметка перенесена: '+nbFName(n.f))});
 document.addEventListener('input',e=>{if(e.target.id!=='nbQ')return;NB.q=e.target.value;const pos=e.target.selectionStart;$$('#nbQ').forEach(i=>{const k=i.closest('.ow-kids, .nb-mk');if(k){k.innerHTML=nbTreeKids()}});const ni=$$('#nbQ').find(i=>i.closest('.ow-l'))||$('#nbQ');if(ni){ni.focus();try{ni.setSelectionRange(pos,pos)}catch{}}});
 
 /* перенос или копия выделенного текста в другую заметку */
@@ -2697,6 +2700,14 @@ document.addEventListener('click',e=>{if(!NBS)return;let b;
  if(b=e.target.closest('[data-nbsf]')){const [mi,fi]=b.dataset.nbsf.split('|').map(Number),m=NBS.d.materials[mi],f=m.files[fi];const img=/^image\//.test(f.mime||'')||/\.(png|jpe?g|webp|gif)$/i.test(f.name||'');NBS.insert(img?`<p><img src="${esc(f.url)}" alt="${esc(f.name)}"></p>`:`<p><a href="${esc(f.url)}">📎 ${esc(f.name)}</a> <em>(${esc(m.title||m.kind||'')}${m.year?', '+m.year:''})</em></p>`);toast('Файл вставлен в заметку');return nbsClose()}});
 document.addEventListener('input',e=>{if(e.target.id==='nbsQ'&&NBS)$('#nbsB').innerHTML=nbsSubj(myFav(),SUBJECTS.filter(s=>!S.fav.includes(s.id)&&!s.vuc),e.target.value)});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&NBS)nbsClose()});
+
+/* свои папки блокнота */
+function nbDirNew(){const name=(prompt('Название папки','')||'').trim().slice(0,40);if(!name)return null;const d={id:'d-'+wUid(),name};NB.dirs.push(d);nbDirSave();return d}
+const nbTreeRedraw=()=>$$('#nbQ').forEach(i=>{const k=i.closest('.ow-kids, .nb-mk');if(k)k.innerHTML=nbTreeKids()});
+document.addEventListener('click',e=>{let b;
+ if(b=e.target.closest('[data-nbdnew]')){e.preventDefault();const d=nbDirNew();if(!d)return;nbTreeRedraw();const s=$('#nbF');if(s){const n=NB.list.find(x=>x.id===NB.cur);if(n)s.closest('label').outerHTML=nbSelHtml(n)}toast('Папка «'+d.name+'» создана. Нажми «+» рядом с ней, чтобы добавить заметку');return}
+ if(b=e.target.closest('[data-nbdren]')){e.preventDefault();const d=nbDir(b.dataset.nbdren);if(!d)return;const name=(prompt('Новое название папки',d.name)||'').trim().slice(0,40);if(!name)return;d.name=name;nbDirSave();nbTreeRedraw();return}
+ if(b=e.target.closest('[data-nbddel]')){e.preventDefault();const d=nbDir(b.dataset.nbddel);if(!d)return;const k=NB.list.filter(n=>n.f===d.id).length;if(!confirm(`Удалить папку «${d.name}»?${k?` Заметки (${k}) не удалятся, а перейдут в «Без папки».`:''}`))return;NB.list.forEach(n=>{if(n.f===d.id)n.f=''});NB.dirs=NB.dirs.filter(x=>x.id!==d.id);nbDirSave();nbSave();rerender();return}});
 /* «В блокнот» под конспектом темы: копия конспекта становится твоей заметкой в папке предмета */
 const _topicViewNB=topicView;topicView=function(s,t,i,canNotes,canTr){const h=_topicViewNB.apply(this,arguments);if(!(canNotes&&S.auth&&nbOpen()&&t.body))return h;return h.replace('<div class="wk-tf">',`<div class="wk-tf"><button type="button" class="btn btn-oo btn-sm" data-nbtake="${esc(s.id)}|${esc(t.id)}">В блокнот</button>`)};
 function nbTake(b){const [sid,tid]=b.dataset.nbtake.split('|'),box=b.closest('.wk-tb'),det=b.closest('.wk-topic');if(!box)return;
