@@ -1863,3 +1863,81 @@ body.ow-lc .ow-l,body.ow-rc .ow-r{visibility:hidden;overflow:hidden;padding:0;bo
 .sc-vt span{display:flex;flex-direction:column;gap:3px}
 .gc-art.bg-vuc,.ow-dot.bg-vuc,.ow-art.bg-vuc{background-color:#3F4D22;background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.07) 0 14px,transparent 14px 28px)}
 .nb-fe{margin:2px 0 6px 20px;font-size:13px}
+/* ===== Блокнот: верх, телефон ===== */
+.nb-off{margin:0 0 10px;padding:8px 12px;border-radius:10px;background:color-mix(in srgb,var(--orange) 10%,transparent);color:var(--ink-2)}
+.nb-top{display:none}
+.nb-delm{display:none}
+.nb-m{display:none!important}
+.nb-ctxbg{position:fixed;inset:0;z-index:180;background:rgba(38,38,42,.35)}
+.nb-ctxbg[hidden]{display:none}
+@media (max-width:1099px){
+ .nb-top{display:flex;gap:8px;align-items:stretch;margin:4px 0 10px;position:relative}
+ .nb-top .nb-mlist{flex:1;margin:0;padding:0;border:1px solid var(--line);border-radius:14px;background:var(--card)}
+ .nb-top .nb-mlist>summary{display:flex;align-items:center;justify-content:space-between;gap:8px;list-style:none;min-height:48px;padding:0 16px;font-weight:600;font-size:16px;color:var(--ink);cursor:pointer}
+ .nb-top .nb-mlist>summary::-webkit-details-marker{display:none}
+ .nb-top .nb-mlist>summary b{min-width:26px;height:24px;padding:0 8px;border-radius:99px;display:inline-grid;place-items:center;background:color-mix(in srgb,var(--orange) 15%,transparent);color:var(--orange-ink);font-size:13px}
+ .nb-newm{flex:none;width:48px;border:0;border-radius:14px;background:var(--orange);color:#fff;font:600 24px/1 var(--font);cursor:pointer}
+ .nb-newd{display:none}
+ .nb-mkh{display:none}
+}
+@media (max-width:700px){
+ /* список заметок — шторкой снизу */
+ .nb-top .nb-mlist[open]>summary::before{content:"";position:fixed;inset:0;z-index:190;background:rgba(38,38,42,.35)}
+ .nb-top .nb-mlist[open]>.nb-mk{position:fixed;left:0;right:0;bottom:0;z-index:191;max-height:78vh;overflow:auto;padding:8px 14px calc(18px + env(safe-area-inset-bottom));background:var(--card);border-radius:20px 20px 0 0;box-shadow:0 -10px 30px rgba(0,0,0,.18)}
+ .nb-mkh{display:block;margin:6px 4px 10px;font-size:18px;font-weight:700}
+ .nb-mk .nb-q input{font-size:16px;padding:12px 14px}
+ .nb-mk .ow-k{min-height:46px;font-size:16px}
+ .nb-mk .nb-fd{font-size:12.5px;margin-top:14px}
+ .nb-mk .nb-fadd{width:36px;height:36px;font-size:18px}
+ /* верхняя строка: папка и статус */
+ .nb-bar{gap:8px;margin:0 0 10px}
+ .nb-bar .nb-fsel{flex:1;min-width:0}.nb-bar .nb-fsel select{flex:1;min-width:0;width:100%;font-size:15px;padding:10px 30px 10px 12px}
+ .nb-bar .nb-fsel>span{display:none}
+ .nb-bar .sp{display:none}
+ .nb-bar .nb-st{font-size:12px;white-space:nowrap}
+ .nb-bar>.nb-delb{display:none}
+ .nb-src{flex-basis:100%;order:3}
+ .nb-delm{display:block;margin:18px 0 6px;text-align:center}
+ /* панель инструментов: одна строка с прокруткой, прилипает под шапкой */
+ .nb-tools{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;top:64px;margin:0 -16px 8px;border-radius:0;border-left:0;border-right:0;padding:6px 10px;gap:4px;-webkit-overflow-scrolling:touch}
+ .nb-tools::-webkit-scrollbar{display:none}
+ .nb-tools .nb-dsk{display:none!important}
+ .nb-m{display:inline-flex!important}
+ .nb-tools button{flex:none;min-width:40px;height:40px;font-size:15px}
+ .nb-tools .nb-insb{background:var(--orange);color:#fff;font-weight:600;padding:0 12px}
+ .nb-tools .nb-sp-x{display:none}
+ .nb-ttools{position:sticky;top:118px;z-index:3;background:var(--card);overflow-x:auto;flex-wrap:nowrap}
+ .nb-ttools button{flex:none;height:36px}
+ /* меню выделения — плашкой над клавиатурой, не закрывает текст */
+ .nb-bub{position:fixed!important;left:8px!important;right:8px!important;top:auto!important;bottom:max(calc(var(--nb-kb,0px) + 8px),calc(67px + env(safe-area-inset-bottom)))!important;transform:none!important;width:auto!important;max-width:none;flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;border-radius:14px;padding:6px;scrollbar-width:none}
+ .nb-bub::-webkit-scrollbar{display:none}
+ .nb-bub button{flex:none;min-width:40px;height:40px;font-size:16px}
+ .nb-bub .nb-hlc{min-width:26px;width:26px;height:26px;margin:7px 3px}
+ /* меню вставки и выбор заметки — шторкой снизу */
+ .nb-ctx.sheet{position:fixed;left:0!important;right:0;top:auto!important;bottom:0;width:auto;max-height:78vh;z-index:181;border-radius:20px 20px 0 0;padding:10px 12px calc(16px + env(safe-area-inset-bottom));box-shadow:0 -10px 30px rgba(0,0,0,.18)}
+ .nb-ctx.sheet>button{min-height:46px;font-size:16px}
+ .nb-ctx.sheet p{font-size:12px;margin-top:10px}
+ .nb-pick{position:fixed!important;left:8px!important;right:8px;top:auto!important;bottom:calc(var(--nb-kb,0px) + 70px);width:auto;z-index:185}
+ .nb-pick input{font-size:16px}
+ .nb-pl button{min-height:44px;font-size:16px}
+ /* текст удобнее читать */
+ .nb-ed .nb-doc{font-size:17px;padding-bottom:120px}
+ .nb-doc h1{font-size:28px}
+ .nb-doc table{font-size:14.5px}
+ .nb-foot{font-size:12.5px}
+ .nbs{max-height:88vh;padding:14px}
+ .nbs-bg{align-items:end;padding:0}
+ .nbs{width:100%;border-radius:20px 20px 0 0}
+}
+@media (max-width:700px){
+ .nb-tools{align-items:center}
+ .nb-tools .nb-insb{white-space:nowrap;line-height:40px;display:inline-flex!important;align-items:center;justify-content:center}
+ .nb-ctx kbd{display:none}
+ .nb-ctx .nb-ctxr button{min-width:42px;height:42px;font-size:17px}
+}
+@media (max-width:700px){
+ .nb-top .nb-mlist[open]>summary::before{z-index:299}
+ .nb-top .nb-mlist[open]>.nb-mk{z-index:300}
+ .nb-ctxbg{z-index:299}.nb-ctx.sheet{z-index:300}
+ .nbs-bg{z-index:300}
+}
