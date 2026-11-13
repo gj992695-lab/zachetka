@@ -2053,7 +2053,7 @@ function homeSched(){const wd=new Date().getDay(),today=schedWd(),ta=today?sched
 let SCH_ED=null;
 function schedHtml(){const ed=SCH_ED&&S.sched.find(x=>x.id===SCH_ED),today=schedWd(),ta=today?schedDay(today):[],slots=[...new Set(S.sched.map(x=>x.time+'–'+schedEnd(x)))].sort().slice(0,8),tot=S.sched.length;
  const sum=!tot?'':today&&ta.length?`Сегодня ${schedSpan(ta).replace(' · ',', с ').replace('–',' до ')}.`:'Сегодня пар нет.';
- return `<section class="card pad"><div class="pg-h"><h2>${ed?'Изменить пару':'Добавить пару'}</h2>${tot?`<span class="small muted">${sum} На неделе ${plural(tot,'пара','пары','пар')}.</span>`:''}</div><form class="sc-f" id="scF" novalidate>${ed?`<input type="hidden" name="eid" value="${ed.id}">`:''}<label class="fl">День<select class="f" name="day">${WD_S.slice(1).map((d,i)=>`<option value="${i+1}" ${(ed?ed.day:today||1)===i+1?'selected':''}>${d}</option>`).join('')}</select></label><label class="fl">Начало<input type="time" name="time" value="${ed?esc(ed.time):'09:00'}"></label><label class="fl">Конец<input type="time" name="end" value="${ed?esc(schedEnd(ed)):'10:30'}"></label><label class="fl sc-w">Предмет<input type="text" name="title" list="scSubj" maxlength="100" placeholder="Начни вводить название" value="${ed?esc(ed.title):''}"><datalist id="scSubj">${[...myFav(),...SUBJECTS.filter(s=>!S.fav.includes(s.id))].map(s=>`<option value="${esc(s.name)}">`).join('')}</datalist></label><label class="fl">Тип<select class="f" name="kind">${['Лекция','Семинар','Практика',''].map(k=>`<option ${ed&&ed.kind===k?'selected':''}>${k}</option>`).join('')}</select></label><label class="fl">Аудитория<input type="text" name="room" maxlength="20" placeholder="313" value="${ed?esc(ed.room||''):''}"></label><button class="btn btn-o btn-sm">${ed?'Сохранить':'Добавить'}</button>${ed?'<button type="button" class="btn btn-oo btn-sm" data-schc>Отмена</button>':''}</form>${slots.length?`<div class="sc-sl"><span class="small muted">Время как у других пар:</span>${slots.map(x=>`<button type="button" class="tab" data-schs="${x}">${x}</button>`).join('')}</div>`:'<p class="small muted sc-h">Конец подставляется сам: начало плюс полтора часа. Если пара другой длины, поправь.</p>'}</section>
+ return `<section class="card pad"><div class="pg-h"><h2>${ed?'Изменить пару':'Добавить пару'}</h2>${tot?`<span class="small muted">${sum} На неделе ${plural(tot,'пара','пары','пар')}.</span>`:''}</div><form class="sc-f" id="scF" novalidate>${ed?`<input type="hidden" name="eid" value="${ed.id}">`:''}<label class="fl">День<select class="f" name="day">${WD_S.slice(1).map((d,i)=>`<option value="${i+1}" ${(ed?ed.day:today||1)===i+1?'selected':''}>${d}</option>`).join('')}</select></label><label class="fl">Начало<input type="time" name="time" value="${ed?esc(ed.time):'09:00'}"></label><label class="fl">Конец<input type="time" name="end" value="${ed?esc(schedEnd(ed)):'10:30'}"></label><label class="fl sc-w">Предмет<span class="dm-cb sc-cb"><input type="text" name="title" maxlength="100" placeholder="Начни вводить название" value="${ed?esc(ed.title):''}" data-scsubj autocomplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="scSug"><span class="dm-sug sc-sug" id="scSug" role="listbox" hidden></span></span></label><label class="fl">Тип<select class="f" name="kind">${['Лекция','Семинар','Практика',''].map(k=>`<option ${ed&&ed.kind===k?'selected':''}>${k}</option>`).join('')}</select></label><label class="fl">Аудитория<input type="text" name="room" maxlength="20" placeholder="313" value="${ed?esc(ed.room||''):''}"></label><button class="btn btn-o btn-sm">${ed?'Сохранить':'Добавить'}</button>${ed?'<button type="button" class="btn btn-oo btn-sm" data-schc>Отмена</button>':''}</form>${slots.length?`<div class="sc-sl"><span class="small muted">Время как у других пар:</span>${slots.map(x=>`<button type="button" class="tab" data-schs="${x}">${x}</button>`).join('')}</div>`:'<p class="small muted sc-h">Конец подставляется сам: начало плюс полтора часа. Если пара другой длины, поправь.</p>'}</section>
  ${tot?`<div class="sc-week">${[1,2,3,4,5,6].map(d=>{const a=schedDay(d);return a.length?`<section class="card pad ${d===today?'today':''}"><div class="sc-dh"><h3>${WD_S[d]}${d===today?' <span class="tag soon">сегодня</span>':''}</h3><span class="small muted">${schedSpan(a)}</span></div>${schedList(a,true,d===today)}</section>`:''}).join('')}</div>`:'<div class="card pad empty"><p class="muted">Расписание пустое. Добавь пары по одной: день и время следующей подставятся сами.</p></div>'}`}
 const _RAccS=R.account;R.account=p=>{p=p||{};if(!S.auth||p.tab!=='sched')return _RAccS(p);return{title:`Расписание: ${D.brand}`,html:`<div class="wrap cb">${cabNav('sched','')}<div class="phead cb-h"><div><h1 tabindex="-1">Расписание</h1><p class="d">Твои пары по дням с началом и концом. Видишь только ты.</p></div></div><div id="scBox" class="stack">${schedHtml()}</div></div>`,after:cabCounts}};
 document.addEventListener('submit',e=>{const f=e.target;if(f.id!=='scF')return;e.preventDefault();const title=f.title.value.trim();if(!title){toast('Напиши предмет');f.title.focus();return}if(!f.time.value){toast('Укажи время начала');return}if(!f.end.value||tMin(f.end.value)<=tMin(f.time.value)){toast('Конец пары должен быть позже начала');f.end.focus();return}
@@ -2393,8 +2393,61 @@ if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostnam
 {const _hdr14=hdr;hdr=function(){_hdr14.apply(this,arguments);const l=$('#hdr .hlog');if(l)l.setAttribute('href','/login');const b=$('#hdr .cab-b');if(b){const n=(whoAmI()||'?').trim();b.dataset.ini=(n[0]||'?').toUpperCase()}};}
 hdr();
 
+
+/* ---------- расписание: свой выпадающий список предметов (datalist на телефонах почти не работает) ---------- */
+const SC={i:-1,list:[]};
+function scMatch(q){q=norm(q.trim());const all=[...myFav(),...SUBJECTS.filter(s=>!S.fav.includes(s.id))];if(!q)return myFav().slice(0,8);
+ const hit=all.map(s=>{const n=norm(s.name),a=norm(s.alias||'');const w=n.split(/[\s()«»,.-]+/);const sc=n.startsWith(q)?0:w.some(x=>x.startsWith(q))?1:n.includes(q)?2:a.split(/\s+/).some(x=>x.startsWith(q))?3:-1;return[sc,s]}).filter(x=>x[0]>=0);
+ return hit.sort((a,b)=>a[0]-b[0]).slice(0,8).map(x=>x[1])}
+function scDraw(inp){const box=inp.parentElement.querySelector('.sc-sug');if(!box)return;SC.list=scMatch(inp.value);SC.i=-1;
+ if(!SC.list.length||(SC.list.length===1&&norm(SC.list[0].name)===norm(inp.value.trim()))){box.hidden=true;inp.setAttribute('aria-expanded','false');return}
+ const q=norm(inp.value.trim());box.innerHTML=SC.list.map((s,k)=>{const n=esc(s.name),j=q?norm(s.name).indexOf(q):-1;const lbl=j>=0?n.slice(0,j)+'<b>'+n.slice(j,j+q.length)+'</b>'+n.slice(j+q.length):n;return `<button type="button" class="sc-o" role="option" id="scO${k}" data-sco="${k}" tabindex="-1"><span>${lbl}</span>${S.fav.includes(s.id)?'<small>мой</small>':''}</button>`}).join('');
+ box.hidden=false;inp.setAttribute('aria-expanded','true')}
+function scClose(inp){const box=inp&&inp.parentElement.querySelector('.sc-sug');if(box)box.hidden=true;inp&&inp.setAttribute('aria-expanded','false');inp&&inp.removeAttribute('aria-activedescendant')}
+function scPick(inp,k){const s=SC.list[k];if(!s)return;inp.value=s.name;scClose(inp);inp.dispatchEvent(new Event('change',{bubbles:true}))}
+document.addEventListener('input',e=>{if(e.target.matches&&e.target.matches('[data-scsubj]'))scDraw(e.target)});
+document.addEventListener('focusin',e=>{if(e.target.matches&&e.target.matches('[data-scsubj]'))scDraw(e.target)});
+document.addEventListener('focusout',e=>{if(e.target.matches&&e.target.matches('[data-scsubj]')){const t=e.target;setTimeout(()=>{if(document.activeElement!==t)scClose(t)},160)}});
+document.addEventListener('pointerdown',e=>{const o=e.target.closest('[data-sco]');if(!o)return;e.preventDefault();const inp=o.closest('.sc-cb').querySelector('[data-scsubj]');scPick(inp,+o.dataset.sco)});
+document.addEventListener('click',e=>{const o=e.target.closest('[data-sco]');if(!o||e.pointerType)return;const inp=o.closest('.sc-cb').querySelector('[data-scsubj]');scPick(inp,+o.dataset.sco)});
+document.addEventListener('keydown',e=>{const inp=e.target;if(!inp.matches||!inp.matches('[data-scsubj]'))return;const box=inp.parentElement.querySelector('.sc-sug');if(!box||box.hidden)return;
+ if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();SC.i=(SC.i+(e.key==='ArrowDown'?1:-1)+SC.list.length)%SC.list.length;$$('.sc-o',box).forEach((b,k)=>b.classList.toggle('on',k===SC.i));inp.setAttribute('aria-activedescendant','scO'+SC.i);const b=$('#scO'+SC.i);b&&b.scrollIntoView({block:'nearest'})}
+ else if(e.key==='Enter'&&SC.i>=0){e.preventDefault();scPick(inp,SC.i)}else if(e.key==='Escape'){scClose(inp)}});
+
+/* ================= Публичные профили: другие студенты видят аватар, обложку, статус и «Обо мне» =================
+   Профиль уже сохраняется на сервере вместе с личными данными (ключ profile в /api/me/data).
+   Сервер отдаёт только публичные поля: GET /api/profiles?logins=a,b и GET /api/profile/:login.
+   Пока сервер не обновлён (в /api/health нет profiles:true), сайт ничего не запрашивает и честно пишет об этом. */
+const PF={c:{},q:null};
+const pfOn=()=>API_ON&&apiTok()&&window.API_H&&API_H.profiles;
+const PF_KEYS=['nick','st','bio','grp','acc','fr','ban','banP','banY','av'];
+const pfSafe=x=>{if(!x||typeof x!=='object')return null;const o={};PF_KEYS.forEach(k=>{if(x[k]!==undefined&&x[k]!==null)o[k]=x[k]});
+ ['av','ban'].forEach(k=>{const u=String(o[k]||'');if(u&&!(u.startsWith(API+'/')||u.startsWith('/api/')))o[k]='';else if(u.startsWith('/api/'))o[k]=API+u});
+ o.nick=String(o.nick||'').slice(0,32);o.st=String(o.st||'').slice(0,60);o.bio=String(o.bio||'').slice(0,190);o.grp=String(o.grp||'').slice(0,24);return o};
+async function pfFetch(logins){logins=[...new Set((logins||[]).filter(l=>l&&!(l in PF.c)))];if(!logins.length)return;await API_READY;if(!pfOn()){logins.forEach(l=>PF.c[l]=null);return}
+ try{const r=await api('/api/profiles?logins='+encodeURIComponent(logins.slice(0,50).join(',')));const m=r.profiles||{};logins.forEach(l=>{PF.c[l]=m[l]?pfSafe(m[l]):null})}catch{logins.forEach(l=>PF.c[l]=null)}}
+const pfOf=l=>l===S.myLogin?S.prof:(PF.c[l]||null);
+const pfName=l=>{const p=pfOf(l);return p&&(p.nick||'').trim()||l};
+const pfChip=(l,cl='')=>{const p=pfOf(l)||{};return `<a class="pf-chip ${cl}" href="/u/${encodeURIComponent(l)}" title="Профиль ${esc(l)}">${mpAva({...p,nick:pfName(l)},'t')}<span>${esc(pfName(l))}</span></a>`};
+/* карточка чужого профиля: те же детали, что видит владелец */
+function pfCard(l,p){const acc=mpAcc(p);return `<article class="mp-card" style="--acc:${acc}">${mpBanner(p)}<div class="mp-cb">${mpAva({...p,nick:pfName(l)})}${p.st?`<p class="mp-st"><span>${esc(p.st)}</span></p>`:''}<h3>${esc(pfName(l))}</h3><p class="mp-sub">@${esc(l)}${p.grp?' · '+esc(p.grp):''}</p>${p.bio?`<div class="mp-bio"><b>Обо мне</b><p>${esc(p.bio)}</p></div>`:''}</div></article>`}
+R.u=(p,login)=>{login=decodeURIComponent(login||'').trim();if(!login)return R.notfound();
+ const me=S.myLogin&&login===S.myLogin;
+ const head=`<div class="phead cb-h"><div><h1 tabindex="-1">${me?'Мой профиль':'Профиль студента'}</h1><p class="d">${me?'Так тебя видят другие студенты':'@'+esc(login)}</p></div>${me?'<a class="btn btn-o btn-sm" href="/account?tab=prof">Оформить профиль</a>':`<a class="btn btn-o btn-sm" href="/chats?to=${encodeURIComponent(login)}">Написать</a>`}</div>`;
+ return{title:`${me?mpName():login}: ${D.brand}`,html:`<div class="wrap pf-page">${head}<div class="pf-one" id="pfOne">${me?mpCard(S.prof):'<p class="muted">Загружаем профиль…</p>'}</div></div>`,
+  after:async()=>{if(me)return;await pfFetch([login]);const b=$('#pfOne');if(!b)return;const x=PF.c[login];
+   b.innerHTML=x?pfCard(login,x):`<div class="card pad pf-none">${mpAva({nick:login})}<div><h3>@${esc(login)}</h3><p class="muted">${pfOn()?'Этот студент ещё не оформил профиль.':'Профили других студентов появятся, когда обновится сервер сайта.'}</p></div></div>`}}};
+/* «Написать» из профиля: подставляем логин в новую переписку */
+const _RChPF=R.chats;R.chats=p=>{const v=_RChPF(p);if(!p||!p.to||!v.after)return v;const af=v.after;v.after=()=>{af();setTimeout(()=>{const i=$('#dmTo');if(i&&!i.value){i.value=p.to;const t=$('#dmNew textarea');t&&t.focus()}},400)};return v};
+/* сообщения: аватар и имя собеседника, ссылка на его профиль */
+const _dmDrawPF=dmDraw;dmDraw=function(){_dmDrawPF.apply(this,arguments);pfDecorDM();const need=(DM.list||[]).map(t=>t.with).filter(l=>!(l in PF.c));if(need.length)pfFetch(need).then(pfDecorDM)};
+function pfDecorDM(){$$('#dmList .dm-t').forEach(a=>{const id=new URLSearchParams(a.search).get('t'),t=(DM.list||[]).find(x=>String(x.id)===id);if(!t)return;const b=$('b',a);if(!b||a.querySelector('.mp-ava'))return;b.textContent=pfName(t.with);b.insertAdjacentHTML('beforebegin',mpAva({...(pfOf(t.with)||{}),nick:pfName(t.with)},'t'));a.classList.add('pf-dm')});
+ const h=$('#dmThread .dm-h b');if(h&&DM.cur&&!h.closest('.pf-chip')){h.outerHTML=pfChip(DM.cur.with,'pf-h')}}
+/* команда проекта: аватары участников */
+const pfTeam=()=>{const ul=$('.ws-tl');if(!ul||!WS||!WS.p)return;const ls=WS.p.members.map(m=>m.login);const draw=()=>$$('.ws-tl li').forEach((li,k)=>{const l=ls[k],b=$('b',li);if(!l||!b||li.querySelector('.pf-chip'))return;b.outerHTML=`<b>${pfChip(l)}</b>`});draw();pfFetch(ls).then(draw)};
+const _routePF=route;route=function(){_routePF();try{if(/^\/project\//.test(location.pathname))setTimeout(pfTeam,600)}catch{}};
 /* ===== Кабинет на компьютере: рабочее пространство в духе Obsidian, в стилистике сайта (пиксельные значки на узорах). На телефоне всё как было ===== */
-const OW_MQ=matchMedia('(min-width:1100px)'),NB_LVL=750,NB_JS='/nb.51e51f.js';
+const OW_MQ=matchMedia('(min-width:1100px)'),NB_LVL=750,NB_JS='/nb.54612a.js';
 /* пиксельные значки разделов 12×12, как эмблемы на карточках предметов */
 Object.assign(PX,{
  c_over:['.....##.....','....####....','...######...','..########..','.##########.','############','.##########.','.##########.','.####..####.','.####..####.','.####..####.','.####..####.'],
@@ -2468,7 +2521,7 @@ function owTree(cur){const fav=myFav(),dlN=owDl().filter(x=>x.d>=T0).length,un=t
   if(k==='nb')badge=`<em class="soon">${nbOpen()?'бета':'скоро'}</em>`;
   if(k==='subj'&&fav.length)kids=fav.slice(0,12).map(s=>kid(`/subject/${s.id}`,s.name,location.pathname==='/subject/'+s.id,dot(s))).join('');
   if(k==='proj'&&pr.length)kids=pr.slice(0,8).map(x=>kid(`/project/${x.id}`,x.name||'Проект',location.pathname==='/project/'+x.id,'<i class="ow-dot bg-mustard"></i>')).join('');
-  if(k==='nb'&&nbOpen()&&cur==='nb')kids=NB.list.map(n=>kid(`/account?tab=nb&n=${n.id}`,n.title||'Без названия',n.id===NB.cur,'<i class="ow-dot bg-orange"></i>')).join('')+`<button type="button" class="ow-k ow-new" data-nbnew><i class="ow-plus">+</i><span>Новая заметка</span></button>`;
+  if(k==='nb'&&nbOpen()&&cur==='nb')kids=nbTreeKids();
   const head=`<a class="ow-i ${on?'on':''}" href="${h}" ${on?'aria-current="page"':''}>${owIc(k)}<span>${l}</span>${badge}</a>`;
   const open=OW_FOLD[k]!==undefined?OW_FOLD[k]:(on||kids.includes('ow-k on')||k==='subj'||k==='nb');
   return kids?`<div class="ow-f ${open?'open':''}"><button type="button" class="ow-tg" data-owfold="${k}" aria-expanded="${open}" aria-label="${open?'Свернуть':'Развернуть'}: ${l}"><span class="ow-chev" aria-hidden="true"></span></button>${head}<div class="ow-kids">${kids}</div></div>`:`<div class="ow-f">${head}</div>`};
@@ -2537,7 +2590,7 @@ function mpForm(){const p=S.prof,acc=mpAcc(),fr=p.fr||'none',bp=p.ban?'':(p.banP
  <label class="mp-lb">Обо мне <span class="mp-cnt" id="mpCnt">${(p.bio||'').length}/190</span><textarea name="bio" maxlength="190" rows="4" placeholder="Пара слов о себе: что изучаешь, чем увлекаешься">${esc(p.bio||'')}</textarea></label></section></form>`}
 function mpSync(f){const p=S.prof;$$('.mp-fr',f).forEach(l=>l.classList.toggle('on',$('input',l).checked));$$('.mp-bp',f).forEach(l=>l.classList.toggle('on',$('input',l).checked));$$('.mp-acc',f).forEach(l=>{const i=$('input[type=radio]',l);if(i)l.classList.toggle('on',i.checked)});const c=$('#mpCnt');if(c)c.textContent=(p.bio||'').length+'/190'}
 const _RAccMP=R.account;R.account=p=>{p=p||{};if(!S.auth||p.tab!=='prof')return _RAccMP(p);
- return{title:`Профиль: ${D.brand}`,html:`<div class="wrap cb">${cabNav('prof','')}<div class="phead cb-h"><div><h1 tabindex="-1">Профиль</h1><p class="d">Аватар, обложка, статус и цвет. Меняется сразу, сохранять не нужно.</p></div></div><div class="mp-ed">${mpForm()}<div class="mp-pv"><p class="mp-lb">Так видят твой профиль</p><div id="mpPrev">${mpCard()}</div><p class="small muted">Профиль синхронизируется между твоими устройствами.</p></div></div></div>`,after:cabCounts}};
+ return{title:`Профиль: ${D.brand}`,html:`<div class="wrap cb">${cabNav('prof','')}<div class="phead cb-h"><div><h1 tabindex="-1">Профиль</h1><p class="d">Аватар, обложка, статус и цвет. Меняется сразу, сохранять не нужно.</p></div></div><div class="mp-ed">${mpForm()}<div class="mp-pv"><p class="mp-lb">Так видят твой профиль</p><div id="mpPrev">${mpCard()}</div><p class="small muted">${S.myLogin?`Другие студенты видят его на странице <a class="link" href="/u/${encodeURIComponent(S.myLogin)}">latisha.ru/u/${esc(S.myLogin)}</a>, в сообщениях и в командах проектов.`:'Профиль синхронизируется между твоими устройствами.'}${S.myLogin&&!pfOn()?' Чужие профили станут видны после обновления сервера.':''}</p></div></div></div>`,after:cabCounts}};
 let mpT=0;
 document.addEventListener('input',e=>{const f=e.target.closest('#mpF');if(!f)return;const t=e.target,p=S.prof;
  if(t.name==='accOwn'){p.acc=t.value;$$('input[name=acc]',f).forEach(i=>i.checked=false)}else if(t.name==='acc')p.acc=t.value;
@@ -2548,34 +2601,64 @@ document.addEventListener('input',e=>{const f=e.target.closest('#mpF');if(!f)ret
 document.addEventListener('change',e=>{const f=e.target.closest('#mpF');if(f&&['fr','banP','acc','accOwn'].includes(e.target.name)){mpSave();if(e.target.name==='fr'||e.target.name==='acc'||e.target.name==='accOwn'){const a=$('.mp-row .mp-ava',f);if(a)a.outerHTML=mpAva(S.prof,'md')}}});
 document.addEventListener('click',e=>{const b=e.target.closest('[data-mpdel]');if(!b)return;S.prof[b.dataset.mpdel]='';mpSave();toast(b.dataset.mpdel==='av'?'Аватар убран':'Фото обложки убрано');rerender()});
 
-/* ---------- Блокнот: в разработке, тариф «Максимум» (750 ₽). Админ видит рабочую версию ---------- */
-const NB={list:store.get('nb_notes',[]),cur:null,api:null,t:0,loading:null};
-const nbSave=()=>{try{localStorage.setItem('latisha_nb_notes',JSON.stringify(NB.list));return true}catch{toast('В браузере закончилось место для заметок. Удали пару фото: на сервере ограничения не будет');return false}};
-const nbNew=()=>{const n={id:wUid(),title:'',doc:null,at:Date.now()};NB.list.unshift(n);nbSave();return n};
+/* ---------- Блокнот: в разработке, тариф «Максимум» (750 ₽). Админ видит рабочую версию ----------
+   Заметки — личные данные аккаунта (ключ nb): синхронизируются между устройствами через /api/me/data.
+   Фото при включённом сервере загружаются в /api/files, в заметке остаётся только ссылка. */
+PERSONAL.add('nb');
+const nbRead=()=>{let l=store.get('nb',null);if(!Array.isArray(l)){l=_sget('nb_notes',null);if(!Array.isArray(l))try{l=JSON.parse(localStorage.getItem('latisha_nb_notes')||'null')}catch{l=null}l=Array.isArray(l)?l:[];if(l.length)store.set('nb',l)}return l};
+const NB={list:nbRead(),cur:null,api:null,t:0,loading:null,q:''};
+const _wlpNB=wLoadPersonal;wLoadPersonal=function(){_wlpNB.apply(this,arguments);NB.list=nbRead()};
+const nbSave=()=>{const j=JSON.stringify(NB.list);if(j.length>4e6){toast('Заметки занимают слишком много места в браузере. Удали пару фото или включи сервер');return false}store.set('nb',NB.list);return true};
+const nbText=d=>{let t='';const w=n=>{if(!n||t.length>4000)return;if(n.text)t+=n.text+' ';(n.content||[]).forEach(w)};if(d&&typeof d==='object')w(d);else if(typeof d==='string')t=d.replace(/<[^>]+>/g,' ');return t.replace(/\s+/g,' ').trim().slice(0,4000)};
+const nbNew=(o={})=>{const n={id:wUid(),title:o.title||'',doc:o.doc||null,at:Date.now(),f:o.f||'',src:o.src||null,txt:nbText(o.doc)};NB.list.unshift(n);nbSave();return n};
+const nbFolders=()=>{const g=new Map();NB.list.forEach(n=>{const k=n.f||'';if(!g.has(k))g.set(k,[]);g.get(k).push(n)});return [...g.entries()].sort((a,b)=>a[0]===''?1:b[0]===''?-1:(byId(a[0])||{name:a[0]}).name.localeCompare((byId(b[0])||{name:b[0]}).name,'ru'))};
+const nbFName=k=>k?(byId(k)||{name:'Предмет'}).name:'Без предмета';
+const nbMatch=(n,q)=>!q||norm((n.title||'')+' '+(n.txt||'')).includes(q);
+function nbTreeKids(){const q=norm(NB.q.trim());const rows=nbFolders().map(([f,ns])=>{const vis=ns.filter(n=>nbMatch(n,q));if(!vis.length)return '';
+  return `<p class="nb-fd"><i class="ow-dot bg-${f&&byId(f)?(KIND[kindOf(byId(f))]||[])[1]||'orange':'orange'}"></i>${esc(nbFName(f))}<button type="button" class="nb-fadd" data-nbnew="${esc(f)}" title="Новая заметка в папке" aria-label="Новая заметка: ${esc(nbFName(f))}">+</button></p>${vis.map(n=>`<a class="ow-k nb-k ${n.id===NB.cur?'on':''}" href="/account?tab=nb&n=${n.id}" data-nid="${n.id}"><span>${esc(n.title||'Без названия')}</span></a>`).join('')}`}).join('');
+ return `<label class="nb-q"><input type="search" id="nbQ" placeholder="Поиск по заметкам" value="${esc(NB.q)}" aria-label="Поиск по заметкам"></label>${rows||`<p class="nb-none">${q?'Ничего не нашлось':'Заметок пока нет'}</p>`}<button type="button" class="ow-k ow-new" data-nbnew><i class="ow-plus">+</i><span>Новая заметка</span></button>`}
 function nbLoad(){if(window.LatNB)return Promise.resolve();if(NB.loading)return NB.loading;return NB.loading=new Promise((ok,no)=>{const s=document.createElement('script');s.src=NB_JS;s.onload=ok;s.onerror=()=>{NB.loading=null;no(new Error('Редактор не загрузился'))};document.head.appendChild(s)})}
-const NB_FEAT=[['Заголовки, списки и чек-листы','как в Obsidian и Notion: Ctrl+B, Ctrl+I, «#» в начале строки — заголовок'],['Форматирование как в Telegram','выдели текст: жирный, курсив, зачёркнутый, моноширинный, спойлер, маркер, ссылка'],['Фото и коллажи','перетащи несколько фото — сложатся альбомом, как в Telegram. Сжимаем сами, место не кончится'],['Конспекты сайта у себя','забираешь конспект с сайта в блокнот и дописываешь, выделяешь, разбираешь'],['Синхронизация','заметки хранятся на сервере: начал на ноутбуке, продолжил с телефона']];
+/* фото из заметки: на сервер, если он доступен; иначе остаётся внутри заметки */
+async function nbUpload(dataUrl){if(!(await useApi())||!apiTok())return dataUrl;const b=await (await fetch(dataUrl)).blob();const f=new File([b],'photo.'+(b.type.split('/')[1]||'webp'),{type:b.type});const r=await WB.upload(f);return r&&r.url||dataUrl}
+const NB_FEAT=[['Заголовки, списки и чек-листы','как в Obsidian и Notion: Ctrl+B, Ctrl+I, «#» в начале строки — заголовок'],['Форматирование как в Telegram','выдели текст: жирный, курсив, зачёркнутый, моноширинный, спойлер, маркер, ссылка'],['Фото и коллажи','перетащи несколько фото — сложатся альбомом, как в Telegram. Сжимаем сами, место не кончится'],['Конспекты сайта у себя','забираешь конспект с сайта в блокнот и дописываешь, выделяешь, разбираешь'],['Синхронизация','заметки хранятся на сервере: начал на ноутбуке, продолжил с телефона'],['Папки по предметам и поиск','заметки сами раскладываются по предметам, поиск по тексту всех заметок']];
 function nbPromo(){const t=S.tier||0,ok=t>=NB_LVL;
  return `<section class="card pad nb-soon"><div class="nb-sh"><span class="nb-tag">В разработке</span><span class="nb-tag nb-tag-o">Тариф «Максимум» · ${rub(NB_LVL)} в месяц</span></div><h2>Блокнот: свои заметки прямо на сайте</h2><p class="muted">Делаем редактор в духе Obsidian, только без установки и переносов файлов: всё живёт в кабинете и синхронизируется через сайт.</p>
  <ul class="nb-feat">${NB_FEAT.map(([a,b])=>`<li><b>${a}</b><span>${b}</span></li>`).join('')}</ul>
  <div class="nb-mock" aria-hidden="true"><div class="nb-mt"><b>Финансовые рынки · лекция 3</b><span>Ж К Ч ▒</span></div><p class="nb-mh">Облигации</p><p>Доходность к погашению — <mark>ставка, при которой</mark> цена равна сумме дисконтированных платежей.</p><p class="nb-mc">☑ Перерешать задачи 2–4<br>☐ Спросить про дюрацию</p><div class="nb-mg"><i></i><i></i><i></i></div></div>
  ${ok?`<p class="nb-ok">У тебя «${esc(owTier()?owTier().name:'Максимум')}». Блокнот откроется здесь автоматически, как только запустим.</p>`:`<div class="nb-cta"><a class="btn btn-o cta1" href="/pricing">Подключить «Максимум»</a><span class="small muted">Блокнот войдёт в тариф без доплаты</span></div>`}</section>`}
+
+const nbSelHtml=n=>{const fav=myFav(),cur=n.f||'';const opts=[['','Без предмета'],...fav.map(s=>[s.id,s.name]),...(cur&&!fav.some(s=>s.id===cur)&&byId(cur)?[[cur,byId(cur).name]]:[])];return `<label class="nb-fsel"><span class="small muted">Папка</span><select id="nbF">${opts.map(([v,l])=>`<option value="${esc(v)}" ${v===cur?'selected':''}>${esc(l)}</option>`).join('')}</select></label>`};
 const _RAccNB=R.account;R.account=p=>{p=p||{};if(!S.auth||p.tab!=='nb')return _RAccNB(p);
  if(!nbOpen())return{title:`Блокнот: ${D.brand}`,html:`<div class="wrap cb">${cabNav('nb','')}<div class="phead cb-h"><div><h1 tabindex="-1">Блокнот</h1><p class="d">Скоро: заметки, фото и конспекты в одном месте</p></div></div>${nbPromo()}</div>`,after:cabCounts};
  let n=NB.list.find(x=>x.id===p.n)||NB.list[0];if(!n)n=nbNew();NB.cur=n.id;
- return{title:`${n.title||'Блокнот'}: ${D.brand}`,html:`<div class="wrap cb">${cabNav('nb','')}<div class="nb-adm"><span class="nb-tag">Бета для администратора</span><span class="small muted">Заметки пока сохраняются только в этом браузере. Пользователи видят экран «В разработке».</span><span class="sp"></span><button type="button" class="link" data-nbdel="${n.id}">Удалить заметку</button></div><div class="nb-wrap" id="nbBox"><p class="muted">Загружаем редактор…</p></div><details class="nb-prev"><summary>Как видят блокнот пользователи</summary>${nbPromo()}</details></div>`,
+ const sync=API_ON&&apiTok()?'Синхронизируется между твоими устройствами.':'Сервер сейчас недоступен: заметки сохраняются в этом браузере и уйдут на сервер, когда он ответит.';
+ return{title:`${n.title||'Блокнот'}: ${D.brand}`,html:`<div class="wrap cb">${cabNav('nb','')}<div class="nb-adm"><span class="nb-tag">Бета для администратора</span><span class="small muted">${sync} Пользователи видят экран «В разработке».</span></div>
+ <div class="nb-bar">${nbSelHtml(n)}${n.src?`<a class="small link" href="/subject/${esc(n.src.s)}">Конспект с сайта: ${esc((byId(n.src.s)||{name:''}).name)}</a>`:''}<span class="sp"></span><span class="nb-st" id="nbSt" aria-live="polite">Сохранено</span><button type="button" class="link" data-nbdel="${n.id}">Удалить</button></div>
+ <details class="nb-mlist"><summary>Все заметки (${NB.list.length})</summary><div class="nb-mk">${nbTreeKids()}</div></details>
+ <div class="nb-wrap" id="nbBox"><p class="muted">Загружаем редактор…</p></div><details class="nb-prev"><summary>Как видят блокнот пользователи</summary>${nbPromo()}</details></div>`,
   after:()=>{cabCounts();nbMount(n)}}};
 async function nbMount(n){const box=$('#nbBox');if(!box)return;if(NB.api){try{NB.api.destroy()}catch{}NB.api=null}
  try{await nbLoad()}catch(e){box.innerHTML=`<p class="muted">${esc(e.message)}. Обнови страницу.</p>`;return}
  if(!$('#nbBox')||NB.cur!==n.id)return;
- NB.api=window.LatNB.mount(box,{doc:n.doc,onChange:(doc,title)=>{n.doc=doc;n.at=Date.now();const ch=n.title!==title;n.title=title;clearTimeout(NB.t);NB.t=setTimeout(()=>{nbSave();const st=$('#nbSt');if(st)st.textContent='Сохранено'},500);const st=$('#nbSt');if(st)st.textContent='Сохраняем…';
-  if(ch){const a=$(`.ow-l a[href="/account?tab=nb&n=${n.id}"] span`);if(a)a.textContent=title||'Без названия'}const ol=$('#nbOl');if(ol)ol.innerHTML=owOutline()}});
- box.insertAdjacentHTML('beforeend','<p class="nb-st" id="nbSt" aria-live="polite">Сохранено</p>');const ol=$('#nbOl');if(ol)ol.innerHTML=owOutline();else{const r=$('.ow-r');if(r)r.insertAdjacentHTML('afterbegin',`<div id="nbOl">${owOutline()}</div>`)}
+ NB.api=window.LatNB.mount(box,{doc:n.doc,upload:nbUpload,onChange:(doc,title)=>{n.doc=doc;n.at=Date.now();n.txt=nbText(doc);const ch=n.title!==title;n.title=title;clearTimeout(NB.t);NB.t=setTimeout(()=>{nbSave();const st=$('#nbSt');if(st)st.textContent='Сохранено'},500);const st=$('#nbSt');if(st)st.textContent='Сохраняем…';
+  if(ch)$$(`a[data-nid="${n.id}"] span`).forEach(a=>a.textContent=title||'Без названия');const ol=$('#nbOl');if(ol)ol.innerHTML=owOutline()}});
+ if(typeof n.doc==='string'){n.doc=NB.api.editor.getJSON();n.txt=nbText(n.doc);nbSave()}
+ const ol=$('#nbOl');if(ol)ol.innerHTML=owOutline();else{const r=$('.ow-r');if(r)r.insertAdjacentHTML('afterbegin',`<div id="nbOl">${owOutline()}</div>`)}
  if(!n.title)NB.api.editor.commands.focus('start')}
 document.addEventListener('click',e=>{let b;
- if(b=e.target.closest('[data-nbnew]')){e.preventDefault();if(!nbOpen())return;const n=nbNew();LOC.hash='/account?tab=nb&n='+n.id;return}
+ if(b=e.target.closest('[data-nbnew]')){e.preventDefault();if(!nbOpen())return;const n=nbNew({f:b.dataset.nbnew||''});LOC.hash='/account?tab=nb&n='+n.id;return}
  if(b=e.target.closest('[data-nbgo]')){NB.api&&NB.api.focusPos(+b.dataset.nbgo);return}
- if(b=e.target.closest('[data-nbdel]')){if(!b.dataset.arm){b.dataset.arm=1;b.textContent='Точно удалить?';return}NB.list=NB.list.filter(x=>x.id!==b.dataset.nbdel);nbSave();if(!NB.list.length)nbNew();LOC.hash='/account?tab=nb&n='+NB.list[0].id}});
-
+ if(b=e.target.closest('[data-nbdel]')){if(!b.dataset.arm){b.dataset.arm=1;b.textContent='Точно удалить?';return}NB.list=NB.list.filter(x=>x.id!==b.dataset.nbdel);nbSave();if(!NB.list.length)nbNew();LOC.hash='/account?tab=nb&n='+NB.list[0].id;return}
+ if(b=e.target.closest('[data-nbtake]')){e.preventDefault();nbTake(b)}});
+document.addEventListener('change',e=>{if(e.target.id!=='nbF')return;const n=NB.list.find(x=>x.id===NB.cur);if(!n)return;n.f=e.target.value;nbSave();$$('#nbQ').forEach(i=>{const k=i.closest('.ow-kids, .nb-mk');if(k)k.innerHTML=nbTreeKids()});toast('Заметка перенесена: '+nbFName(n.f))});
+document.addEventListener('input',e=>{if(e.target.id!=='nbQ')return;NB.q=e.target.value;const pos=e.target.selectionStart;$$('#nbQ').forEach(i=>{const k=i.closest('.ow-kids, .nb-mk');if(k){k.innerHTML=nbTreeKids()}});const ni=$$('#nbQ').find(i=>i.closest('.ow-l'))||$('#nbQ');if(ni){ni.focus();try{ni.setSelectionRange(pos,pos)}catch{}}});
+/* «В блокнот» под конспектом темы: копия конспекта становится твоей заметкой в папке предмета */
+const _topicViewNB=topicView;topicView=function(s,t,i,canNotes,canTr){const h=_topicViewNB.apply(this,arguments);if(!(canNotes&&S.auth&&nbOpen()&&t.body))return h;return h.replace('<div class="wk-tf">',`<div class="wk-tf"><button type="button" class="btn btn-oo btn-sm" data-nbtake="${esc(s.id)}|${esc(t.id)}">В блокнот</button>`)};
+function nbTake(b){const [sid,tid]=b.dataset.nbtake.split('|'),box=b.closest('.wk-tb'),det=b.closest('.wk-topic');if(!box)return;
+ const ex=NB.list.find(n=>n.src&&n.src.s===sid&&n.src.t===tid);if(ex&&!b.dataset.arm){b.dataset.arm=1;b.textContent='Уже в блокноте. Ещё копию?';const a=document.createElement('a');a.className='link small';a.href='/account?tab=nb&n='+ex.id;a.textContent='Открыть';b.after(a);return}
+ const c=box.cloneNode(true);$$('.wk-tf,.wk-qz,script,button,input,label',c).forEach(x=>x.remove());const title=det?($('.wk-tt',det)||{}).textContent||'Конспект':'Конспект',s=byId(sid);
+ const html=`<h1>${esc(title)}</h1><p><em>Конспект с сайта · ${esc(s?s.name:'')}</em></p>${c.innerHTML}`;
+ const n=nbNew({title,doc:html,f:sid,src:{s:sid,t:tid}});toast('Конспект в блокноте, можно дописывать');LOC.hash='/account?tab=nb&n='+n.id}
 window.addEventListener('popstate',LOC.pop);shell();route();
 
 /* (см. CSS .dark-cat) */
