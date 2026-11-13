@@ -1857,3 +1857,8 @@ body.ow-lc .ow-l,body.ow-rc .ow-r{visibility:hidden;overflow:hidden;padding:0;bo
 .nb-tools{gap:1px;padding:5px}
 .nb-tools button{min-width:30px;padding:0 7px;font-size:13.5px}
 .nb-tools .nb-sep{margin:0 2px}
+.sc-vuc{margin-top:14px;display:flex;flex-direction:column;gap:8px}
+.sc-vt{display:flex;gap:12px;align-items:flex-start;cursor:pointer}
+.sc-vt input{width:20px;height:20px;margin-top:2px;accent-color:var(--orange);flex:none}
+.sc-vt span{display:flex;flex-direction:column;gap:3px}
+.gc-art.bg-vuc,.ow-dot.bg-vuc,.ow-art.bg-vuc{background-color:#3F4D22;background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.07) 0 14px,transparent 14px 28px)}
