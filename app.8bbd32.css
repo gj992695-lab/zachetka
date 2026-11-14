@@ -2016,3 +2016,12 @@ body.nb-drag .nb-fe{color:var(--orange-ink)}
 @media(max-width:700px){#scF.sc-f{grid-template-columns:1fr 1fr}#scF .sc-dtw,#scF .sc-w{grid-column:1/-1}.sc-cal{width:min(320px,calc(100vw - 40px))}.sc-wn b{font-size:15.5px;flex:1}.sc-lg{width:100%}.sc-lg i:first-child{margin-left:0}}
 @media(max-width:700px){#scF .sc-rp{grid-column:1/-1}.sc-wn b{text-align:center}}
 .sc-dtw[hidden]{display:none}
+/* списки в блокноте: вернуть номера и маркеры (общий сброс ul,ol их убирал) */
+.nb-doc ol{list-style:decimal;padding-left:1.7em}
+.nb-doc ol ol{list-style:lower-alpha}
+.nb-doc ol ol ol{list-style:lower-roman}
+.nb-doc ul:not([data-type=taskList]){list-style:disc;padding-left:1.5em}
+.nb-doc ul:not([data-type=taskList]) ul:not([data-type=taskList]){list-style:circle}
+.nb-doc ul:not([data-type=taskList]) ul:not([data-type=taskList]) ul:not([data-type=taskList]){list-style:square}
+.nb-doc li::marker{color:var(--orange-ink);font-weight:600}
+.nb-doc li>p{margin:.15em 0}
