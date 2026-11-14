@@ -2015,3 +2015,4 @@ body.nb-drag .nb-fe{color:var(--orange-ink)}
 .sc-week .past{opacity:.62}
 @media(max-width:700px){#scF.sc-f{grid-template-columns:1fr 1fr}#scF .sc-dtw,#scF .sc-w{grid-column:1/-1}.sc-cal{width:min(320px,calc(100vw - 40px))}.sc-wn b{font-size:15.5px;flex:1}.sc-lg{width:100%}.sc-lg i:first-child{margin-left:0}}
 @media(max-width:700px){#scF .sc-rp{grid-column:1/-1}.sc-wn b{text-align:center}}
+.sc-dtw[hidden]{display:none}
