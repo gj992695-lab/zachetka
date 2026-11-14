@@ -1941,3 +1941,12 @@ body.ow-lc .ow-l,body.ow-rc .ow-r{visibility:hidden;overflow:hidden;padding:0;bo
  .nb-ctxbg{z-index:299}.nb-ctx.sheet{z-index:300}
  .nbs-bg{z-index:300}
 }
+/* блокнот: шапка уезжает при прокрутке вниз */
+.hdr,.ow-tabs,.ow-l,.ow-r,.nb-tools{transition:transform .22s ease,top .22s ease,height .22s ease}
+body.nb-hide .hdr{transform:translateY(-100%)}
+body.nb-hide .ow-tabs{top:-48px}
+body.nb-hide .nb-tools{top:8px}
+@media (min-width:1100px){body.nb-hide .ow-l,body.nb-hide .ow-r{top:0;height:100vh}}
+@media (max-width:700px){body.nb-hide .nb-tools{top:0}body.nb-hide .nb-ttools{top:54px}}
+.ow-olp.cl{padding-bottom:10px}.ow-olp.cl .ow-ph{margin-bottom:0}
+.ow-olp .ow-ib{font-size:13px;font-weight:500}
