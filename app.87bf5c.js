@@ -2628,13 +2628,25 @@ const _wlpNB=wLoadPersonal;wLoadPersonal=function(){_wlpNB.apply(this,arguments)
 const nbSave=()=>{const j=JSON.stringify(NB.list);if(j.length>4e6){toast('Заметки занимают слишком много места в браузере. Удали пару фото или включи сервер');return false}store.set('nb',NB.list);return true};
 const nbText=d=>{let t='';const w=n=>{if(!n||t.length>4000)return;if(n.text)t+=n.text+' ';(n.content||[]).forEach(w)};if(d&&typeof d==='object')w(d);else if(typeof d==='string')t=d.replace(/<[^>]+>/g,' ');return t.replace(/\s+/g,' ').trim().slice(0,4000)};
 const nbNew=(o={})=>{const n={id:wUid(),title:o.title||'',doc:o.doc||null,at:Date.now(),f:o.f||'',src:o.src||null,txt:nbText(o.doc)};NB.list.unshift(n);nbSave();return n};
-const nbFolders=()=>{const g=new Map();NB.dirs.forEach(d=>g.set(d.id,[]));NB.list.forEach(n=>{const k=n.f&&(nbDir(n.f)||byId(n.f))?n.f:'';if(!g.has(k))g.set(k,[]);g.get(k).push(n)});const rank=k=>k===''?2:nbDir(k)?0:1;return [...g.entries()].sort((a,b)=>rank(a[0])-rank(b[0])||nbFName(a[0]).localeCompare(nbFName(b[0]),'ru'))};
+const nbDK=d=>d&&d.p&&nbDir(d.p)&&d.p!==d.id?d.p:'';
+const nbSub=p=>NB.dirs.filter(d=>nbDK(d)===p).sort((a,b)=>a.name.localeCompare(b.name,'ru'));
+const nbUnder=(a,b)=>{let x=nbDir(a),g=0;while(x&&g++<60){if(x.id===b)return true;x=nbDir(nbDK(x))}return false};
+const nbNK=n=>n.f&&(nbDir(n.f)||byId(n.f))?n.f:'';
+const nbPath=k=>{const o=[];let x=nbDir(k),g=0;while(x&&g++<60){o.unshift(x.name);x=nbDir(nbDK(x))}return o.join(' / ')};
+const nbDirFlat=(p='',dep=0,skip='')=>nbSub(p).filter(d=>d.id!==skip).flatMap(d=>[{d,dep},...nbDirFlat(d.id,dep+1,skip)]);
+const nbFC=()=>store.get('nb_fc',[])||[];
 const nbDir=k=>NB.dirs.find(d=>d.id===k);
 const nbFName=k=>!k?'Без папки':nbDir(k)?nbDir(k).name:(byId(k)||{name:'Предмет'}).name;
 const nbMatch=(n,q)=>!q||norm((n.title||'')+' '+(n.txt||'')).includes(q);
-function nbTreeKids(){const q=norm(NB.q.trim());const rows=nbFolders().map(([f,ns])=>{const vis=ns.filter(n=>nbMatch(n,q));const own=!!nbDir(f);if(!vis.length&&!(own&&!q))return '';
-  return `<p class="nb-fd"><i class="ow-dot bg-${f&&byId(f)?(KIND[kindOf(byId(f))]||[])[1]||'orange':'orange'}"></i>${esc(nbFName(f))}${own?`<button type="button" class="nb-fadd" data-nbdren="${f}" title="Переименовать папку" aria-label="Переименовать папку ${esc(nbFName(f))}">✎</button><button type="button" class="nb-fadd" data-nbddel="${f}" title="Удалить папку (заметки останутся)" aria-label="Удалить папку ${esc(nbFName(f))}">×</button>`:''}<button type="button" class="nb-fadd" data-nbnew="${esc(f)}" title="Новая заметка в папке" aria-label="Новая заметка: ${esc(nbFName(f))}">+</button></p>${!vis.length?'<p class="nb-none nb-fe">Пустая папка</p>':''}${vis.map(n=>`<a class="ow-k nb-k ${n.id===NB.cur?'on':''}" href="/account?tab=nb&n=${n.id}" data-nid="${n.id}"><span>${esc(n.title||'Без названия')}</span></a>`).join('')}`}).join('');
- return `<label class="nb-q"><input type="search" id="nbQ" placeholder="Поиск по заметкам" value="${esc(NB.q)}" aria-label="Поиск по заметкам"></label>${rows||`<p class="nb-none">${q?'Ничего не нашлось':'Заметок пока нет'}</p>`}<button type="button" class="ow-k ow-new" data-nbnew><i class="ow-plus">+</i><span>Новая заметка</span></button><button type="button" class="ow-k ow-new" data-nbdnew><i class="ow-plus">▣</i><span>Новая папка</span></button>`}
+function nbTreeKids(){const q=norm(NB.q.trim()),fc=nbFC();
+ const hit=f=>NB.list.some(n=>nbNK(n)===f&&nbMatch(n,q))||(nbDir(f)&&nbSub(f).some(d=>hit(d.id)));
+ const note=(n,dep)=>`<a class="ow-k nb-k ${n.id===NB.cur?'on':''}" href="/account?tab=nb&n=${n.id}" data-nid="${n.id}" draggable="true" style="--d:${dep}"><span>${esc(n.title||'Без названия')}</span></a>`;
+ const fold=(f,dep)=>{const own=!!nbDir(f);if(q&&!hit(f))return '';const ns=NB.list.filter(n=>nbNK(n)===f&&nbMatch(n,q)),sub=own?nbSub(f):[],cl=!q&&fc.includes(f),dot=f&&byId(f)?(KIND[kindOf(byId(f))]||[])[1]||'orange':'orange';
+  return `<p class="nb-fd" data-drop="${esc(f)}" ${own?'draggable="true" data-dragd="'+f+'"':''} style="--d:${dep}"><button type="button" class="nb-tg" data-nbfc="${esc(f)}" aria-expanded="${!cl}" aria-label="${cl?'Развернуть':'Свернуть'} папку">${cl?'▸':'▾'}</button><i class="ow-dot bg-${dot}"></i><span class="nb-fn" title="${esc(own?nbPath(f):nbFName(f))}">${esc(nbFName(f))}</span>${own?`<button type="button" class="nb-fadd nb-fmb" data-nbfm="${f}" title="Действия с папкой" aria-label="Действия с папкой ${esc(nbFName(f))}">⋯</button>`:''}<button type="button" class="nb-fadd" data-nbnew="${esc(f)}" title="Новая заметка в папке" aria-label="Новая заметка: ${esc(nbFName(f))}">+</button></p>`+(cl?'':`<div class="nb-fk">${sub.map(d=>fold(d.id,dep+1)).join('')}${ns.map(n=>note(n,dep+1)).join('')}${!ns.length&&!sub.length?`<p class="nb-none nb-fe" data-drop="${esc(f)}" style="--d:${dep}">${f?'Пустая папка — перетащи сюда заметку':'Перетащи сюда, чтобы убрать из папки'}</p>`:''}</div>`)};
+ const subj=[...new Set(NB.list.map(nbNK).filter(f=>f&&!nbDir(f)))].sort((a,b)=>nbFName(a).localeCompare(nbFName(b),'ru'));
+ const loose=NB.list.some(n=>!nbNK(n));
+ const rows=[...nbSub('').map(d=>fold(d.id,0)),...subj.map(f=>fold(f,0)),(loose||NB.dirs.length)?fold('',0):''].join('');
+ return `<label class="nb-q"><input type="search" id="nbQ" placeholder="Поиск по заметкам" value="${esc(NB.q)}" aria-label="Поиск по заметкам"></label><div class="nb-tree">${rows||`<p class="nb-none">${q?'Ничего не нашлось':'Заметок пока нет'}</p>`}</div><button type="button" class="ow-k ow-new" data-nbnew><i class="ow-plus">+</i><span>Новая заметка</span></button><button type="button" class="ow-k ow-new" data-nbdnew><i class="ow-plus">▣</i><span>Новая папка</span></button>${NB.list.length>1||NB.dirs.length?'<p class="nb-hint small muted">Заметки и папки можно перетаскивать мышью</p>':''}`}
 function nbLoad(){if(window.LatNB)return Promise.resolve();if(NB.loading)return NB.loading;return NB.loading=new Promise((ok,no)=>{const s=document.createElement('script');s.src=NB_JS;s.onload=ok;s.onerror=()=>{NB.loading=null;no(new Error('Редактор не загрузился'))};document.head.appendChild(s)})}
 /* фото из заметки: на сервер, если он доступен; иначе остаётся внутри заметки */
 async function nbUpload(dataUrl){if(!(await useApi())||!apiTok())return dataUrl;const b=await (await fetch(dataUrl)).blob();const f=new File([b],'photo.'+(b.type.split('/')[1]||'webp'),{type:b.type});const r=await WB.upload(f);return r&&r.url||dataUrl}
@@ -2645,7 +2657,7 @@ function nbPromo(){const t=S.tier||0,ok=t>=NB_LVL;
  <div class="nb-mock" aria-hidden="true"><div class="nb-mt"><b>Финансовые рынки · лекция 3</b><span>Ж К Ч ▒</span></div><p class="nb-mh">Облигации</p><p>Доходность к погашению — <mark>ставка, при которой</mark> цена равна сумме дисконтированных платежей.</p><p class="nb-mc">☑ Перерешать задачи 2–4<br>☐ Спросить про дюрацию</p><div class="nb-mg"><i></i><i></i><i></i></div></div>
  <div class="nb-cta"><a class="btn btn-o cta1" href="/pricing">Подключить «Максимум»</a><span class="small muted">Блокнот входит в тариф без доплаты</span></div></section>`}
 
-const nbSelHtml=n=>{const fav=myFav(),cur=n.f||'';const o=([v,l])=>`<option value="${esc(v)}" ${v===cur?'selected':''}>${esc(l)}</option>`;const subj=[...fav.map(s=>[s.id,s.name]),...(cur&&!nbDir(cur)&&!fav.some(s=>s.id===cur)&&byId(cur)?[[cur,byId(cur).name]]:[])];return `<label class="nb-fsel"><span class="small muted">Папка</span><select id="nbF">${o(['','Без папки'])}${NB.dirs.length?`<optgroup label="Мои папки">${NB.dirs.map(d=>o([d.id,d.name])).join('')}</optgroup>`:''}${subj.length?`<optgroup label="Предметы">${subj.map(o).join('')}</optgroup>`:''}<option value="__new">＋ Новая папка…</option></select></label>`};
+const nbSelHtml=n=>{const fav=myFav(),cur=n.f||'';const o=([v,l])=>`<option value="${esc(v)}" ${v===cur?'selected':''}>${esc(l)}</option>`;const subj=[...fav.map(s=>[s.id,s.name]),...(cur&&!nbDir(cur)&&!fav.some(s=>s.id===cur)&&byId(cur)?[[cur,byId(cur).name]]:[])];return `<label class="nb-fsel"><span class="small muted">Папка</span><select id="nbF">${o(['','Без папки'])}${NB.dirs.length?`<optgroup label="Мои папки">${nbDirFlat().map(({d,dep})=>o([d.id,'\u00a0\u00a0'.repeat(dep)+(dep?'└ ':'')+d.name])).join('')}</optgroup>`:''}${subj.length?`<optgroup label="Предметы">${subj.map(o).join('')}</optgroup>`:''}<option value="__new">＋ Новая папка…</option></select></label>`};
 const _RAccNB=R.account;R.account=p=>{p=p||{};if(!S.auth||p.tab!=='nb')return _RAccNB(p);
  if(!nbOpen())return{title:`Блокнот: ${D.brand}`,html:`<div class="wrap cb">${cabNav('nb','')}<div class="phead cb-h"><div><h1 tabindex="-1">Блокнот</h1><p class="d">Заметки, фото и конспекты в одном месте</p></div></div>${nbPromo()}</div>`,after:cabCounts};
  let n=NB.list.find(x=>x.id===p.n)||NB.list[0];if(!n)n=nbNew();NB.cur=n.id;
@@ -2700,12 +2712,50 @@ document.addEventListener('input',e=>{if(e.target.id==='nbsQ'&&NBS)$('#nbsB').in
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&NBS)nbsClose()});
 
 /* свои папки блокнота */
-function nbDirNew(){const name=(prompt('Название папки','')||'').trim().slice(0,40);if(!name)return null;const d={id:'d-'+wUid(),name};NB.dirs.push(d);nbDirSave();return d}
+function nbDirNew(par=''){const name=(prompt(par?'Название папки внутри «'+nbFName(par)+'»':'Название папки','')||'').trim().slice(0,40);if(!name)return null;const d={id:'d-'+wUid(),name};if(par&&nbDir(par))d.p=par;NB.dirs.push(d);nbDirSave();return d}
 const nbTreeRedraw=()=>$$('#nbQ').forEach(i=>{const k=i.closest('.ow-kids, .nb-mk');if(k)k.innerHTML=nbTreeKids()});
 document.addEventListener('click',e=>{let b;
  if(b=e.target.closest('[data-nbdnew]')){e.preventDefault();const d=nbDirNew();if(!d)return;nbTreeRedraw();const s=$('#nbF');if(s){const n=NB.list.find(x=>x.id===NB.cur);if(n)s.closest('label').outerHTML=nbSelHtml(n)}toast('Папка «'+d.name+'» создана. Нажми «+» рядом с ней, чтобы добавить заметку');return}
  if(b=e.target.closest('[data-nbdren]')){e.preventDefault();const d=nbDir(b.dataset.nbdren);if(!d)return;const name=(prompt('Новое название папки',d.name)||'').trim().slice(0,40);if(!name)return;d.name=name;nbDirSave();nbTreeRedraw();return}
- if(b=e.target.closest('[data-nbddel]')){e.preventDefault();const d=nbDir(b.dataset.nbddel);if(!d)return;const k=NB.list.filter(n=>n.f===d.id).length;if(!confirm(`Удалить папку «${d.name}»?${k?` Заметки (${k}) не удалятся, а перейдут в «Без папки».`:''}`))return;NB.list.forEach(n=>{if(n.f===d.id)n.f=''});NB.dirs=NB.dirs.filter(x=>x.id!==d.id);nbDirSave();nbSave();rerender();return}});
+ if(b=e.target.closest('[data-nbddel]')){e.preventDefault();nbDirDel(b.dataset.nbddel);return}});
+
+/* перенос заметок и папок: перетаскивание мышью, меню «⋯» и окно «Переместить в…» */
+const nbSelSync=()=>{const s=$('#nbF'),n=NB.list.find(x=>x.id===NB.cur);if(s&&n)s.closest('label').outerHTML=nbSelHtml(n)};
+const nbOpenF=f=>{if(!f)return;const c=nbFC();let x=f,g=0;const o=new Set(c);while(x&&g++<60){o.delete(x);x=nbDir(x)?nbDK(nbDir(x)):''}if(o.size!==c.length)store.set('nb_fc',[...o])};
+function nbMoveNote(id,f){const n=NB.list.find(x=>x.id===id);if(!n)return;f=f||'';if(nbNK(n)===f)return;n.f=f;nbSave();nbOpenF(f);nbTreeRedraw();if(id===NB.cur)nbSelSync();toast('Заметка «'+(n.title||'Без названия')+'» → '+nbFName(f))}
+function nbMoveDir(id,p){const d=nbDir(id);if(!d)return;p=p||'';if(p&&!nbDir(p)){toast('Папку можно положить только в свою папку, не в папку предмета');return}if(p&&nbUnder(p,id)){toast('Нельзя положить папку внутрь самой себя');return}if(nbDK(d)===p)return;if(p)d.p=p;else delete d.p;nbDirSave();nbOpenF(p);nbTreeRedraw();nbSelSync();toast('Папка «'+d.name+'» → '+(p?nbPath(p):'верхний уровень'))}
+function nbDirDel(id){const d=nbDir(id);if(!d)return;const par=nbDK(d),k=NB.list.filter(n=>n.f===d.id).length,sub=nbSub(d.id).length;
+ const dst=par?'«'+nbFName(par)+'»':null;if(!confirm(`Удалить папку «${d.name}»?${k||sub?' Ничего не потеряется: '+[k?`заметки (${k}) перейдут в ${dst||'«Без папки»'}`:'',sub?`вложенные папки (${sub}) — ${dst?'в '+dst:'на верхний уровень'}`:''].filter(Boolean).join(', ')+'.':''}`))return;
+ NB.list.forEach(n=>{if(n.f===d.id)n.f=par});NB.dirs.forEach(x=>{if(x.p===d.id){if(par)x.p=par;else delete x.p}});NB.dirs=NB.dirs.filter(x=>x.id!==d.id);nbDirSave();nbSave();rerender()}
+const nbFmClose=()=>{const m=$('#nbFm');if(m)m.remove()};
+function nbFmOpen(btn){nbFmClose();const f=btn.dataset.nbfm,d=nbDir(f);if(!d)return;const m=document.createElement('div');m.id='nbFm';m.className='nb-fm';m.setAttribute('role','menu');
+ m.innerHTML=`<button type="button" role="menuitem" data-nbdsub="${f}">▣ Новая папка внутри</button><button type="button" role="menuitem" data-nbmv="d:${f}">⇄ Переместить в…</button><button type="button" role="menuitem" data-nbdren="${f}">✎ Переименовать</button><button type="button" role="menuitem" class="nb-fm-del" data-nbddel="${f}">× Удалить папку</button>`;
+ document.body.append(m);const r=btn.getBoundingClientRect(),w=m.offsetWidth,h=m.offsetHeight;m.style.left=Math.max(8,Math.min(innerWidth-w-8,r.right-w))+'px';m.style.top=(r.bottom+h+8>innerHeight?Math.max(8,r.top-h-4):r.bottom+4)+'px';m.querySelector('button').focus()}
+function nbMoveDlg(t,id){nbFmClose();nbsClose();const isD=t==='d',it=isD?nbDir(id):NB.list.find(x=>x.id===id);if(!it)return;const cur=isD?nbDK(it):nbNK(it);
+ const row=(v,label,dep=0,sub='')=>`<button type="button" class="nbs-i ${v===cur?'on':''}" data-nbmvto="${esc(v)}" style="padding-left:${10+dep*18}px" ${v===cur?'aria-current="true"':''}><span>${esc(label)}${sub?`<small>${esc(sub)}</small>`:''}</span>${v===cur?'<em>сейчас здесь</em>':''}</button>`;
+ const own=nbDirFlat('',0,isD?id:'');const fav=myFav().filter(s=>!nbDir(s.id));const subj=isD?[]:[...new Map([...fav.map(s=>[s.id,s.name]),...(cur&&!nbDir(cur)&&byId(cur)?[[cur,byId(cur).name]]:[])]).entries()];
+ const bg=document.createElement('div');bg.id='nbsBg';bg.className='nbs-bg';bg.dataset.nbmvi=t+':'+id;
+ bg.innerHTML=`<div class="nbs" role="dialog" aria-modal="true" aria-label="Переместить"><div class="nbs-h"><h2>Переместить ${isD?'папку':'заметку'}</h2><button type="button" class="btn btn-o btn-sm" data-nbsx>Закрыть</button></div><p class="small muted" style="margin:0 4px">«${esc(isD?it.name:(it.title||'Без названия'))}» — выбери, куда положить</p><div class="nbs-b">${row('',isD?'Верхний уровень':'Без папки',0,isD?'не внутри другой папки':'')}${own.length?`<p class="nbs-c">Мои папки</p>${own.map(({d,dep})=>row(d.id,d.name,dep)).join('')}`:''}${subj.length?`<p class="nbs-c">Предметы</p>${subj.map(([v,l])=>row(v,l)).join('')}`:''}<button type="button" class="nbs-i nbs-all" data-nbmvnew><span>＋ Новая папка и переместить туда</span></button></div></div>`;
+ document.body.append(bg);NBS={mv:1};const f=bg.querySelector('.nbs-i.on')||bg.querySelector('.nbs-i');if(f)f.focus()}
+document.addEventListener('click',e=>{let b;
+ if(b=e.target.closest('[data-nbfm]')){e.preventDefault();e.stopPropagation();if($('#nbFm')&&$('#nbFm')._f===b.dataset.nbfm){nbFmClose();return}nbFmOpen(b);$('#nbFm')._f=b.dataset.nbfm;return}
+ if($('#nbFm')&&!e.target.closest('#nbFm'))nbFmClose();
+ if(b=e.target.closest('[data-nbdsub]')){e.preventDefault();nbFmClose();const d=nbDirNew(b.dataset.nbdsub);if(!d)return;nbOpenF(d.p||'');nbTreeRedraw();nbSelSync();toast('Папка «'+d.name+'» создана внутри «'+nbFName(d.p||'')+'»');return}
+ if(e.target.closest('#nbFm [data-nbdren],#nbFm [data-nbddel]'))setTimeout(nbFmClose);
+ if(b=e.target.closest('[data-nbmv]')){e.preventDefault();const [t,id]=b.dataset.nbmv.split(':');nbMoveDlg(t,id);return}
+ if(b=e.target.closest('[data-nbmvto],[data-nbmvnew]')){const bg=b.closest('#nbsBg');if(!bg||!bg.dataset.nbmvi)return;const [t,id]=bg.dataset.nbmvi.split(':');let to=b.dataset.nbmvto||'';
+  if(b.hasAttribute('data-nbmvnew')){const d=nbDirNew();if(!d)return;to=d.id}nbsClose();t==='d'?nbMoveDir(id,to):nbMoveNote(id,to);return}
+ if(b=e.target.closest('[data-nbfc]')){e.preventDefault();const f=b.dataset.nbfc,c=nbFC();store.set('nb_fc',c.includes(f)?c.filter(x=>x!==f):[...c,f]);nbTreeRedraw();return}
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')nbFmClose()});
+addEventListener('scroll',()=>{if($('#nbFm'))nbFmClose()},{passive:true,capture:true});
+let NBDG=null;
+const nbDropKey=el=>{const t=el&&el.closest('[data-drop],.nb-k[data-nid]');if(!t)return null;if(t.dataset.nid){const n=NB.list.find(x=>x.id===t.dataset.nid);return n?nbNK(n):null}return t.dataset.drop};
+const nbDropOk=(k)=>NBDG&&k!==null&&(NBDG.t==='n'||(k===''||(nbDir(k)&&!nbUnder(k,NBDG.id))));
+document.addEventListener('dragstart',e=>{const n=e.target.closest&&e.target.closest('.nb-tree .nb-k[data-nid], .nb-tree [data-dragd]');if(!n)return;NBDG=n.dataset.nid?{t:'n',id:n.dataset.nid}:{t:'d',id:n.dataset.dragd};try{e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',n.textContent.trim())}catch{}n.classList.add('nb-dragging');document.body.classList.add('nb-drag')});
+document.addEventListener('dragover',e=>{if(!NBDG)return;const k=nbDropKey(e.target);$$('.nb-over').forEach(x=>x.classList.remove('nb-over'));if(!nbDropOk(k))return;e.preventDefault();try{e.dataTransfer.dropEffect='move'}catch{}const t=e.target.closest('[data-drop],.nb-k');const h=t.classList.contains('nb-k')?t.closest('.nb-fk')&&t.closest('.nb-fk').previousElementSibling:t;(h||t).classList.add('nb-over')});
+document.addEventListener('drop',e=>{if(!NBDG)return;const k=nbDropKey(e.target);if(!nbDropOk(k))return;e.preventDefault();const g=NBDG;NBDG=null;g.t==='n'?nbMoveNote(g.id,k):nbMoveDir(g.id,k)});
+document.addEventListener('dragend',()=>{NBDG=null;document.body.classList.remove('nb-drag');$$('.nb-over,.nb-dragging').forEach(x=>x.classList.remove('nb-over','nb-dragging'))});
 
 /* оглавление сворачивается */
 document.addEventListener('click',e=>{if(!e.target.closest('[data-olt]'))return;store.set('nb_olc',!store.get('nb_olc',false));const o=$('#nbOl');if(o)o.innerHTML=owOutline()});

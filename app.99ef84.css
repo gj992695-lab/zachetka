@@ -1950,3 +1950,28 @@ body.nb-hide .nb-tools{top:8px}
 @media (max-width:700px){body.nb-hide .nb-tools{top:0}body.nb-hide .nb-ttools{top:54px}}
 .ow-olp.cl{padding-bottom:10px}.ow-olp.cl .ow-ph{margin-bottom:0}
 .ow-olp .ow-ib{font-size:13px;font-weight:500}
+/* дерево блокнота: вложенные папки и перетаскивание */
+.nb-tree{display:flex;flex-direction:column}
+.nb-tree .nb-fd{padding-left:calc(2px + var(--d,0)*14px);gap:5px;border-radius:8px;min-height:30px}
+.nb-tree .nb-fd[draggable=true]{cursor:grab}
+.nb-tree .nb-fd .nb-fadd{margin-left:0;flex:none}
+.nb-fn{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nb-tg{flex:none;border:0;background:none;width:16px;height:22px;padding:0;color:var(--ink-2);font:700 11px/1 var(--font);cursor:pointer;border-radius:5px}
+.nb-tg:hover{background:color-mix(in srgb,var(--orange) 14%,transparent)}
+.nb-tree .nb-k{padding-left:calc(22px + var(--d,0)*14px)}
+.nb-tree .nb-fe{margin-left:calc(22px + var(--d,0)*14px)}
+.nb-tree .nb-fd .nb-fd{margin-top:4px}
+.nb-fk .nb-fd{text-transform:none;letter-spacing:0;font-size:13.5px;margin-top:4px}
+.nb-over{background:color-mix(in srgb,var(--orange) 16%,transparent)!important;box-shadow:inset 0 0 0 2px var(--orange);border-radius:8px}
+.nb-dragging{opacity:.4}
+body.nb-drag .nb-fe{color:var(--orange-ink)}
+.nb-hint{margin:6px 8px 0;font-size:12.5px}
+@media(hover:hover){.nb-tree .nb-fd .nb-fadd{opacity:.35;transition:opacity .15s}.nb-tree .nb-fd:hover .nb-fadd,.nb-tree .nb-fd:focus-within .nb-fadd{opacity:1}}
+@media(hover:none){.nb-hint{display:none}}
+.nb-fm{position:fixed;z-index:260;min-width:220px;display:flex;flex-direction:column;padding:5px;background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 30px rgba(0,0,0,.18)}
+.nb-fm button{border:0;background:none;text-align:left;padding:9px 11px;border-radius:8px;font:500 14.5px/1.2 var(--font);color:var(--ink);cursor:pointer;min-height:40px}
+.nb-fm button:hover,.nb-fm button:focus-visible{background:color-mix(in srgb,var(--orange) 11%,transparent);outline:none}
+.nb-fm .nb-fm-del{color:#B3261E}
+.nbs-i.on{background:color-mix(in srgb,var(--orange) 9%,transparent)}
+.nb-fn{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow-wrap:anywhere;line-height:1.25}
+.nb-fm{z-index:320}#nbsBg{z-index:310}
