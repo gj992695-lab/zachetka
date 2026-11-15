@@ -1477,6 +1477,12 @@ body.th-vuc:not(.vk-dark) .vk-ch{background:#DCE4C8}
  .cb-h.cb-sub .cb-st{display:block;margin:0}
 }
 @media(max-width:760px){.fcard .tc-ste{display:none}}
+/* v15b: нижнее меню на iPhone — без большого пустого поля под иконками (Safari отдаёт большой отступ снизу) */
+@media(max-width:760px){
+ .bbar{padding-bottom:min(env(safe-area-inset-bottom,0px),12px)}
+ .bbar a,.bbar button{min-height:54px}
+}
+@media(max-width:760px){.bbar{transition:transform .22s ease;will-change:transform}body.bb-hide .bbar{transform:translateY(calc(100% + 30px))}}
 
 @media (max-width:720px){:root{--hero:url('/img/hero-m.7c836a.webp')}}
 /* ===== Кабинет на компьютере: рабочее пространство (Obsidian, в стилистике сайта) ===== */

@@ -2458,6 +2458,9 @@ async function dashLoad(){const box=$('#dashL');if(!box)return;try{const [U,E]=a
 {const _wall15=R.wall;R.wall=p=>{const v=_wall15(p);v.html=v.html.replace('<a class="link" href="/">На главную</a>','<p class="small muted wall-in">Уже есть аккаунт? <a class="link" href="/login">Войти</a></p><a class="link" href="/">На главную</a>');return v}}
 /* кабинет на телефоне: в разделах вместо имени — название раздела, без кнопки «Выйти» */
 {const CT={subj:'Мои предметы',dl:'Дедлайны',set:'Настройки',cards:'Коллекция'};const _ac15=R.account;R.account=(p,...a)=>{const v=_ac15(p,...a),t=p&&p.tab;if(!v||!CT[t])return v;const af=v.after;v.after=async()=>{af&&await af();const h=$('.cb-h');if(h)h.classList.add('cb-sub');const h1=$('.cb-h h1');if(h1&&!h1.querySelector('.cb-st'))h1.insertAdjacentHTML('afterend',`<p class="cb-st h1">${CT[t]}</p>`)};return v}}
+/* нижнее меню: при прокрутке вниз уезжает, при прокрутке вверх возвращается (как панель самого Safari) */
+{let y0=scrollY,acc=0;addEventListener('scroll',()=>{if(innerWidth>760)return;const y=scrollY,d=y-y0;y0=y;const b=document.body;if(y<80||innerHeight+y>=document.documentElement.scrollHeight-40){b.classList.remove('bb-hide');acc=0;return}acc=(acc>0)===(d>0)?acc+d:d;if(acc>24)b.classList.add('bb-hide');else if(acc<-24)b.classList.remove('bb-hide')},{passive:true});
+ const _r16=route;route=function(){document.body.classList.remove('bb-hide');return _r16.apply(this,arguments)}}
 
 /* ===================== v16: работа параллельной сессии (блокнот, профили, расписание по датам) — перенесено из собранного сайта ===================== */
 
