@@ -1483,6 +1483,33 @@ body.th-vuc:not(.vk-dark) .vk-ch{background:#DCE4C8}
  .bbar a,.bbar button{min-height:54px}
 }
 @media(max-width:760px){.bbar{transition:transform .22s ease;will-change:transform}body.bb-hide .bbar{transform:translateY(calc(100% + 30px))}}
+/* ===== v17: плавность ===== */
+html{-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%}
+a,button,summary,label,[role=button],.tab,.btn,input[type=checkbox],select{touch-action:manipulation}
+.btn,.tab,.ib,.link,.card a,a.card,.cn-grid a,.bbar a,.bbar button,summary,.chip,.tag[href],.wk-fab,.cn-back{transition:transform .16s cubic-bezier(.2,.8,.2,1),background-color .18s ease,color .18s ease,box-shadow .2s ease,border-color .18s ease,opacity .18s ease}
+.card{transition:box-shadow .2s ease,transform .18s cubic-bezier(.2,.8,.2,1)}
+@media(hover:none){
+ .btn:active,.tab:active,.ib:active,.cn-back:active,.wk-fab:active{transform:scale(.96)}
+ a.card:active,.cn-grid a:active,.fcard:active,.tcard:active{transform:scale(.98)}
+ .bbar a:active,.bbar button:active{transform:scale(.9)}
+}
+/* смена страницы: мягкое появление вместо резкой подмены */
+@keyframes pgIn{from{opacity:0}to{opacity:1}}
+#main.pg-in{animation:pgIn .22s ease-out}
+/* раскрывающиеся темы и блоки */
+@keyframes dtIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+details[open]>:not(summary){animation:dtIn .22s ease both}
+/* меню «Ещё», всплывашки, окна */
+@keyframes mmIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.mmenu:not([hidden]){animation:mmIn .24s cubic-bezier(.2,.8,.2,1) both}
+@keyframes ovIn{from{opacity:0}to{opacity:1}}
+.ov,.dlg,.ws-ov,[role=dialog]:not(.mmenu){animation:ovIn .18s ease both}
+#toast{transition:opacity .2s ease,transform .25s cubic-bezier(.2,.8,.2,1)}
+/* прокрутка: ленты вкладок листаются без рывков и не тянут страницу */
+.tabs,.cn-row,.ws-tabs,.wk-tabs,.filters,.m-tch{scroll-behavior:smooth;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.tabs::-webkit-scrollbar,.cn-row::-webkit-scrollbar,.ws-tabs::-webkit-scrollbar,.wk-tabs::-webkit-scrollbar{display:none}
+img{transition:opacity .25s ease}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 
 @media (max-width:720px){:root{--hero:url('/img/hero-m.7c836a.webp')}}
 /* ===== Кабинет на компьютере: рабочее пространство (Obsidian, в стилистике сайта) ===== */

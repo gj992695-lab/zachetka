@@ -2461,6 +2461,10 @@ async function dashLoad(){const box=$('#dashL');if(!box)return;try{const [U,E]=a
 /* нижнее меню: при прокрутке вниз уезжает, при прокрутке вверх возвращается (как панель самого Safari) */
 {let y0=scrollY,acc=0;addEventListener('scroll',()=>{if(innerWidth>760)return;const y=scrollY,d=y-y0;y0=y;const b=document.body;if(y<80||innerHeight+y>=document.documentElement.scrollHeight-40){b.classList.remove('bb-hide');acc=0;return}acc=(acc>0)===(d>0)?acc+d:d;if(acc>24)b.classList.add('bb-hide');else if(acc<-24)b.classList.remove('bb-hide')},{passive:true});
  const _r16=route;route=function(){document.body.classList.remove('bb-hide');return _r16.apply(this,arguments)}}
+/* мягкая смена страниц: контент появляется с короткой анимацией; прокрутка наверх без анимации, чтобы не «ехала» */
+{const _r17=route;route=function(){const h=document.documentElement,sb=h.style.scrollBehavior;h.style.scrollBehavior='auto';const r=_r17.apply(this,arguments);const m=$('#main');if(m){m.classList.remove('pg-in');void m.offsetWidth;m.classList.add('pg-in')}requestAnimationFrame(()=>{h.style.scrollBehavior=sb});return r}}
+/* активная вкладка в прокручиваемой ленте сама подъезжает в видимую часть */
+{const fix=()=>$$('.tabs,.cn-row,.wk-tabs,.ws-tabs').forEach(r=>{if(r.scrollWidth<=r.clientWidth)return;const a=r.querySelector('[aria-current="page"],[aria-selected="true"],.on,[aria-pressed="true"]');if(a)r.scrollLeft=Math.max(0,a.offsetLeft-r.clientWidth/2+a.offsetWidth/2)});const _r17b=route;route=function(){const v=_r17b.apply(this,arguments);setTimeout(fix,60);return v}}
 
 /* ===================== v16: работа параллельной сессии (блокнот, профили, расписание по датам) — перенесено из собранного сайта ===================== */
 
