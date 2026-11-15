@@ -1452,6 +1452,31 @@ body.th-vuc:not(.vk-dark) .vk-ch{background:#DCE4C8}
  .cb-w #myEd .ph-r:nth-of-type(n+2){display:none}
  .cb-w .tl li{font-size:13.5px}
 }
+/* v15 */
+.ev .ev-tx{display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
+.ev .ev-tx.open{display:block;-webkit-line-clamp:unset}
+.ev .ev-more{margin:-4px 0 8px;font-size:15px}
+.dl-u{grid-template-columns:1fr auto}
+@media(max-width:760px){
+ .ev .ev-tx{-webkit-line-clamp:3}
+ .ev .body h3{font-size:19px;line-height:1.25}
+ .ev .body{padding:16px 16px 14px}
+ .ev{grid-template-columns:76px minmax(0,1fr);min-height:0}
+ .ev .date{padding:8px 4px}
+ .ev .date b{font-size:30px}
+ .ev .date span{font-size:13px}
+ .ev .ev-ln{display:none}
+ body.kb-open .bbar{display:none}
+ body.kb-open{padding-bottom:0}
+}
+.cb-st{display:none}
+.wall-in{margin:14px 0 4px}
+@media(max-width:760px){
+ .cabnav .cn-adm:not(.cn-on){display:none}
+ .cb-h.cb-sub h1,.cb-h.cb-sub [data-out],.cb-h.cb-sub .ach,.cb-h.cb-sub .d{display:none}
+ .cb-h.cb-sub .cb-st{display:block;margin:0}
+}
+@media(max-width:760px){.fcard .tc-ste{display:none}}
 
 @media (max-width:720px){:root{--hero:url('/img/hero-m.7c836a.webp')}}
 /* ===== Кабинет на компьютере: рабочее пространство (Obsidian, в стилистике сайта) ===== */
@@ -2025,3 +2050,8 @@ body.nb-drag .nb-fe{color:var(--orange-ink)}
 .nb-doc ul:not([data-type=taskList]) ul:not([data-type=taskList]) ul:not([data-type=taskList]){list-style:square}
 .nb-doc li::marker{color:var(--orange-ink);font-weight:600}
 .nb-doc li>p{margin:.15em 0}
+/* v15: аватар в шапке на телефоне занимает весь кружок */
+@media(max-width:760px){
+ .hdr .cab-b.has-av{background:var(--av) center/cover;box-shadow:0 0 0 2px #fff,0 1px 4px rgba(0,0,0,.15)}
+ .hdr .cab-b.has-av::before{display:none}
+}
