@@ -1,6 +1,6 @@
 /* latisha.ru: кэш для быстрой загрузки. Файлы с хэшем в имени не меняются, их берём из кэша сразу.
    Страницу (HTML) берём из сети, а если сеть не ответила за 2,5 с — из кэша. */
-const V='8b0c60',ST='lt-static',PG='lt-pages',CORE=["/app.985289.js", "/app.6e5fa1.css", "/fonts/jost-0.b7120f.woff2", "/fonts/jost-6.620c0a.woff2"];
+const V='f019c7',ST='lt-static',PG='lt-pages',CORE=["/app.5ff542.js", "/app.4d63a0.css", "/fonts/jost-0.b7120f.woff2", "/fonts/jost-6.620c0a.woff2"];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(ST).then(c=>c.addAll(CORE)).catch(()=>{}).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil((async()=>{for(const k of await caches.keys())if(k!==ST&&k!==PG)await caches.delete(k);
  const c=await caches.open(ST);for(const r of await c.keys()){const p=new URL(r.url).pathname;if(/^\/app\.[0-9a-f]+\.(js|css)$/.test(p)&&!CORE.includes(p))await c.delete(r)}
