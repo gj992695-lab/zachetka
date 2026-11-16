@@ -1510,6 +1510,24 @@ details[open]>:not(summary){animation:dtIn .22s ease both}
 .tabs::-webkit-scrollbar,.cn-row::-webkit-scrollbar,.ws-tabs::-webkit-scrollbar,.wk-tabs::-webkit-scrollbar{display:none}
 img{transition:opacity .25s ease}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+/* v18: строка темы не разъезжается — номер слева, название в полную ширину, метки под ним */
+.wk-topic summary{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;column-gap:12px;text-align:left}
+.wk-topic .wk-tt{min-width:0;overflow-wrap:anywhere;text-align:left}
+.wk-tags{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.wk-tags .tag{white-space:nowrap}
+@media(max-width:760px){
+ .wk-topic summary{grid-template-columns:auto minmax(0,1fr);row-gap:6px;align-items:start}
+ .wk-topic .wk-tn{grid-row:span 2;margin-top:1px}
+ .wk-tags{justify-content:flex-start}
+ .wk-tags .tag{font-size:13px;padding:3px 10px}
+ /* кнопка правки — круглая иконка, не закрывает текст */
+ .wk-fab{width:54px;height:54px;padding:0!important;border-radius:50%!important;justify-content:center;bottom:calc(82px + env(safe-area-inset-bottom,0px))!important;right:14px!important;box-shadow:0 6px 18px rgba(184,77,26,.35)}
+ .wk-fab span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+ .wk-fab svg{width:22px;height:22px}
+ body.bb-hide .wk-fab{transform:translateY(64px)}
+}
+/* прочитанная тема получала общий стиль экрана «.done» (по центру, с отступами) — сбрасываем */
+details.done,.wk-topic.done{max-width:none;margin:0;text-align:left;display:block;padding:0;gap:0;justify-items:normal}
 
 @media (max-width:720px){:root{--hero:url('/img/hero-m.7c836a.webp')}}
 /* ===== Кабинет на компьютере: рабочее пространство (Obsidian, в стилистике сайта) ===== */
