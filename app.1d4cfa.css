@@ -1471,6 +1471,7 @@ body.th-vuc:not(.vk-dark) .vk-ch{background:#DCE4C8}
 }
 .cb-st{display:none}
 .wall-in{margin:14px 0 4px}
+.cb-h.cb-sub h1,.cb-h.cb-sub [data-out],.cb-h.cb-sub .ach,.cb-h.cb-sub .d{display:none}.cb-h.cb-sub .cb-st{display:block;margin:0}
 @media(max-width:760px){
  .cabnav .cn-adm:not(.cn-on){display:none}
  .cb-h.cb-sub h1,.cb-h.cb-sub [data-out],.cb-h.cb-sub .ach,.cb-h.cb-sub .d{display:none}
@@ -2108,7 +2109,7 @@ body.nb-drag .nb-fe{color:var(--orange-ink)}
 }
 /* ===================== v19: чаты как в Telegram ===================== */
 .ws-chat,.dm-r{position:relative}
-.ws-chat{height:min(72vh,720px)}
+.ws-chat{height:min(calc(100vh - 170px),720px);min-height:380px}.ws-tabs{scroll-margin-top:72px}
 .ch-h,.dm-h{display:flex;align-items:center;gap:10px;padding:10px 12px 10px 16px;border-bottom:1px solid var(--line);background:#fff;min-height:54px}
 .ch-h small{flex:1}.dm-h b{flex:1}
 .ch-gear{width:38px;height:38px;border-radius:50%;color:var(--ink-2)}.ch-gear svg{width:20px;height:20px}.ch-gear:hover{background:var(--peach);color:var(--ink)}
